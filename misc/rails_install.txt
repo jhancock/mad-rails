@@ -1,0 +1,48 @@
+# this is for dev
+# for deploy see https://gorails.com/deploy/ubuntu/14.04
+# https://www.phusionpassenger.com/
+
+rvm implode # do cleanup if rvm was being used
+
+echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+
+#from https://gorails.com/setup/osx/10.9-mavericks
+#homebrew
+brew update
+brew install rbenv ruby-build
+echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.profile
+source ~/.profile
+
+# Install Ruby 2.1.2 and set it as the default version
+rbenv install 2.1.2
+rbenv global 2.1.2
+
+ruby -v
+# ruby 2.1.2
+rbenv rehash
+gem update
+rbenv rehash
+gem install rails
+rbenv rehash
+rails -v
+# Rails 4.1.1
+
+cd ~/mhd
+rails new mhd --skip-test-unit --skip-sprockets --skip-active-record
+# rename mhd directory to rails  ~/mhd/rails
+# init git repo
+
+# from https://gorails.com/guides/setting-up-rails-4-with-mongodb-and-mongoid
+
+# edit Gemfile, add:
+gem 'mongoid', '~> 4.0.0.beta2', github: 'mongoid/mongoid'
+gem 'bson_ext'
+
+bundle
+# or...
+bundle update # to reinstall all
+
+rails g mongoid:config
+
+
+
