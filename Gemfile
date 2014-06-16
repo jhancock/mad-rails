@@ -4,7 +4,7 @@ ruby '2.1.2'
 gem 'rails', '4.1.1'
 gem 'haml-rails'
 gem 'bcrypt', '~> 3.1.7'
-gem 'mongoid', '~> 4.0.0.rc1', github: 'mongoid/mongoid'
+gem 'mongoid', '~> 4.0.0.rc2', github: 'mongoid/mongoid'
 gem 'bson_ext'
 gem 'thin'
 
@@ -16,7 +16,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :mri_21, :rbx]
   gem 'html2haml'
-  gem 'quiet_assets'
+  #gem 'quiet_assets'
   #gem 'pry-rails'
 end
 

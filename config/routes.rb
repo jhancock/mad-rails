@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+
+  root 'public#index'
+  #TODO why cant I use dashses instead of underscores in route names?
+  get 'privacy_policy' => 'public#privacy_policy'
+  get 'terms_of_service' => 'public#terms_of_service'
+  get 'contact' => 'public#contact'
+  
+  #TODO - remove this route and ensure home page is pagable
+  get 'public/index'
+
+  get 'public/upload_notice'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
