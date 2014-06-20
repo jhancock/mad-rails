@@ -1,0 +1,7 @@
+%h2
+	= "热力排行 #{params[:page]}"
+
+= render @books 
+%hr
+= paginate @books, :params => {:controller => 'books', :action => 'popular'}
+= page_entries_info @books

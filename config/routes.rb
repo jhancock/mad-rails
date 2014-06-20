@@ -5,11 +5,15 @@ Rails.application.routes.draw do
   get 'privacy_policy' => 'public#privacy_policy'
   get 'terms_of_service' => 'public#terms_of_service'
   get 'contact' => 'public#contact'
+  get 'public/upload_notice' => 'public#upload_notice'
+
+  get 'books/recent(/page/:page)' => 'books#recent', as: 'recent_books'
+  get 'books/popular(/page/:page)' => 'books#popular', as: 'popular_books'
+  get 'books/:author/:title/read(/:page)' => 'books#read', as: 'read_book'
+  get 'books/:id/read(/:page)' => 'books#read_id', as: 'read_id_book'
   
   #TODO - remove this route and ensure home page is pagable
-  get 'public/index'
-
-  get 'public/upload_notice'
+  #get 'public/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

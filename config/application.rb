@@ -26,5 +26,8 @@ module Mhd
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    config.mihudie = ActiveSupport::OrderedOptions.new 
+    #config.mihudie.suppress_tags = [19, 35]
   end
 end

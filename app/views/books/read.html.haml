@@ -1,0 +1,18 @@
+%h2
+	#{@book.title} - #{@book.author} - chapter #{@page}
+
+:plain
+	#{@content}
+
+%nav{:class => :pagination}
+	- if @page > 1
+		%span{:class => :page}
+			%a{:href => read_book_path(author: @book.author, title: @book.title, page: (@page - 1)), :rel => "nofollow"}
+				« 前一页
+
+	%span{:class => :page}
+		&nbsp;&nbsp;&nbsp;&nbsp;	
+	- if @page < @book.chunks
+		%span{:class => :page}
+			%a{:href => read_book_path(author: @book.author, title: @book.title, page: (@page + 1)), :rel => "nofollow"}
+				下一页 »

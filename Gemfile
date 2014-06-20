@@ -6,7 +6,19 @@ gem 'haml-rails'
 gem 'bcrypt', '~> 3.1.7'
 gem 'mongoid', '~> 4.0.0.rc2', github: 'mongoid/mongoid'
 gem 'bson_ext'
+# after bundle mongoid and bson_ext run rails mongoid config script
+gem 'kaminari'
+# after bundle
+# 	rails g kaminari:config
+# 	rails g kaminari:views default -e haml
 gem 'thin'
+# add https://github.com/collectiveidea/delayed_job/
+# add mandril-api mailer 
+#    http://www.alanverga.com/blog/2014/01/03/custom-rails-mailer-and-mandrill
+
+# add exception_notifier http://amberonrails.com/rails-exception_notification-setup/
+#    https://github.com/smartinez87/exception_notification
+# or https://github.com/rails/exception_notification
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc

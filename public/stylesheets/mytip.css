@@ -1,0 +1,21 @@
+div.myTip {
+  width: 360px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #f9e98e;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  background: #fbf7aa;
+  color: #020202;
+  font-size: .8em;
+  padding-bottom: 0; }
+
+div.myTipContent {
+  margin: 10px; }
+
+div.myTipContentBottom {
+  background: #f9e98e;
+  color: #020202;
+  border-style: solid;
+  border-color: #f9e98e;
+  padding: 8px 6px 0 6px; }

@@ -1,0 +1,5 @@
+# rsync --archive --one-file-system --hard-links --human-readable --progress  mhd@ca1:/home/mhd/mongo_dump/* ~/mongo_dump
+
+# rsync --archive --one-file-system --hard-links --human-readable --progress  mhd@vr1:/home/mhd/books-20140618.tar.gz .
+
+

@@ -1,0 +1,10 @@
+# NOT WORKING setup digitalocean vm in singapore - not working so far
+# setup vr.org vm in HK
+# test bandwidth variences
+
+# download books from lin1
+# turn on mihudie BankOfDudley card
+# fix PayPal mihudie and shellshadow accounts.  might need cc info updated
+# fix BoD personal debit card.
+
+# handle Merb::Config[:mihudie][:suppress_tags] in public lists

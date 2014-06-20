@@ -1,0 +1,75 @@
+vr1  205.147.105.160  ubuntu server 14.04 64bit
+
+root     / <on file>
+jhancock / <on file>
+mhd		 / <on file>
+
+# as root
+apt-get update
+apt-get -y upgrade
+# possibly needs a reboot
+
+# set timezone to 'Etc/UTC'
+dpkg-reconfigure tzdata
+
+# set hostname - already set
+sudo vim /etc/hostname
+hostname -F /etc/hostname
+
+# edit /etc/hosts  add:
+50.116.1.15  lin1
+
+# edit /etc/ssh/sshd_config
+# change sshd to port 1047
+restart ssh
+
+# add jhancock & mhd users and give sudo
+adduser jhancock
+adduser jhancock sudo
+adduser mhd
+adduser mhd sudo
+# add ssmerb, ssrelay - not donw
+
+# install an editor - already installed
+#sudo apt-get install -y vim-nox
+
+# setup login keys for jhancock & mhd
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+# add public key, from client
+scp ~/.ssh/new_jhancock.pub jhancock@vr1:~/.ssh
+# back to server
+cat ~/.ssh/new_jhancock.pub > ~/.ssh/authorized_keys 
+chmod 600 ~/.ssh/authorized_keys 
+
+# repeat above for user mhd
+
+# edit /etc/ssh/sshd_config
+PermitRootLogin yes -> PermitRootLogin no
+#PasswordAuthentication yes -> PasswordAuthentication no
+
+restart ssh
+
+# sudo apt-get install byobu - already installed
+byobu-config  # choose to enable byobu at login
+# F-9 -> Change Escape Sequence, set to Ctr-S so Ctr-A works for beginning of line
+
+#HERE
+
+# enable access to lin1 and bitbucket
+# edit ~/.ssh/config see misc/server/misc/ssh_config
+
+Host us1
+  HostName us1.shellshadow.com
+  IdentityFile ~/.ssh/jhancock_ss_id_rsa
+  Port 1047
+  Protocol 2
+Host bb
+  Compression yes
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/new_jhancock
+  User hg
+
+
+
+

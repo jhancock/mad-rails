@@ -3,6 +3,9 @@ class PublicController < ApplicationController
     @page_title = self.class.home_page_title
     @page_description = "迷蝴蝶中文电子书在线阅读网络社区，由用户共同推荐分享喜爱的 中文电子书，提供最清爽干净、简捷方便和安全的社区环境，无广告病毒烦忧。"
     @page_keywords = "电子书 在线阅读 安全 简便"
+    criteria = Book.public_recent_criteria
+    #logger.info "CRITERIA: #{criteria.inspect}"
+    @books = criteria.page(1)
   end
 
   def self.home_page_title

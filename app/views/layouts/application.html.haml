@@ -8,7 +8,10 @@
 		%meta{:name => "description", :content => "#{@page_description}"}
 		= stylesheet_link_tag '/stylesheets/pure-0.5.0-min', media: 'all'
 		= stylesheet_link_tag '/stylesheets/pure-0.5.0-responsive-min', media: 'all'
+		= stylesheet_link_tag '/stylesheets/baby-blue', media: 'all'
+		= stylesheet_link_tag '/stylesheets/mytip', media: 'all'
 		= javascript_include_tag '/javascripts/jquery-1.11.1.min'
+		= javascript_include_tag '/javascripts/mihudie'
 		= csrf_meta_tags
 
 	%body{:class => "pure-g"}
@@ -17,3 +20,14 @@
 			= yield
 			%footer
 				= render 'layouts/footer'
+	:javascript
+		$(document).ready(function () {
+			$(document).bind("contextmenu", function (e) {
+				return false;
+			});
+			$(document).ready(function() { 
+				$("a.tip").myTips({position: 'right', width: 400});
+			});
+		});
+
+
