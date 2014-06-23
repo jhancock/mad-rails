@@ -2,7 +2,8 @@ namespace :mhd do
 	desc "report all attributes in mongo collections"
 	task model_report: :environment do
 
-  		models = [Book, User]
+  		# models = [Book, User, Bookmark]
+  		models = [EventLog, MailLog]
   		models.each do | model |
 	  		puts "collection: #{model} count: #{model.count}"
 	  		@attribute_counts = {}

@@ -1,10 +1,11 @@
 # NOT WORKING setup digitalocean vm in singapore - not working so far
-# setup vr.org vm in HK
-# test bandwidth variences
+# DONE setup vr.org vm in HK
+	setup beta.mihudie.com and include basic http auth
 
-# download books from lin1
+# DONE download books from lin1 to vr1 to mac
 # turn on mihudie BankOfDudley card
 # fix PayPal mihudie and shellshadow accounts.  might need cc info updated
 # fix BoD personal debit card.
 
-# handle Merb::Config[:mihudie][:suppress_tags] in public lists
+# DONE handle Merb::Config[:mihudie][:suppress_tags] in public lists
+

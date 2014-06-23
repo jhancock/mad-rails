@@ -2,4 +2,4 @@
 
 # rsync --archive --one-file-system --hard-links --human-readable --progress  mhd@vr1:/home/mhd/books-20140618.tar.gz .
 
-
+# rsync --archive --one-file-system --hard-links --human-readable --progress  mhd@vr1:/home/mhd/books/* ~/mhd/books_vr1
