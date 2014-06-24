@@ -11,9 +11,6 @@ Rails.application.routes.draw do
   get 'books/popular(/page/:page)' => 'books#popular', as: 'popular_books'
   get 'books/:author/:title/read(/:page)' => 'books#read', as: 'read_book'
   get 'books/:id/read(/:page)' => 'books#read_id', as: 'read_id_book'
-  
-  #TODO - remove this route and ensure home page is pagable
-  #get 'public/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

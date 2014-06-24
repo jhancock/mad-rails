@@ -1,12 +1,11 @@
 class EventLog
 	include Mongoid::Document
-	#TODO only want :created_at
-	include Mongoid::Timestamps
+  include Mongoid::Timestamps::Created
 
 	store_in collection: "event_log"
   
   def self.log(hash = {})
-    self.new(hash).save()
+    self.create(hash)
   end
   
   #def insert(options={})

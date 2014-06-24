@@ -4,7 +4,7 @@ ruby '2.1.2'
 gem 'rails', '4.1.1'
 gem 'haml-rails'
 gem 'bcrypt', '~> 3.1.7'
-gem 'mongoid', '~> 4.0.0.rc2', github: 'mongoid/mongoid'
+gem 'mongoid', '~> 4.0.0', github: 'mongoid/mongoid'
 gem 'bson_ext'
 # after bundle mongoid and bson_ext run rails mongoid config script
 gem 'kaminari'

@@ -2,18 +2,16 @@ class BooksController < ApplicationController
 	# read by monogo id for backward compatibility and completeness
 	def read_id
 		id = params[:id]
-		page = params[:page]
-		@page = params[:page] ? params[:page].to_i : 1
-		#TODO throw error if book not found.
-		book = Book.where(id: id).first
-		redirect_to read_book_url(author: book.author, title: book.title, page: @page)
+		book = Book.find(id)
+		render_404 and return unless book
+		redirect_to read_book_url(author: book.author, title: book.title, page: params[:page]), status: 301
 	end
 
 	def read()
 		author = params[:author]
 		title = params[:title]
-		#TODO throw error if book not found.
-		@book = Book.where(author: author, title: title).first
+		@book = Book.find_by(author: author, title: title, offline_at: {'$exists' => false})
+		render_404 and return unless @book
 		@page = params[:page] ? params[:page].to_i : 1
 		begin
 			path = @book.chunk_path(@page)
