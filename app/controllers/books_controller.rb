@@ -22,21 +22,29 @@ class BooksController < ApplicationController
     	end
     	render
 	end
-	
-	def recent()
+
+	def list()
 		@page = params[:page].to_i > 0 ? params[:page].to_i : 1
-		@books = Book.public_recent_criteria.page(@page)
+		@sort = params[:sort] || 'popular'
+		criteria = Book.online_popular if @sort == "popular"
+		criteria = Book.online_recent if @sort == "recent"
+		@books = criteria.page(@page)
+		@books = Book.online_recent.page(@page)
 		@page_title = "关注排行 电子书在线阅读"
     	@page_description = "按近期被点击次数排行的电子书，在线阅读最吸引人的中文电子书"
     	@page_keywords = "关注 流行 中文电子书 在线阅读"
 	end
 
-	def popular()
+	def tag()
 		@page = params[:page].to_i > 0 ? params[:page].to_i : 1
-		@books = Book.public_popular_criteria.page(@page)
-		@page_title = "热门书籍排行 电子书在线阅读"
-    	@page_description = "按被点击次数高低的书籍排行，在线阅读最热门的中文电子书"
-    	@page_keywords = "热门 流行 中文电子书 在线阅读"
+		@tag = GenreTag.by_name(params[:tag])
+		render_404 and return unless @tag
+		@sort = params[:sort] || 'popular'
+		criteria = Book.online_popular_by_tag(@tag) if @sort == "popular"
+		criteria = Book.online_recent_by_tag(@tag) if @sort == "recent"
+		@books = criteria.page(@page)
+		page_title = "#{@tag.cn} 电子书在线阅读"
+		page_description = "#{@tag.cn} 的言情小说在此应有尽有，最热门，最受关注的全本原创作品均在此陈列。喜欢此类故事的朋友一定能在此找到自己喜爱的书籍"
+		page_keywords = "#{@tag.cn}  言情小说  电子书  在线阅读"
 	end
-
 end

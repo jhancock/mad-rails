@@ -1,0 +1,7 @@
+%h2
+	= "#{@sort} books  page #{@page}"
+
+= render @books 
+%hr
+= paginate @books, :params => {:controller => 'books', :action => 'list', :sort => @sort}
+= page_entries_info @books

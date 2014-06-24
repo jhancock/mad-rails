@@ -7,10 +7,11 @@ Rails.application.routes.draw do
   get 'contact' => 'public#contact'
   get 'public/upload_notice' => 'public#upload_notice'
 
-  get 'books/recent(/page/:page)' => 'books#recent', as: 'recent_books'
-  get 'books/popular(/page/:page)' => 'books#popular', as: 'popular_books'
+  get 'books(/:sort)(/page/:page)' => 'books#list', as: 'list_books', constraints: { sort: /recent|popular/ }
   get 'books/:author/:title/read(/:page)' => 'books#read', as: 'read_book'
-  get 'books/:id/read(/:page)' => 'books#read_id', as: 'read_id_book'
+  get 'books/:id/read(/:page)' => 'books#read_id', as: 'read_id_book', constraints: { id: /[a-f0-9]{24}/ }
+
+  get 'tags/:tag(/:sort)(/page/:page)' => 'books#tag', as: 'books_by_tag', constraints: { sort: /recent|popular/ }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

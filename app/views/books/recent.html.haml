@@ -1,7 +1,0 @@
-%h2
-	= "关注排行 #{@page}"
-
-= render @books 
-%hr
-= paginate @books, :params => {:controller => 'books', :action => 'recent'}
-= page_entries_info @books

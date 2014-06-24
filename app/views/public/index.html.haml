@@ -6,5 +6,5 @@
 
 = render @books 
 %hr
-= paginate @books, :params => {:controller => 'books', :action => 'recent'}
+= paginate @books, :params => {:controller => 'books', :action => 'list', :sort => @sort}
 = page_entries_info @books

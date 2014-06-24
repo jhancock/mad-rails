@@ -20,15 +20,23 @@ class Book
 	field :offline_at, type: Time
 	field :offline_reason, type: String
 
-	def self.public_recent_criteria
-		self.public_criteria.desc(:updated_at)
+	def self.online_recent
+		self.online_criteria.desc(:updated_at)
 	end
 
-	def self.public_popular_criteria
-		self.public_criteria.desc(:read_count)
+	def self.online_popular
+		self.online_criteria.desc(:read_count)
 	end
 
-	def self.public_criteria
+	def self.online_recent_by_tag(tag)
+		self.online_recent.in(tags: tag.id)
+	end
+
+	def self.online_popular_by_tag(tag)
+		self.online_popular.in(tags: tag.id)
+	end
+
+	def self.online_criteria
 		criteria = Book.exists(title: true, author: true, offline_at: false)
 		if Rails.configuration.mihudie.suppress_tags
 			criteria = criteria.nin(tags: Rails.configuration.mihudie.suppress_tags)
