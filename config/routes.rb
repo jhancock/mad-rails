@@ -1,9 +1,27 @@
 Rails.application.routes.draw do
 
   root 'public#index'
-  #TODO why cant I use dashses instead of underscores in route names?
-  get 'privacy_policy' => 'public#privacy_policy'
-  get 'terms_of_service' => 'public#terms_of_service'
+
+  get 'login' => 'account_public#login', as: 'login'
+  post 'login' => 'account_public#login_post'
+  get 'logout' => 'account#logout', as: 'logout'
+  get 'login_help' => 'account_public#login_help', as: 'login_help'
+  #TODO register
+  get 'register' => 'account_public#register', as: 'register'
+  post 'register' => 'account_public#register_post'
+
+  get 'account' => 'account#index', as: 'account_home'
+  #TODO change_password
+  get 'account/change_password' => 'account#change_password', as: 'change_password'
+  post 'account/change_password' => 'account#change_password_post'
+  #TODO password_reset
+  get 'password_reset_request' => 'account_public#password_reset_request', as: 'password_reset_request'
+  post 'password_reset_request' => 'account_public#password_reset_request_post'  
+  get 'password-reset/:code' => 'account_public#password_reset', as: 'password_reset'
+  post 'password-reset/:code' => 'account_public#password_reset_post'
+
+  get 'privacy_policy' => 'public#privacy_policy', as: 'privacy_policy'
+  get 'terms_of_service' => 'public#terms_of_service', as: 'terms_of_service'
   get 'contact' => 'public#contact'
   get 'public/upload_notice' => 'public#upload_notice'
 

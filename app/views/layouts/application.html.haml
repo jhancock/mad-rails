@@ -17,6 +17,9 @@
 	%body{:class => "pure-g"}
 		= render 'layouts/sidebar'
 		%main{:role => "main", :class => "content pure-u-1 pure-u-md-1-2"}
+			= render 'layouts/header'
+			- flash.each do |name, msg|
+				= content_tag :div, msg, class: name
 			= yield
 			%footer
 				= render 'layouts/footer'

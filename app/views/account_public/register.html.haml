@@ -1,0 +1,25 @@
+%p
+%h2 注册免费  请提供正确邮件地址  接收迷蝴蝶大礼及精彩品书荐书贴！
+%h2
+	我们绝不会与任何第三方分享您的邮件地址，详细请参见 
+	= link_to("隐私声明", privacy_policy_path)
+%h2
+	已经注册? 
+	= link_to(' 请登录', login_path)
+
+= form_tag(register_path, class: "pure-form pure-form-aligned") do 
+	%fieldset
+		%div{:class => "pure-control-group"}
+			= label_tag(:email, "电子邮箱")
+			= text_field_tag(:email)
+		%div{:class => "pure-control-group"}
+			= label_tag(:password, "密码")
+			= password_field_tag(:password)
+		%div{:class => "pure-control-group"}
+			= label_tag(:password_confirm, "确认密码")
+			= password_field_tag(:password_confirm)
+		%div{:class => "pure-controls"}
+			点击注册按钮则表示您完全同意并接受我们的
+			= link_to("服务协议", terms_of_service_path)
+		%div{:class => "pure-controls"}	
+			= submit_tag("注册", class: "pure-button pure-button-primary")

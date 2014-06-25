@@ -1,0 +1,12 @@
+%h1 Login
+
+= form_tag(login_path, class: "pure-form pure-form-aligned") do 
+	%fieldset
+		%div{:class => "pure-control-group"}
+			= label_tag(:email, "email:")
+			= text_field_tag(:email)
+		%div{:class => "pure-control-group"}
+			= label_tag(:password, "password:")
+			= password_field_tag(:password)
+		%div{:class => "pure-controls"}
+			= submit_tag("Login", class: "pure-button pure-button-primary")

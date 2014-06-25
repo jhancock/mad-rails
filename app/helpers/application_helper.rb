@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+    def current_user
+      controller.current_user
+    end
+
     @@tags_table_all = nil
     def tags_table_all
       return @@tags_table_all if @@tags_table_all
