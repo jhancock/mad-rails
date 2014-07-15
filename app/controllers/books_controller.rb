@@ -29,7 +29,6 @@ class BooksController < ApplicationController
 		criteria = Book.online_popular if @sort == "popular"
 		criteria = Book.online_recent if @sort == "recent"
 		@books = criteria.page(@page)
-		@books = Book.online_recent.page(@page)
 		@page_title = "关注排行 电子书在线阅读"
     	@page_description = "按近期被点击次数排行的电子书，在线阅读最吸引人的中文电子书"
     	@page_keywords = "关注 流行 中文电子书 在线阅读"

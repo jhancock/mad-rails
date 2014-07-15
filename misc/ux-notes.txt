@@ -1,0 +1,37 @@
+fly1397@qq.com
+
+words not icons
+
+browsing
+	top - mihudie - login/account - search
+	search expands a div
+	login/account goes to new page
+	logout is on account page
+
+lists
+	top - back arrow - category/search-term
+	big enough list-item area to tap
+		expands div for details
+			can have one or two buttons in addition to details
+
+reading
+	top - back arrow - title - author - chapter - setting
+		title and author must be easily tapped
+	bottom - next chapter, maybe previous
+
+read-settings
+	shows a list of 6 themes
+
+book-home
+	description
+	author newsfeed
+	reader newsfeed
+	desktop-leave notes
+
+account-page
+	gives easy access to bookmarks
+	access to theme settings
+	logout
+	change-password
+	referral-url
+

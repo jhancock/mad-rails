@@ -2,6 +2,11 @@ Rails.application.routes.draw do
 
   root 'public#index'
 
+  get 'books(/:sort)(/page/:page)' => 'books#list', as: 'list_books', constraints: { sort: /recent|popular/ }
+  get 'books/:author/:title/read(/:page)' => 'books#read', as: 'read_book'
+  get 'books/:id/read(/:page)' => 'books#read_id', as: 'read_id_book', constraints: { id: /[a-f0-9]{24}/ }
+  get 'tags/:tag(/:sort)(/page/:page)' => 'books#tag', as: 'books_by_tag', constraints: { sort: /recent|popular/ }
+
   get 'login' => 'account_public#login', as: 'login'
   post 'login' => 'account_public#login_post'
   get 'logout' => 'account#logout', as: 'logout'
@@ -10,6 +15,7 @@ Rails.application.routes.draw do
   get 'register' => 'account_public#register', as: 'register'
   post 'register' => 'account_public#register_post'
 
+  #TODO add bookmark view, logout, and choose theme
   get 'account' => 'account#index', as: 'account_home'
   #TODO change_password
   get 'account/change_password' => 'account#change_password', as: 'change_password'
@@ -24,12 +30,6 @@ Rails.application.routes.draw do
   get 'terms_of_service' => 'public#terms_of_service', as: 'terms_of_service'
   get 'contact' => 'public#contact'
   get 'public/upload_notice' => 'public#upload_notice'
-
-  get 'books(/:sort)(/page/:page)' => 'books#list', as: 'list_books', constraints: { sort: /recent|popular/ }
-  get 'books/:author/:title/read(/:page)' => 'books#read', as: 'read_book'
-  get 'books/:id/read(/:page)' => 'books#read_id', as: 'read_id_book', constraints: { id: /[a-f0-9]{24}/ }
-
-  get 'tags/:tag(/:sort)(/page/:page)' => 'books#tag', as: 'books_by_tag', constraints: { sort: /recent|popular/ }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
