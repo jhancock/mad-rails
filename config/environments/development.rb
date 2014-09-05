@@ -23,6 +23,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.mongoid.logger.level = Logger::DEBUG
-  config.mihudie.books_path_prefix = '/Users/jhancock/mhd/books/'
   #config.mihudie.suppress_tags = [19, 35]
 end

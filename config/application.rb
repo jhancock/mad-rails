@@ -28,6 +28,8 @@ module Mhd
     # config.i18n.default_locale = :de
 
     config.mihudie = ActiveSupport::OrderedOptions.new 
+    config.mihudie.books_path_prefix = '/home/mhd/books/'
+
     #config.mihudie.suppress_tags = [19, 35]
   end
 end

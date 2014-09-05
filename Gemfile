@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.1.2'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.5'
 gem 'haml-rails'
 gem 'bcrypt', '~> 3.1.7'
 gem 'mongoid', '~> 4.0.0', github: 'mongoid/mongoid'

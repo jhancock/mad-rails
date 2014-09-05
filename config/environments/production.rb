@@ -64,6 +64,5 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   config.mongoid.logger.level = Logger::DEBUG
-  config.mihudie.books_path_prefix = '/home/mhd/books/'
   #config.mihudie.suppress_tags = [19, 35]
 end
