@@ -5,8 +5,17 @@ turn on mihudie BankOfDudley card
 fix PayPal mihudie and shellshadow accounts.  might need cc info updated
 fix BoD personal debit card.
 
+fix iPhone, buy new hdmi-mini adapter
+
+contact FBI background folks
+DONE renew namecheap domains
+
+add mandrill SMTP; use delayed process; keep id/pw out of git.
+finish all user & password behavior
+
 cleanup email TODOs
 
+email Wiley Stuckey
 see about NZ telecom HR director.  See if he's the same guy I met
 email Aaron Bellingham
 email Richard Vaughan with updated cv
@@ -16,9 +25,10 @@ email Andrew Morrow
 remove old bitbucket rsa key.  new key is bitbucket_jhancock
 send cv to trademe saved jobs
 
-sign up for braintree
-fix paypal mihudie account.  need to find mihudie EIN.  get files from backup disks
 fix Georgia corp registration.  need to pay 
+sign up for braintree - CC and PayPal.  test from China.
+fix paypal mihudie account.  need to find mihudie EIN.  get files from backup disks
+
 
 
 DONE send Fly notes on UX.  Set a date for v1

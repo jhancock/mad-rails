@@ -1,0 +1,152 @@
+dev  192.168.1.6  ubuntu server 14.04.1 64bit
+
+root     / <on file>
+jhancock / <old usual nanny>
+mhd		 / <same as above>
+
+# update system
+apt-get update
+apt-get -y upgrade
+# reboot
+
+# set timezone to 'Etc/UTC'
+dpkg-reconfigure tzdata
+
+# install vim 
+sudo apt-get install -y vim-nox
+
+# set hostname - already set
+sudo vim /etc/hostname
+hostname -F /etc/hostname
+
+# set IP, edit /etc/network/interfaces
+# change: 
+iface eth0 inet dhcp
+# to:
+iface eth0 inet static
+        address 192.168.1.6
+        broadcast 192.168.1.255
+        gateway 192.168.1.1
+        netmask 255.255.255.0 
+
+# edit /etc/hosts
+# change:
+127.0.1.1  unbuntu
+# to:
+127.0.1.1  dev
+
+# edit /etc/resolvconf/resolv.conf.d/base
+nameserver 8.26.56.26
+nameserver 8.20.247.20
+
+sudo resolvconf -u
+
+# add jhancock & mhd users and give sudo
+# done on vmware install - adduser jhancock
+# done on vmware install - adduser jhancock sudo
+adduser mhd
+adduser mhd sudo
+
+# install ssh
+sudo apt-get install openssh-server openssh-client
+
+# setup login keys for jhancock & mhd
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+# add public key, from client
+scp ~/.ssh/new_jhancock.pub jhancock@dev:~/.ssh
+# back to server
+cat ~/.ssh/new_jhancock.pub > ~/.ssh/authorized_keys 
+chmod 600 ~/.ssh/authorized_keys 
+
+# repeat above for user mhd
+
+# edit /etc/ssh/sshd_config:
+PermitRootLogin yes -> PermitRootLogin no
+# PasswordAuthentication yes -> PasswordAuthentication no
+
+sudo restart ssh
+
+# edit /etc/hosts  add:
+50.116.1.15  lin1
+205.147.105.160 vr1
+192.168.1.5 air
+
+# sudo apt-get install byobu
+byobu-config  # choose to enable byobu at login.  repaat for users jhancock and mhd
+# F-9 -> Change Escape Sequence, set to Ctr-S so Ctr-A works for beginning of line
+
+# install emacs
+sudo apt-get install emacs24-nox
+
+# install nginx
+sudo apt-get install nginx
+# create /etc/nginx/sites-available/shellshadow.com
+
+# install dev tools
+sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison pkg-config htop e2fslibs-dev
+
+#SKIP
+# install tarsnap
+cd ~/download
+wget https://www.tarsnap.com/download/tarsnap-autoconf-1.0.35.tgz .
+sudo make all install clean
+# cp tarsnap.conf.sample
+# generate key for vr1
+# test
+
+#HERE
+# enable access to lin1 and bitbucket
+# edit ~/.ssh/config 
+
+Host lin1
+  HostName lin1
+  IdentityFile ~/.ssh/jhancock_ss_id_rsa
+  Port 22
+  Protocol 2
+Host vr1
+  HostName vr1
+  IdentityFile ~/.ssh/new_jhancock
+  Port 22
+  Protocol 2
+Host bitbucket.org
+  Compression yes
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/bitbucket_jhancock
+
+# setup ssh keychain
+sudo apt-get install keychain
+# see bottom of ~/.bashrc for keychain config
+
+## install rbenv, ruby and rails
+
+# install rbenv && and ruby-build plugin
+git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+# restart shell and verufy
+exec $SHELL
+type rbenv
+#=> "rbenv is a function"
+
+git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+
+# Install Ruby 2.1.2 and set it as the default version
+echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+rbenv install 2.1.2
+rbenv global 2.1.2
+ruby -v
+#=>ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-linux]
+rbenv rehash
+gem update
+rbenv rehash
+gem install bundler
+rbenv rehash
+
+# clone git repo
+
+
+# bundle update
+
+
+
