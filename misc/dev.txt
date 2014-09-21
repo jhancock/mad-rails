@@ -252,16 +252,24 @@ sudo apt-get update
 sudo apt-get install nginx-extras passenger
 
 # Edit /etc/nginx/nginx.conf and uncomment passenger_root and passenger_ruby. 
+# add to /etc/nginx/nginx.conf in http block:
+passenger_max_pool_size 2;
+passenger_pool_idle_time 0;
+# add to bottom of http block, after sites-enabled is included
+passenger_pre_start http://dev.mihudie.com/; 
+# ensure service can resolve dev.mihudie.com.  Edit /etc/hosts
 
 sudo service nginx restart
+
+# setup old shellshadow.com static site
+# from /home/jhancock 
+git clone git@bitbucket.org:jhancock/ss-www-static.git ~/ss-www-static
 
 sudo cp /home/mhd/rails/misc/nginx/sites-available/dev.shellshadow.com /etc/nginx/sites-available
 
 sudo ln -s /etc/nginx/sites-available/dev.shellshadow.com /etc/nginx/sites-enabled/dev.shellshadow.com
 
-# from /home/jhancock 
-git clone git@bitbucket.org:jhancock/ss-www-static.git ~/ss-www-static
-
+# setup mihudie.com config
 sudo cp /home/mhd/rails/misc/nginx/sites-available/dev.mihudie.com /etc/nginx/sites-available/dev.mihudie.com
 
 sudo ln -s /etc/nginx/sites-available/dev.mihudie.com /etc/nginx/sites-enabled/dev.mihudie.com
@@ -272,9 +280,7 @@ sudo service nginx restart
 ##   VM snapshot PASSENGER    ##
 ################################
 
-
 # test! ;)
-# rails server
 
 
 #SKIP
