@@ -5,21 +5,24 @@ jhancock / <old usual nanny>
 mhd	 / <same as jhancock>
 
 # update system
-apt-get update
-apt-get -y upgrade
+sudo apt-get update
+sudo apt-get -y upgrade
 # reboot
+sudo shutdown -r now
 
 # set timezone to 'Etc/UTC'
-dpkg-reconfigure tzdata
+# already set
+sudo dpkg-reconfigure tzdata
 
 # install vim 
 sudo apt-get install -y vim-nox
 
-# set hostname - already set
+# set hostname to dev
 sudo vim /etc/hostname
-hostname -F /etc/hostname
+sudo hostname -F /etc/hostname
 
-# set IP, edit /etc/network/interfaces
+# set IP
+sudo vim /etc/network/interfaces
 # change: 
 iface eth0 inet dhcp
 # to:
@@ -29,58 +32,66 @@ iface eth0 inet static
         gateway 192.168.1.1
         netmask 255.255.255.0 
 
-# edit /etc/hosts
+sudo vim /etc/hosts
 # change:
 127.0.1.1  unbuntu
 # to:
 127.0.1.1  dev
 
-# edit /etc/resolvconf/resolv.conf.d/base
+# add nameservers
+sudo vim /etc/resolvconf/resolv.conf.d/base
+# add:
 nameserver 8.26.56.26
 nameserver 8.20.247.20
 
 sudo resolvconf -u
 
-# add jhancock & mhd users and give sudo
-# done on vmware install - adduser jhancock
-# done on vmware install - adduser jhancock sudo
-adduser mhd
-adduser mhd sudo
-
 # install ssh
-sudo apt-get install openssh-server openssh-client
+sudo apt-get install -y openssh-server openssh-client
 
-# setup login keys for jhancock & mhd
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-# add public key, from client
-scp ~/.ssh/new_jhancock.pub jhancock@dev:~/.ssh
-# back to server
-cat ~/.ssh/new_jhancock.pub > ~/.ssh/authorized_keys 
-chmod 600 ~/.ssh/authorized_keys 
+sudo shutdown -r now
 
-# repeat above for user mhd
+# login through ssh
 
-# edit /etc/ssh/sshd_config:
+# config sshd
+sudo vim /etc/ssh/sshd_config
+# edit:
 PermitRootLogin yes -> PermitRootLogin no
 # PasswordAuthentication yes -> PasswordAuthentication no
 
 sudo restart ssh
 
-# edit /etc/hosts  add:
+# add jhancock & mhd users and give sudo
+# done on vmware install - adduser jhancock
+# done on vmware install - adduser jhancock sudo
+sudo adduser mhd
+sudo adduser mhd sudo
+
+# setup login keys for jhancock & mhd
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+# add public key, from client
+scp ~/.ssh/new_jhancock.pub ~/.ssh/new_jhancock jhancock@dev:~/.ssh
+scp ~/.ssh/jhancock_ss_id_rsa.pub ~/.ssh/jhancock_ss_id_rsa jhancock@dev:~/.ssh
+scp ~/.ssh/bitbucket_jhancock.pub ~/.ssh/bitbucket_jhancock jhancock@dev:~/.ssh
+
+# back to server
+cat ~/.ssh/new_jhancock.pub > ~/.ssh/authorized_keys 
+
+chmod 600 ~/.ssh/authorized_keys 
+
+# repeat above for user mhd
+
+# edit /etc/hosts  
+sudo vim /etc/hosts
+# add:
 50.116.1.15  lin1
 205.147.105.160 vr1
 192.168.1.5 air
 
-# sudo apt-get install byobu
-byobu-config  # choose to enable byobu at login.  repaat for users jhancock and mhd
-# F-9 -> Change Escape Sequence, set to Ctr-S so Ctr-A works for beginning of line
-
-# install emacs
-sudo apt-get install emacs24-nox
-
 # enable access to lin1 and bitbucket
-# edit ~/.ssh/config 
+vim ~/.ssh/config
+# add:
 Host lin1
   HostName lin1
   IdentityFile ~/.ssh/jhancock_ss_id_rsa
@@ -96,18 +107,34 @@ Host bitbucket.org
   HostName bitbucket.org
   IdentityFile ~/.ssh/bitbucket_jhancock
 
-# setup dotfiles
-git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
-# run dotfiles creat_links.sh script
+# repeat above for user's jhancock and mhd
 
-# install dev tools
-sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison pkg-config htop e2fslibs-dev
+sudo apt-get install -y byobu
+byobu-config  # choose to enable byobu at login.  repaat for users jhancock and mhd
+# F-9 -> Change Escape Sequence, set to Ctr-S so Ctr-A works for beginning of line
 
-
+# repeat above for user's jhancock and mhd
 
 # setup ssh keychain
-sudo apt-get install keychain
+sudo apt-get install -y keychain
 # see bottom of ~/.bashrc for keychain config
+
+# install emacs
+sudo apt-get install -y emacs24-nox
+
+# install dev tools
+sudo apt-get install build-essential git curl zlib1g-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev libcurl4-openssl-dev python-software-properties autoconf automake libtool bison pkg-config htop
+
+# setup dotfiles
+git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
+# run dotfiles create_links.sh script
+
+# install dev tools
+#sudo apt-get install build-essential git curl openssl libssl-dev libreadline6 libreadline6-dev zlib1g zlib1g-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison pkg-config htop e2fslibs-dev
+
+##############################
+##    VM snapshot READY     ##
+##############################
 
 #####################################
 ##  install rbenv, ruby and rails  ##
@@ -115,9 +142,12 @@ sudo apt-get install keychain
 
 # install rbenv && and ruby-build plugin
 git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+
+# next two lines should be modified from the dotfiles 
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-# restart shell and verufy
+
+# restart shell and verify
 exec $SHELL
 type rbenv
 #=> "rbenv is a function"
@@ -125,22 +155,40 @@ type rbenv
 git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
 # Install Ruby 2.1.2 and set it as the default version
+
+# ~/.gemrc should already be modified from the dotfiles
 echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+
 rbenv install 2.1.2
+# go to orginal source if mirrors are giving trouble
+# RUBY_BUILD_SKIP_MIRROR=true rbenv install 2.1.2
+
 rbenv global 2.1.2
 ruby -v
 #=>ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-linux]
+
 rbenv rehash
 gem update
 rbenv rehash
+
 gem install bundler
+# change gem source if above doesn't work
+# gem sources -r https://rubygems.org/
+# gem sources -a http://ruby.taobao.org/
+
 rbenv rehash
 
 # clone git repo
-git clone git@bitbucket.org:jhancock/mhd-rails.git rails
+git clone git@bitbucket.org:jhancock/mhd-rails.git ~/rails
+cd ~/rails
 
+# do this anytime specs may have changed
 bundle update
 rbenv rehash
+
+##############################
+##    VM snapshot RUBY      ##
+##############################
 
 ##########################
 ##    setup mongodb     ##
@@ -157,7 +205,7 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 
 sudo apt-get update
-sudo apt-get install mongodb-org=2.6.4 mongodb-org-server=2.6.4 mongodb-org-shell=2.6.4 mongodb-org-mongos=2.6.4 mongodb-org-tools=2.6.4
+sudo apt-get install -y mongodb-org=2.6.4 mongodb-org-server=2.6.4 mongodb-org-shell=2.6.4 mongodb-org-mongos=2.6.4 mongodb-org-tools=2.6.4
 
 echo "mongodb-org hold" | sudo dpkg --set-selections
 echo "mongodb-org-server hold" | sudo dpkg --set-selections
@@ -176,7 +224,15 @@ sudo service mongod stop
 sudo service mongod restart
 
 # restore data - restores the collections to the running mongod
-mongorestore ./lin1-20140529004235-mod-for-dev/mhd_development/
+# when extracting a tar dumped from production, untar and then go into 
+# the directory rm -rf admin/  and rename mhd_production to mhd_development if needed
+
+mongorestore /home/mhd/mongo_dump/lin1-20140529004235/mhd_development/
+
+
+###############################
+##    VM snapshot MONGO      ##
+###############################
 
 ####################################
 ##    setup nginx-passenger       ##
@@ -186,7 +242,7 @@ mongorestore ./lin1-20140529004235-mod-for-dev/mhd_development/
 # from https://www.phusionpassenger.com/documentation/Users%20guide%20Nginx.html#install_on_debian_ubuntu
 
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
-sudo apt-get install apt-transport-https ca-certificates
+sudo apt-get install -y apt-transport-https ca-certificates
 
 sudo sh -c "echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' >> /etc/apt/sources.list.d/passenger.list"
 sudo chown root: /etc/apt/sources.list.d/passenger.list
@@ -195,19 +251,26 @@ sudo apt-get update
 
 sudo apt-get install nginx-extras passenger
 
+# Edit /etc/nginx/nginx.conf and uncomment passenger_root and passenger_ruby. 
+
+sudo service nginx restart
 
 sudo cp /home/mhd/rails/misc/nginx/sites-available/dev.shellshadow.com /etc/nginx/sites-available
 
 sudo ln -s /etc/nginx/sites-available/dev.shellshadow.com /etc/nginx/sites-enabled/dev.shellshadow.com
 
 # from /home/jhancock 
-git clone git@bitbucket.org:jhancock/ss-www-static.git ss-www-static
+git clone git@bitbucket.org:jhancock/ss-www-static.git ~/ss-www-static
 
 sudo cp /home/mhd/rails/misc/nginx/sites-available/dev.mihudie.com /etc/nginx/sites-available/dev.mihudie.com
 
 sudo ln -s /etc/nginx/sites-available/dev.mihudie.com /etc/nginx/sites-enabled/dev.mihudie.com
 
 sudo service nginx restart
+
+################################
+##   VM snapshot PASSENGER    ##
+################################
 
 
 # test! ;)
