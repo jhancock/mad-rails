@@ -1,8 +1,8 @@
 dev  192.168.1.6  ubuntu server 14.04.1 64bit
 
-root     / <on file>
+root     / <same as jhancock>
 jhancock / <old usual nanny>
-mhd		 / <same as above>
+mhd	 / <same as jhancock>
 
 # update system
 apt-get update
@@ -79,26 +79,8 @@ byobu-config  # choose to enable byobu at login.  repaat for users jhancock and 
 # install emacs
 sudo apt-get install emacs24-nox
 
-# install nginx
-sudo apt-get install nginx
-# create /etc/nginx/sites-available/shellshadow.com
-
-# install dev tools
-sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison pkg-config htop e2fslibs-dev
-
-#SKIP
-# install tarsnap
-cd ~/download
-wget https://www.tarsnap.com/download/tarsnap-autoconf-1.0.35.tgz .
-sudo make all install clean
-# cp tarsnap.conf.sample
-# generate key for vr1
-# test
-
-#HERE
 # enable access to lin1 and bitbucket
 # edit ~/.ssh/config 
-
 Host lin1
   HostName lin1
   IdentityFile ~/.ssh/jhancock_ss_id_rsa
@@ -114,11 +96,22 @@ Host bitbucket.org
   HostName bitbucket.org
   IdentityFile ~/.ssh/bitbucket_jhancock
 
+# setup dotfiles
+git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
+# run dotfiles creat_links.sh script
+
+# install dev tools
+sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison pkg-config htop e2fslibs-dev
+
+
+
 # setup ssh keychain
 sudo apt-get install keychain
 # see bottom of ~/.bashrc for keychain config
 
-## install rbenv, ruby and rails
+#####################################
+##  install rbenv, ruby and rails  ##
+#####################################
 
 # install rbenv && and ruby-build plugin
 git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
@@ -148,6 +141,10 @@ git clone git@bitbucket.org:jhancock/mhd-rails.git rails
 
 bundle update
 rbenv rehash
+
+##########################
+##    setup mongodb     ##
+##########################
 
 # ensure books are in ~/books
 
@@ -181,5 +178,47 @@ sudo service mongod restart
 # restore data - restores the collections to the running mongod
 mongorestore ./lin1-20140529004235-mod-for-dev/mhd_development/
 
+####################################
+##    setup nginx-passenger       ##
+####################################
+#sudo apt-get install nginx
+
+# from https://www.phusionpassenger.com/documentation/Users%20guide%20Nginx.html#install_on_debian_ubuntu
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
+sudo apt-get install apt-transport-https ca-certificates
+
+sudo sh -c "echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' >> /etc/apt/sources.list.d/passenger.list"
+sudo chown root: /etc/apt/sources.list.d/passenger.list
+sudo chmod 600 /etc/apt/sources.list.d/passenger.list
+sudo apt-get update
+
+sudo apt-get install nginx-extras passenger
+
+
+sudo cp /home/mhd/rails/misc/nginx/sites-available/dev.shellshadow.com /etc/nginx/sites-available
+
+sudo ln -s /etc/nginx/sites-available/dev.shellshadow.com /etc/nginx/sites-enabled/dev.shellshadow.com
+
+# from /home/jhancock 
+git clone git@bitbucket.org:jhancock/ss-www-static.git ss-www-static
+
+sudo cp /home/mhd/rails/misc/nginx/sites-available/dev.mihudie.com /etc/nginx/sites-available/dev.mihudie.com
+
+sudo ln -s /etc/nginx/sites-available/dev.mihudie.com /etc/nginx/sites-enabled/dev.mihudie.com
+
+sudo service nginx restart
+
+
 # test! ;)
-rails server
+# rails server
+
+
+#SKIP
+# install tarsnap
+cd ~/download
+wget https://www.tarsnap.com/download/tarsnap-autoconf-1.0.35.tgz .
+sudo make all install clean
+# cp tarsnap.conf.sample
+# generate key for vr1
+# test

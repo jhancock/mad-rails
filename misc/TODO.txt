@@ -1,14 +1,13 @@
 DONE setup vr.org vm in HK
 	setup beta.mihudie.com and include basic http auth
-DONE download books from lin1 to vr1 to mac
+
 turn on mihudie BankOfDudley card
 fix PayPal mihudie and shellshadow accounts.  might need cc info updated
 fix BoD personal debit card.
 
-fix iPhone, buy new hdmi-mini adapter
-
-contact FBI background folks
-DONE renew namecheap domains
+fix Georgia corp registration.  need to pay 
+sign up for braintree - CC and PayPal.  test from China.
+fix paypal mihudie account.  need to find mihudie EIN.  get files from backup disks
 
 add mandrill SMTP; use delayed process; keep id/pw out of git.
 finish all user & password behavior
@@ -24,11 +23,6 @@ email Nick
 email Andrew Morrow
 remove old bitbucket rsa key.  new key is bitbucket_jhancock
 send cv to trademe saved jobs
-
-fix Georgia corp registration.  need to pay 
-sign up for braintree - CC and PayPal.  test from China.
-fix paypal mihudie account.  need to find mihudie EIN.  get files from backup disks
-
 
 
 DONE send Fly notes on UX.  Set a date for v1

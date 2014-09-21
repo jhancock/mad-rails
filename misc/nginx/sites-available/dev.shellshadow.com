@@ -2,17 +2,12 @@ server {
 	listen 80;
 	#listen [::]:8080 default_server ipv6only=on;
 
-	server_name shellshadow.com www.shellshadow.com;
+	server_name dev.shellshadow.com;
 	root /home/jhancock/ss-www-static;
 	index index.html index.htm;
 
 	# jhancock
 	default_type "text/html";
-
-	## Redirect from www to non-www
-	if ($host = 'www.shellshadow.com') {
-		rewrite  ^/(.*)$  $scheme://shellshadow.com/$1  permanent;
-	}
 
 	location / {
 		# First attempt to serve request as file, then
@@ -21,7 +16,6 @@ server {
 		# Uncomment to enable naxsi on this location
 		# include /etc/nginx/naxsi.rules
 	}
-
 
 	#error_page 404 /404.html;
 
