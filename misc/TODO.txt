@@ -9,6 +9,7 @@ fix Georgia corp registration.  need to pay
 sign up for braintree - CC and PayPal.  test from China.
 fix paypal mihudie account.  need to find mihudie EIN.  get files from backup disks
 
+come up with solution for storing passwords, API keys out of git
 add mandrill SMTP; use delayed process; keep id/pw out of git.
 finish all user & password behavior
 

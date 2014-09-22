@@ -281,6 +281,15 @@ sudo service nginx restart
 ################################
 
 # test! ;)
+# sudo passenger-status
+# sudo passenger-memory-stats
+
+# http://dev.mihudie.com/rails/info/properties
+
+
+# add grc generic colorizer
+sudo apt-get install grc
+grc tail -f ~/rails/log/development.log
 
 
 #SKIP

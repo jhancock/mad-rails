@@ -27,6 +27,8 @@ module Mhd
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    #config.colorize_logging = true
+
     config.mihudie = ActiveSupport::OrderedOptions.new 
     config.mihudie.books_path_prefix = '/home/mhd/books/'
 

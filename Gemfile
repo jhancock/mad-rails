@@ -13,11 +13,16 @@ gem 'kaminari'
 # 	rails g kaminari:config
 # 	rails g kaminari:views default -e haml
 
-#gem 'puma'
 
+gem 'mandrill-api'
 # add https://github.com/collectiveidea/delayed_job/
-# add mandril-api mailer 
-#    http://www.alanverga.com/blog/2014/01/03/custom-rails-mailer-and-mandrill
+#  or
+# sidekiq
+#  or
+# https://github.com/brandonhilkert/sucker_punch
+# http://bessey.io/blog/2014/05/14/easy-asynchronous-mailers-with-suckerpunch/
+
+# add sunspot http://sunspot.github.io/
 
 # add exception_notifier http://amberonrails.com/rails-exception_notification-setup/
 #    https://github.com/smartinez87/exception_notification
@@ -44,9 +49,6 @@ end
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
-
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-# gem 'spring',        group: :development
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
