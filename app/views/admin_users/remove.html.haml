@@ -1,0 +1,14 @@
+%h2
+  = "REMOVE USER"
+
+%h3  
+  = form_tag(admin_users_remove_path, class: "pure-form pure-form-aligned") do
+    %fieldset
+      %div{:class => "pure-control-group"}
+        = label_tag(:email, "email: ")
+        #{@user.email}
+      %div{:class => "pure-control-group"}
+        = label_tag(:id, "id:")
+        #{@user.id}
+      %div{:class => "pure-controls "}
+        = submit_tag("REMOVE", class: "pure-button pure-button-primary")

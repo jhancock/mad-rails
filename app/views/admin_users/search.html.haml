@@ -1,0 +1,9 @@
+%h1 User Search
+
+= form_tag(admin_users_search_path, class: "pure-form pure-form-aligned") do
+  %fieldset
+    %div{:class => "pure-control-group"}
+      = label_tag(:email, "email:")
+      = text_field_tag(:email)
+    %div{:class => "pure-controls"}
+      = submit_tag("Search", class: "pure-button pure-button-primary")

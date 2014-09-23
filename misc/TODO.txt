@@ -16,11 +16,25 @@ bundle install --without development test
 
 DONE come up with solution for storing passwords, API keys out of git
 DONE add mandrill
-add ENV vars to .bashrc and test.
-add suckerpunck
-get rid of login-help link at top.  only need login, register || account, logout
+DONE add ENV vars to .bashrc and test.
+DONE move ENV vars to ~/.rails_env
+DONE create admin page to delete a user, so I can re-register.
+DONE create scripts to GRANT/REVOKE admin
+DONE get rid of login-help link at top.  only need login, register || account, logout
+
+add suckerpunch
+setup vr1
+      backup files.  copy tarsnap keys 
+create admin page so Fly can update css on lin1
+
 finish all user & password behavior
 
+if User has a bad cookie, remove the cookie.  Test case:  I'm an admin user and login as myself.  I go to the admin page to remove myself.  After removing, I get redirected to the home page.  My cookie should get deleted when the home page renders as it contains an invalid user id.
+
+
+Call +64 9 336 4600  NZ Courier Post re: USPS Express # 8303575722
+https://www.nzpost.co.nz/home/sending-internationally/letters-documents/international-express-courier
+https://www.courierpost.co.nz/
 
 cleanup email TODOs
 

@@ -2,11 +2,6 @@ Rails.application.routes.draw do
 
   root 'public#index'
 
-  get 'books(/:sort)(/page/:page)' => 'books#list', as: 'list_books', constraints: { sort: /recent|popular/ }
-  get 'books/:author/:title/read(/:page)' => 'books#read', as: 'read_book'
-  get 'books/:id/read(/:page)' => 'books#read_id', as: 'read_id_book', constraints: { id: /[a-f0-9]{24}/ }
-  get 'tags/:tag(/:sort)(/page/:page)' => 'books#tag', as: 'books_by_tag', constraints: { sort: /recent|popular/ }
-
   get 'login' => 'account_public#login', as: 'login'
   post 'login' => 'account_public#login_post'
   get 'logout' => 'account#logout', as: 'logout'
@@ -30,6 +25,19 @@ Rails.application.routes.draw do
   get 'terms_of_service' => 'public#terms_of_service', as: 'terms_of_service'
   get 'contact' => 'public#contact'
   get 'public/upload_notice' => 'public#upload_notice'
+
+  get 'admin' => 'admin#index', as: 'admin'
+  get 'admin/users' => 'admin_users#index', as: 'admin_users'
+  get 'admin/users/search' => 'admin_users#search', as: 'admin_users_search'
+  post 'admin/users/search' => 'admin_users#search_post'
+  get 'admin/users/:id/show' => 'admin_users#show', as: 'admin_users_show'
+  get 'admin/users/:id/remove' => 'admin_users#remove', as: 'admin_users_remove'
+  post 'admin/users/:id/remove' => 'admin_users#remove_post'
+
+  get 'tags/:tag(/:sort)(/page/:page)' => 'books#tag', as: 'books_by_tag', constraints: { sort: /recent|popular/ }
+  get 'books(/:sort)(/page/:page)' => 'books#list', as: 'list_books', constraints: { sort: /recent|popular/ }
+  get 'books/:author/:title/read(/:page)' => 'books#read', as: 'read_book'
+  get 'books/:id/read(/:page)' => 'books#read_id', as: 'read_id_book', constraints: { id: /[a-f0-9]{24}/ }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

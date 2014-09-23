@@ -1,0 +1,13 @@
+%div
+  %h2
+    #{@user.email}
+    
+%div
+  :plain
+    #{doc_pp @user}
+
+%p ----------------------------
+
+= link_to "[REMOVE user] - #{@user.email}", admin_users_remove_path(id: @user.id)
+
+%p
