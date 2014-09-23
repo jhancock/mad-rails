@@ -7,6 +7,9 @@ index solr
 
 DNS stuff - lin1 to vr1
 
+mandrill
+	ensure production API key
+
 remove basic auth from Rails
 
 nginx.conf
@@ -18,6 +21,7 @@ nginx sites-available mihudie.com
 	to server_name mihudie.com www.mihudie.com;
 
 ensure www.mihudie.com redirects to mihudie.com
+	see shellshadow.com for example
 
 ensure nginx request without domain is default server and returns nothing
 

@@ -238,7 +238,9 @@ sudo service nginx restart
 # sudo passenger-status
 # sudo passenger-memory-stats
 
+# if in production mode, this url should not work
 # http://vr1.mihudie.com/rails/info/properties
+
 
 
 # add grc generic colorizer

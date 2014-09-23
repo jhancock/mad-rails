@@ -5,7 +5,7 @@ server {
         server_name vr1.mihudie.com;
         passenger_enabled on;
         passenger_ruby /home/mhd/.rbenv/shims/ruby;
-        passenger_app_env development;
+        passenger_app_env production;
         passenger_min_instances 2;
         root         /home/mhd/rails/public;
 
