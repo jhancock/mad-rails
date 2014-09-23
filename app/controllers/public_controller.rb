@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class PublicController < ApplicationController
   def index
     @page_title = self.class.home_page_title

@@ -15,6 +15,8 @@ gem 'kaminari'
 
 
 gem 'mandrill-api'
+gem 'sucker_punch'
+
 # add https://github.com/collectiveidea/delayed_job/
 #  or
 # sidekiq

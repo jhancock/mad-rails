@@ -55,7 +55,7 @@ class MandrillDelivery
                                         }
                                        ],
                                        message = @message)
-    Rails.logger.info 'UserMailer sent to #{mail.to}'
+    Rails.logger.info "UserMailer sent to #{mail.to}"
   end
 
 end

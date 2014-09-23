@@ -8,10 +8,19 @@ fix BoD personal debit card.
 fix Georgia corp registration.  need to pay 
 sign up for braintree - CC and PayPal.  test from China.
 fix paypal mihudie account.  need to find mihudie EIN.  get files from backup disks
+find solution for Alipay
 
-come up with solution for storing passwords, API keys out of git
-add mandrill SMTP; use delayed process; keep id/pw out of git.
+# for production do:
+bundle install --without development test
+# see https://github.com/rails/spring   #deployment
+
+DONE come up with solution for storing passwords, API keys out of git
+DONE add mandrill
+add ENV vars to .bashrc and test.
+add suckerpunck
+get rid of login-help link at top.  only need login, register || account, logout
 finish all user & password behavior
+
 
 cleanup email TODOs
 
