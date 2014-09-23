@@ -12,6 +12,7 @@ sudo shutdown -r now
 
 # set timezone to 'Etc/UTC'
 # already set
+date
 sudo dpkg-reconfigure tzdata
 
 # install vim 
@@ -34,7 +35,7 @@ iface eth0 inet static
 
 sudo vim /etc/hosts
 # change:
-127.0.1.1  unbuntu
+127.0.1.1  ubuntu
 # to:
 127.0.1.1  dev
 
@@ -82,6 +83,8 @@ chmod 600 ~/.ssh/authorized_keys
 
 # repeat above for user mhd
 
+# HERE ##
+
 # edit /etc/hosts  
 sudo vim /etc/hosts
 # add:
@@ -125,12 +128,10 @@ sudo apt-get install -y emacs24-nox
 # install dev tools
 sudo apt-get install build-essential git curl zlib1g-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev libcurl4-openssl-dev python-software-properties autoconf automake libtool bison pkg-config htop
 
-# setup dotfiles
+# setup dotfiles on both jhancock and mhd
 git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
 # run dotfiles create_links.sh script
 
-# install dev tools
-#sudo apt-get install build-essential git curl openssl libssl-dev libreadline6 libreadline6-dev zlib1g zlib1g-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison pkg-config htop e2fslibs-dev
 
 ##############################
 ##    VM snapshot READY     ##

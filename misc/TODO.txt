@@ -1,5 +1,5 @@
 DONE setup vr.org vm in HK
-	setup beta.mihudie.com and include basic http auth
+	setup vr1.mihudie.com and include basic http auth
 
 turn on mihudie BankOfDudley card
 fix PayPal mihudie and shellshadow accounts.  might need cc info updated
@@ -10,9 +10,7 @@ sign up for braintree - CC and PayPal.  test from China.
 fix paypal mihudie account.  need to find mihudie EIN.  get files from backup disks
 find solution for Alipay
 
-# for production do:
-bundle install --without development test
-# see https://github.com/rails/spring   #deployment
+AMAZON order QC25
 
 DONE come up with solution for storing passwords, API keys out of git
 DONE add mandrill

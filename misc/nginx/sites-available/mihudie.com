@@ -2,7 +2,7 @@ server {
 	listen 80;
         #listen [::]:80 default_server ipv6only=on;
 
-        server_name dev.mihudie.com;
+        server_name vr1.mihudie.com;
         passenger_enabled on;
         passenger_ruby /home/mhd/.rbenv/shims/ruby;
         passenger_app_env development;

@@ -2,3 +2,22 @@ PRE_LAUNCH.txt
 
 mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand mnigrate to an ObjectId pre-launch.
 
+index mongo with mongoid rake task
+index solr
+
+DNS stuff - lin1 to vr1
+
+remove basic auth from Rails
+
+nginx.conf
+	change passenger_pre_start http://vr1.mihudie.com/; 
+	to passenger_pre_start http://mihudie.com/; 
+
+nginx sites-available mihudie.com
+	change server_name vr1.mihudie.com;
+	to server_name mihudie.com www.mihudie.com;
+
+ensure www.mihudie.com redirects to mihudie.com
+
+ensure nginx request without domain is default server and returns nothing
+

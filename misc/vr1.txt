@@ -1,16 +1,17 @@
-vr1  205.147.105.160  ubuntu server 14.04 64bit
+vr1.mihudie.com  205.147.105.160  ubuntu server 14.04 64bit
 
 root     / <on file>
 jhancock / <on file>
 mhd		 / <on file>
 
 # as root
-apt-get update
-apt-get -y upgrade
-# possibly needs a reboot
-
 # set timezone to 'Etc/UTC'
 dpkg-reconfigure tzdata
+# update system
+sudo apt-get update
+sudo apt-get -y upgrade
+# reboot
+shutdown -r now
 
 # set hostname - already set
 #sudo vim /etc/hostname
@@ -20,10 +21,14 @@ dpkg-reconfigure tzdata
 50.116.1.15  lin1
 
 # add jhancock & mhd users and give sudo
-adduser jhancock
-adduser jhancock sudo
-adduser mhd
-adduser mhd sudo
+sudo adduser jhancock
+sudo adduser jhancock sudo
+sudo adduser mhd
+sudo adduser mhd sudo
+
+# byobu - already installed
+byobu-config  # choose to enable byobu at login
+# F-9 -> Change Escape Sequence, set to Ctr-S so Ctr-A works for beginning of line
 
 # install an editor - already installed
 #sudo apt-get install -y vim-nox
@@ -32,46 +37,240 @@ adduser mhd sudo
 mkdir ~/.ssh
 chmod 700 ~/.ssh
 # add public key, from client
-scp ~/.ssh/new_jhancock.pub jhancock@vr1:~/.ssh
+scp ~/.ssh/new_jhancock.pub ~/.ssh/new_jhancock jhancock@vr1:~/.ssh
+scp ~/.ssh/jhancock_ss_id_rsa.pub ~/.ssh/jhancock_ss_id_rsa jhancock@vr1:~/.ssh
+scp ~/.ssh/bitbucket_jhancock.pub ~/.ssh/bitbucket_jhancock jhancock@vr1:~/.ssh
+
 # back to server
 cat ~/.ssh/new_jhancock.pub > ~/.ssh/authorized_keys 
+
 chmod 600 ~/.ssh/authorized_keys 
 
 # repeat above for user mhd
 
-# edit /etc/ssh/sshd_config:
+# config sshd
+sudo vim /etc/ssh/sshd_config
+# edit:
 PermitRootLogin yes -> PermitRootLogin no
-PasswordAuthentication yes -> PasswordAuthentication no
+# PasswordAuthentication yes -> PasswordAuthentication no
 
-restart ssh
+sudo restart ssh
 
-# byobu - already installed
-byobu-config  # choose to enable byobu at login
-# F-9 -> Change Escape Sequence, set to Ctr-S so Ctr-A works for beginning of line
+# enable access to lin1 and bitbucket
+vim ~/.ssh/config
+# add:
+Host lin1
+  HostName lin1
+  IdentityFile ~/.ssh/jhancock_ss_id_rsa
+  Port 22
+  Protocol 2
+Host bitbucket.org
+  Compression yes
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/bitbucket_jhancock
 
-# install nginx
-sudo apt-get install nginx
-# create /etc/nginx/sites-available/shellshadow.com
+# repeat above for user's jhancock and mhd
 
-# install dev tools
-sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison pkg-config htop e2fslibs-dev
+# setup ssh keychain
+sudo apt-get install -y keychain
+# see bottom of ~/.bashrc for keychain config
 
-#HERE
+# install emacs
+sudo apt-get install -y emacs24-nox
+
+sudo apt-get install build-essential git curl zlib1g-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev libcurl4-openssl-dev python-software-properties autoconf automake libtool bison pkg-config htop
+
+# setup dotfiles on both jhancock and mhd
+git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
+# run dotfiles create_links.sh script
+
+# copy .rails_env to /home/mhd/.rails_env
+# edit for production
+
+##############################
+##       base READY         ##
+##############################
+
+
+#####################################
+##  install rbenv, ruby and rails  ##
+#####################################
+
+# install rbenv && and ruby-build plugin
+git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+
+# next two lines should be modified from the dotfiles 
+#echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+#echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+
+# restart shell and verify
+exec $SHELL
+type rbenv
+#=> "rbenv is a function"
+
+git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+
+# Install Ruby 2.1.2 and set it as the default version
+
+# ~/.gemrc should already be modified from the dotfiles
+#echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+
+rbenv install 2.1.2
+# go to orginal source if mirrors are giving trouble
+# RUBY_BUILD_SKIP_MIRROR=true rbenv install 2.1.2
+
+rbenv global 2.1.2
+ruby -v
+#=>ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-linux]
+# gem sources -a https://rubygems.org/
+# gem sources -r http://ruby.taobao.org/
+
+rbenv rehash
+gem update
+rbenv rehash
+
+gem install bundler
+# change gem source if above doesn't work
+
+rbenv rehash
+
+# clone git repo
+git clone git@bitbucket.org:jhancock/mhd-rails.git ~/rails
+cd ~/rails
+
+# do this anytime specs may have changed
+bundle install --without development test
+
+rbenv rehash
+
+
+##########################
+##    setup mongodb     ##
+##########################
+
+# ensure books are in ~/books
+scp mhd@lin1:~/books-20140923.tar.gz ~/.
+
+# ensure mongo_dump has latest
+
+# ensure books_upload
+scp mhd@lin1:~/books_upload-20140923.tar.gz .
+
+# install mongo
+# http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+
+echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+
+sudo apt-get update
+
+sudo apt-get install -y mongodb-org=2.6.4 mongodb-org-server=2.6.4 mongodb-org-shell=2.6.4 mongodb-org-mongos=2.6.4 mongodb-org-tools=2.6.4
+
+echo "mongodb-org hold" | sudo dpkg --set-selections
+echo "mongodb-org-server hold" | sudo dpkg --set-selections
+echo "mongodb-org-shell hold" | sudo dpkg --set-selections
+echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+
+# start service - should already be started
+sudo service mongod start
+
+# log - /var/log/mongodb/mongod.log
+# data - /var/lib/mongodb
+
+# to stop or restart service
+sudo service mongod stop
+sudo service mongod restart
+
+# restore data - restores the collections to the running mongod
+# when extracting a tar dumped from production, untar and then go into 
+# the directory rm -rf admin/  and rename mhd_production to mhd_development if needed
+
+mongorestore /home/mhd/mongo_dump/lin1-20140923114602/mhd_production/
+
+# create indexes with mongoid rake task
+
+### HERE ####
+
+####################################
+##    setup nginx-passenger       ##
+####################################
+
+# from https://www.phusionpassenger.com/documentation/Users%20guide%20Nginx.html#install_on_debian_ubuntu
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
+sudo apt-get install -y apt-transport-https ca-certificates
+
+sudo sh -c "echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' >> /etc/apt/sources.list.d/passenger.list"
+sudo chown root: /etc/apt/sources.list.d/passenger.list
+sudo chmod 600 /etc/apt/sources.list.d/passenger.list
+sudo apt-get update
+
+sudo apt-get install nginx-extras passenger
+
+# Edit /etc/nginx/nginx.conf and uncomment passenger_root and passenger_ruby. 
+# add to /etc/nginx/nginx.conf in http block:
+passenger_max_pool_size 2;
+passenger_pool_idle_time 0;
+# add to bottom of http block, after sites-enabled is included
+passenger_pre_start http://vr1.mihudie.com/; 
+# ensure service can resolve vr1.mihudie.com.  Edit /etc/hosts
+
+sudo service nginx restart
+# ensure basic auth is present while still developing
+
+# setup old shellshadow.com static site
+# from /home/jhancock 
+git clone git@bitbucket.org:jhancock/ss-www-static.git ~/ss-www-static
+
+sudo cp /home/mhd/rails/misc/nginx/sites-available/shellshadow.com /etc/nginx/sites-available
+
+sudo ln -s /etc/nginx/sites-available/shellshadow.com /etc/nginx/sites-enabled/shellshadow.com
+
+# setup mihudie.com config
+sudo cp /home/mhd/rails/misc/nginx/sites-available/mihudie.com /etc/nginx/sites-available/mihudie.com
+
+sudo ln -s /etc/nginx/sites-available/dev.mihudie.com /etc/nginx/sites-enabled/dev.mihudie.com
+
+sudo service nginx restart
+
+# test! ;)
+# sudo passenger-status
+# sudo passenger-memory-stats
+
+# http://vr1.mihudie.com/rails/info/properties
+
+
+# add grc generic colorizer
+sudo apt-get install grc
+grc tail -f ~/rails/log/development.log
+
+########################
+##   PRE PRODUCTION   ##
+########################
+
+ensure mongo indexes
+fix mongodump_mhd.sh
+cron for mongo and other data
+tarsnap cron jobs
+money in mandrill account
+
+########################
+##       TARSNAP      ##
+########################
+
 # install tarsnap
 cd ~/download
 wget https://www.tarsnap.com/download/tarsnap-autoconf-1.0.35.tgz .
 sudo make all install clean
 # cp tarsnap.conf.sample
-# generate key for vr1
+# put vr1 key in ~/tarsnap
 # test
+# grab ss-archive from tarsnap
 
-# enable access to lin1 and bitbucket
-# edit ~/.ssh/config see misc/server/misc/ssh_config
+cp books.tar and mongo-lin1-prod-dump
 
-Host bitbucket.org
-  Compression yes
-  HostName bitbucket.org
-  IdentityFile ~/.ssh/bitbucket_jhancock
+
 
 
 
