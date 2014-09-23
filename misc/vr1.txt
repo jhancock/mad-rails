@@ -230,7 +230,7 @@ sudo ln -s /etc/nginx/sites-available/shellshadow.com /etc/nginx/sites-enabled/s
 # setup mihudie.com config
 sudo cp /home/mhd/rails/misc/nginx/sites-available/mihudie.com /etc/nginx/sites-available/mihudie.com
 
-sudo ln -s /etc/nginx/sites-available/dev.mihudie.com /etc/nginx/sites-enabled/dev.mihudie.com
+sudo ln -s /etc/nginx/sites-available/mihudie.com /etc/nginx/sites-enabled/mihudie.com
 
 sudo service nginx restart
 
@@ -243,17 +243,8 @@ sudo service nginx restart
 
 # add grc generic colorizer
 sudo apt-get install grc
-grc tail -f ~/rails/log/development.log
+grc tail -f ~/rails/log/production.log
 
-########################
-##   PRE PRODUCTION   ##
-########################
-
-ensure mongo indexes
-fix mongodump_mhd.sh
-cron for mongo and other data
-tarsnap cron jobs
-money in mandrill account
 
 ########################
 ##       TARSNAP      ##

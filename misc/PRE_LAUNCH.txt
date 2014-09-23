@@ -21,3 +21,7 @@ ensure www.mihudie.com redirects to mihudie.com
 
 ensure nginx request without domain is default server and returns nothing
 
+fix mongodump_mhd.sh
+cron for mongo and other data
+tarsnap cron jobs
+money in mandrill account
