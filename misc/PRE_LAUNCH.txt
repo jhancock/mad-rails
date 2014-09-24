@@ -11,6 +11,8 @@ mandrill
 	ensure production API key
 
 remove basic auth from Rails
+ApplicationController
+	before_filter :http_auth
 
 nginx.conf
 	change passenger_pre_start http://vr1.mihudie.com/; 

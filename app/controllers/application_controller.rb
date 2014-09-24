@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  before_filter :http_auth
   before_action :current_user
 
   def current_user
@@ -18,5 +19,14 @@ class ApplicationController < ActionController::Base
     # return true if value =~ /^.+@.+\..+$/
     return true if value =~ /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
     false
+  end
+
+
+  protected
+
+  def http_auth
+    authenticate_or_request_with_http_basic do |username, password|
+      username == "foo" && password == "bar"
+    end
   end
 end
