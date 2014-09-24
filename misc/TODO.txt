@@ -29,10 +29,12 @@ finish all user & password behavior
 
 if User has a bad cookie, remove the cookie.  Test case:  I'm an admin user and login as myself.  I go to the admin page to remove myself.  After removing, I get redirected to the home page.  My cookie should get deleted when the home page renders as it contains an invalid user id.
 
-
 Call +64 9 336 4600  NZ Courier Post re: USPS Express # 8303575722
+
 https://www.nzpost.co.nz/home/sending-internationally/letters-documents/international-express-courier
 https://www.courierpost.co.nz/
+
+perhaps FedEx  -  64 9 2 565 382
 
 cleanup email TODOs
 
