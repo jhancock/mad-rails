@@ -251,6 +251,25 @@ sudo apt-get install grc
 grc tail -f ~/rails/log/production.log
 
 
+#########################
+##       SCOUT         ##
+#########################
+
+scoutapp.com/jhancock
+# installed under mhd@vr1
+
+sudo gem install scout 
+scout install nF4A61hTGlmBAtuOFA0lR1rMw7VU8ABx3hDaPjJZ 
+
+# for Ruby on Rails plugin
+sudo gem install elif
+sudo gem install request-log-analyzer
+# from https://scoutapp.com/plugin_urls/181-ruby-on-rails-monitoring/help_entries/351
+
+# Mongo plugins - MongoDB Database Stats, MongoDB Server Status, MongoDB Slow Queries
+sudo gem install mongo mongo_ext bson_ext
+
+
 ########################
 ##       TARSNAP      ##
 ########################
