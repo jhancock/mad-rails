@@ -75,6 +75,13 @@ Host bitbucket.org
 sudo apt-get install -y keychain
 # see bottom of ~/.bashrc for keychain config
 
+# install ntp
+sudo apt-get install ntp
+# view ntp stats
+sudo ntpq -p
+
+
+
 # install emacs
 sudo apt-get install -y emacs24-nox
 
