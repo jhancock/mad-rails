@@ -6,7 +6,7 @@ server {
         passenger_enabled on;
         passenger_ruby /home/mhd/.rbenv/shims/ruby;
         passenger_app_env production;
-        passenger_min_instances 3;
+        passenger_min_instances 2;
         root         /home/mhd/rails/public;
 
         # redirect server error pages to the static page /50x.html
