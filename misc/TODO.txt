@@ -10,6 +10,8 @@ sign up for braintree - CC and PayPal.  test from China.
 fix paypal mihudie account.  need to find mihudie EIN.  get files from backup disks
 find solution for Alipay
 
+find solution for NTP clock drift.  What is resyncing effect on mongodb?
+
 AMAZON order QC25
 
 DONE come up with solution for storing passwords, API keys out of git

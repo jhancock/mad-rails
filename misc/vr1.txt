@@ -259,14 +259,43 @@ scoutapp.com/jhancock
 # installed under mhd@vr1
 
 sudo gem install scout 
+# next command run as mhd user
 scout install nF4A61hTGlmBAtuOFA0lR1rMw7VU8ABx3hDaPjJZ 
 
-# for Ruby on Rails plugin
+## Ruby on Rails plugin
 sudo gem install elif
 sudo gem install request-log-analyzer
 # from https://scoutapp.com/plugin_urls/181-ruby-on-rails-monitoring/help_entries/351
 
-# Mongo plugins - MongoDB Database Stats, MongoDB Server Status, MongoDB Slow Queries
+# in Rails app
+add to Gemfile:
+gem 'oink'
+#gem 'oink', group: :production
+# add initialer file config/initializers/oink/rb with contents:
+Rails.application.middleware.use( Oink::Middleware, :logger => Rails.logger )
+
+#add to Gemfile:
+#gem 'hodel_3000_compliant_logger'
+
+# add file https://raw.githubusercontent.com/topfunky/hodel_3000_compliant_logger/master/lib/hodel_3000_compliant_logger.rb to lib/hodel_3000_compliant_logger.rb 
+
+# add to config/application.rb:
+config.logger = Hodel3000CompliantLogger.new(config.paths['log'].first)
+
+bundle install --without development test
+
+
+## END Ruby on Rails plugin
+
+## Passenger plugin
+sudo su – # change to the root user
+visudo # edit the sudoers file.  Add to bottom:
+mhd ALL=(root)NOPASSWD:/usr/sbin/passenger-status
+mhd ALL=(root)NOPASSWD:/usr/sbin/passenger-memory-stats
+
+
+# Mongo Slow Queries and MongoDB Database Stats plugins - MongoDB Database Stats, MongoDB Server Status, MongoDB Slow Queries
+sudo apt-get install ruby-dev
 sudo gem install mongo mongo_ext bson_ext
 
 
