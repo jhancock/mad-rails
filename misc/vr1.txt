@@ -274,12 +274,13 @@ sudo gem install elif
 sudo gem install request-log-analyzer
 # from https://scoutapp.com/plugin_urls/181-ruby-on-rails-monitoring/help_entries/351
 
+## Do not do!  This install process is for tracking mem usage and does not work.
 # in Rails app
-add to Gemfile:
-gem 'oink'
+#add to Gemfile:
+#gem 'oink'
 #gem 'oink', group: :production
 # add initialer file config/initializers/oink/rb with contents:
-Rails.application.middleware.use( Oink::Middleware, :logger => Rails.logger )
+#Rails.application.middleware.use( Oink::Middleware, :logger => Rails.logger )
 
 #add to Gemfile:
 #gem 'hodel_3000_compliant_logger'
@@ -287,9 +288,9 @@ Rails.application.middleware.use( Oink::Middleware, :logger => Rails.logger )
 # add file https://raw.githubusercontent.com/topfunky/hodel_3000_compliant_logger/master/lib/hodel_3000_compliant_logger.rb to lib/hodel_3000_compliant_logger.rb 
 
 # add to config/application.rb:
-config.logger = Hodel3000CompliantLogger.new(config.paths['log'].first)
+#config.logger = Hodel3000CompliantLogger.new(config.paths['log'].first)
 
-bundle install --without development test
+#bundle install --without development test
 
 
 ## END Ruby on Rails plugin

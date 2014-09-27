@@ -17,11 +17,6 @@ gem 'kaminari'
 gem 'mandrill-api'
 gem 'sucker_punch'
 
-#gem 'oink'
-#gem 'oink', group: :production
-gem 'hodel_3000_compliant_logger'
-
-
 # add https://github.com/collectiveidea/delayed_job/
 #  or
 # sidekiq
