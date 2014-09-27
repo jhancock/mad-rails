@@ -29,8 +29,6 @@ module Mhd
 
     #config.colorize_logging = true
 
-    #config.logger = Hodel3000CompliantLogger.new(config.paths['log'].first)
-
     config.mihudie = ActiveSupport::OrderedOptions.new 
     config.mihudie.books_path_prefix = '/home/mhd/books/'
 
