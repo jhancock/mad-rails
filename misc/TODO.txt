@@ -1,6 +1,3 @@
-DONE setup vr.org vm in HK
-	setup vr1.mihudie.com and include basic http auth
-
 turn on mihudie BankOfDudley card
 fix PayPal mihudie and shellshadow accounts.  might need cc info updated
 fix BoD personal debit card.
@@ -10,33 +7,32 @@ sign up for braintree - CC and PayPal.  test from China.
 fix paypal mihudie account.  need to find mihudie EIN.  get files from backup disks
 find solution for Alipay
 
-find solution for NTP clock drift.  What is resyncing effect on mongodb?
+AMAZON order QC25 - send email to Sree Monday AM.  Call UPS to get redelivered.
 
-AMAZON order QC25
+nginx logs should be seperate for mihudie and shellshadow
 
-DONE come up with solution for storing passwords, API keys out of git
-DONE add mandrill
-DONE add ENV vars to .bashrc and test.
-DONE move ENV vars to ~/.rails_env
-DONE create admin page to delete a user, so I can re-register.
-DONE create scripts to GRANT/REVOKE admin
-DONE get rid of login-help link at top.  only need login, register || account, logout
+find out why nginx log don't seem to rotate
+
+setup rails logrotate.  ensure it works right with scout processing
+
+setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
+
+Scout Mongodb plugin reporting size of storage around 400mb, but he files in /var/lib/mongodb are over 1G.  Send support email.
+
+Scout Rails plugin is properly triggering alert when over 500 request/minute.  But when I go to the web console, the history shows almost nothing.  I don't see the spike.
+
+setup tarsnap on vr1
 
 add suckerpunch
-setup vr1
-      backup files.  copy tarsnap keys 
+
 create admin page so Fly can update css on lin1
 
 finish all user & password behavior
 
 if User has a bad cookie, remove the cookie.  Test case:  I'm an admin user and login as myself.  I go to the admin page to remove myself.  After removing, I get redirected to the home page.  My cookie should get deleted when the home page renders as it contains an invalid user id.
 
-Call +64 9 336 4600  NZ Courier Post re: USPS Express # 8303575722
+try http://emailtosms.com for a low cost email2sms service with Scoutapp
 
-https://www.nzpost.co.nz/home/sending-internationally/letters-documents/international-express-courier
-https://www.courierpost.co.nz/
-
-perhaps FedEx  -  64 9 2 565 382
 
 cleanup email TODOs
 
@@ -47,9 +43,20 @@ email Richard Vaughan with updated cv
 email Rowan's friend
 email Nick
 email Andrew Morrow
-remove old bitbucket rsa key.  new key is bitbucket_jhancock
 send cv to trademe saved jobs
 
+DONE remove old bitbucket rsa key.  new key is bitbucket_jhancock
+DONE find solution for NTP clock drift.  What is resyncing effect on mongodb?
+
+DONE setup vr.org vm in HK
+	setup vr1.mihudie.com and include basic http auth
+DONE come up with solution for storing passwords, API keys out of git
+DONE add mandrill
+DONE add ENV vars to .bashrc and test.
+DONE move ENV vars to ~/.rails_env
+DONE create admin page to delete a user, so I can re-register.
+DONE create scripts to GRANT/REVOKE admin
+DONE get rid of login-help link at top.  only need login, register || account, logout
 
 DONE send Fly notes on UX.  Set a date for v1
 DONE 2 more namecheap emails to confirm
