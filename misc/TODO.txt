@@ -9,9 +9,7 @@ find solution for Alipay
 
 AMAZON order QC25 - send email to Sree Monday AM.  Call UPS to get redelivered.
 
-nginx logs should be seperate for mihudie and shellshadow
-
-find out why nginx log don't seem to rotate
+DONE nginx logs should be seperate for mihudie and shellshadow.  added mihudie.access.log. and mihudie.error.log.  shellshadow logs go to normal access.log and error.log
 
 setup rails logrotate.  ensure it works right with scout processing
 
@@ -25,9 +23,9 @@ setup tarsnap on vr1
 
 add suckerpunch
 
-create admin page so Fly can update css on lin1
-
 finish all user & password behavior
+
+create admin page so Fly can update css on lin1
 
 if User has a bad cookie, remove the cookie.  Test case:  I'm an admin user and login as myself.  I go to the admin page to remove myself.  After removing, I get redirected to the home page.  My cookie should get deleted when the home page renders as it contains an invalid user id.
 
@@ -44,6 +42,9 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+
+DONE - Its set to Weekly, not daily. ;) find out why nginx log don't seem to rotate
 
 DONE remove old bitbucket rsa key.  new key is bitbucket_jhancock
 DONE find solution for NTP clock drift.  What is resyncing effect on mongodb?

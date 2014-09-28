@@ -2,6 +2,9 @@ server {
 	listen 80;
         #listen [::]:80 default_server ipv6only=on;
 
+	access_log /var/log/nginx/mihudie.access.log;
+	error_log /var/log/nginx/mihudie.error.log;
+
         server_name vr1.mihudie.com;
         passenger_enabled on;
         passenger_ruby /home/mhd/.rbenv/shims/ruby;
