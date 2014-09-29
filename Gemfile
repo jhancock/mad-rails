@@ -9,26 +9,21 @@ gem 'bson_ext'
 # after bundle mongoid and bson_ext run rails mongoid config script
 
 gem 'kaminari'
-# after bundle
-# 	rails g kaminari:config
-# 	rails g kaminari:views default -e haml
-
+# bundle install
+#   rails g kaminari:config
+#   rails g kaminari:views default -e haml
 
 gem 'mandrill-api'
-gem 'sucker_punch'
 
-# add https://github.com/collectiveidea/delayed_job/
-#  or
-# sidekiq
-#  or
-# https://github.com/brandonhilkert/sucker_punch
-# http://bessey.io/blog/2014/05/14/easy-asynchronous-mailers-with-suckerpunch/
+gem 'sidekiq'
+# bundle install
 
-# add sunspot http://sunspot.github.io/
 
 # add exception_notifier http://amberonrails.com/rails-exception_notification-setup/
 #    https://github.com/smartinez87/exception_notification
 # or https://github.com/rails/exception_notification
+
+# add sunspot http://sunspot.github.io/
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc

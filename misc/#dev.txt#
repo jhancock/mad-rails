@@ -1,52 +1,58 @@
-vr1.mihudie.com  205.147.105.160  ubuntu server 14.04 64bit
+dev  192.168.1.6  ubuntu server 14.04.1 64bit
 
-root     / <on file>
-jhancock / <on file>
-mhd		 / <on file>
+root     / <same as jhancock>
+jhancock / <old usual nanny>
+mhd	 / <same as jhancock>
 
-# as root
-# set timezone to 'Etc/UTC'
-dpkg-reconfigure tzdata
 # update system
 sudo apt-get update
 sudo apt-get -y upgrade
 # reboot
-shutdown -r now
+sudo shutdown -r now
 
-# set hostname - already set
-#sudo vim /etc/hostname
-#hostname -F /etc/hostname
+# set timezone to 'Etc/UTC'
+# already set
+date
+sudo dpkg-reconfigure tzdata
 
-# edit /etc/hosts  add:
-50.116.1.15  lin1
+# install vim 
+sudo apt-get install -y vim-nox
 
-# add jhancock & mhd users and give sudo
-sudo adduser jhancock
-sudo adduser jhancock sudo
-sudo adduser mhd
-sudo adduser mhd sudo
+# set hostname to dev
+sudo vim /etc/hostname
+sudo hostname -F /etc/hostname
 
-# byobu - already installed
-byobu-config  # choose to enable byobu at login
-# F-9 -> Change Escape Sequence, set to Ctr-S so Ctr-A works for beginning of line
+# set IP
+sudo vim /etc/network/interfaces
+# change: 
+iface eth0 inet dhcp
+# to:
+iface eth0 inet static
+        address 192.168.1.6
+        broadcast 192.168.1.255
+        gateway 192.168.1.1
+        netmask 255.255.255.0 
 
-# install an editor - already installed
-#sudo apt-get install -y vim-nox
+sudo vim /etc/hosts
+# change:
+127.0.1.1  ubuntu
+# to:
+127.0.1.1  dev
 
-# setup login keys for jhancock & mhd
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-# add public key, from client
-scp ~/.ssh/new_jhancock.pub ~/.ssh/new_jhancock jhancock@vr1:~/.ssh
-scp ~/.ssh/jhancock_ss_id_rsa.pub ~/.ssh/jhancock_ss_id_rsa jhancock@vr1:~/.ssh
-scp ~/.ssh/bitbucket_jhancock.pub ~/.ssh/bitbucket_jhancock jhancock@vr1:~/.ssh
+# add nameservers
+sudo vim /etc/resolvconf/resolv.conf.d/base
+# add:
+nameserver 8.26.56.26
+nameserver 8.20.247.20
 
-# back to server
-cat ~/.ssh/new_jhancock.pub > ~/.ssh/authorized_keys 
+sudo resolvconf -u
 
-chmod 600 ~/.ssh/authorized_keys 
+# install ssh
+sudo apt-get install -y openssh-server openssh-client
 
-# repeat above for user mhd
+sudo shutdown -r now
+
+# login through ssh
 
 # config sshd
 sudo vim /etc/ssh/sshd_config
@@ -56,12 +62,47 @@ PermitRootLogin yes -> PermitRootLogin no
 
 sudo restart ssh
 
+# add jhancock & mhd users and give sudo
+# done on vmware install - adduser jhancock
+# done on vmware install - adduser jhancock sudo
+sudo adduser mhd
+sudo adduser mhd sudo
+
+# setup login keys for jhancock & mhd
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+# add public key, from client
+scp ~/.ssh/new_jhancock.pub ~/.ssh/new_jhancock jhancock@dev:~/.ssh
+scp ~/.ssh/jhancock_ss_id_rsa.pub ~/.ssh/jhancock_ss_id_rsa jhancock@dev:~/.ssh
+scp ~/.ssh/bitbucket_jhancock.pub ~/.ssh/bitbucket_jhancock jhancock@dev:~/.ssh
+
+# back to server
+cat ~/.ssh/new_jhancock.pub > ~/.ssh/authorized_keys 
+
+chmod 600 ~/.ssh/authorized_keys 
+
+# repeat above for user mhd
+
+# HERE ##
+
+# edit /etc/hosts  
+sudo vim /etc/hosts
+# add:
+50.116.1.15  lin1
+205.147.105.160 vr1
+192.168.1.5 air
+
 # enable access to lin1 and bitbucket
 vim ~/.ssh/config
 # add:
 Host lin1
   HostName lin1
   IdentityFile ~/.ssh/jhancock_ss_id_rsa
+  Port 22
+  Protocol 2
+Host vr1
+  HostName vr1
+  IdentityFile ~/.ssh/new_jhancock
   Port 22
   Protocol 2
 Host bitbucket.org
@@ -71,33 +112,30 @@ Host bitbucket.org
 
 # repeat above for user's jhancock and mhd
 
+sudo apt-get install -y byobu
+byobu-config  # choose to enable byobu at login.  repaat for users jhancock and mhd
+# F-9 -> Change Escape Sequence, set to Ctr-S so Ctr-A works for beginning of line
+
+# repeat above for user's jhancock and mhd
+
 # setup ssh keychain
 sudo apt-get install -y keychain
 # see bottom of ~/.bashrc for keychain config
 
-# install ntp
-sudo apt-get install ntp
-# view ntp stats
-sudo ntpq -p
-
-
-
 # install emacs
 sudo apt-get install -y emacs24-nox
 
+# install dev tools
 sudo apt-get install build-essential git curl zlib1g-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev libcurl4-openssl-dev python-software-properties autoconf automake libtool bison pkg-config htop
 
 # setup dotfiles on both jhancock and mhd
 git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
 # run dotfiles create_links.sh script
 
-# copy .rails_env to /home/mhd/.rails_env
-# edit for production
 
 ##############################
-##       base READY         ##
+##    VM snapshot READY     ##
 ##############################
-
 
 #####################################
 ##  install rbenv, ruby and rails  ##
@@ -107,8 +145,8 @@ git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
 git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 
 # next two lines should be modified from the dotfiles 
-#echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-#echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 
 # restart shell and verify
 exec $SHELL
@@ -120,7 +158,7 @@ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-bu
 # Install Ruby 2.1.2 and set it as the default version
 
 # ~/.gemrc should already be modified from the dotfiles
-#echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+echo "gem: --no-ri --no-rdoc" > ~/.gemrc
 
 rbenv install 2.1.2
 # go to orginal source if mirrors are giving trouble
@@ -129,8 +167,6 @@ rbenv install 2.1.2
 rbenv global 2.1.2
 ruby -v
 #=>ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-linux]
-# gem sources -a https://rubygems.org/
-# gem sources -r http://ruby.taobao.org/
 
 rbenv rehash
 gem update
@@ -138,6 +174,8 @@ rbenv rehash
 
 gem install bundler
 # change gem source if above doesn't work
+# gem sources -r https://rubygems.org/
+# gem sources -a http://ruby.taobao.org/
 
 rbenv rehash
 
@@ -146,22 +184,20 @@ git clone git@bitbucket.org:jhancock/mhd-rails.git ~/rails
 cd ~/rails
 
 # do this anytime specs may have changed
-bundle install --without development test
-
+bundle update
 rbenv rehash
 
+##############################
+##    VM snapshot RUBY      ##
+##############################
 
 ##########################
 ##    setup mongodb     ##
 ##########################
 
 # ensure books are in ~/books
-scp mhd@lin1:~/books-20140923.tar.gz ~/.
 
 # ensure mongo_dump has latest
-
-# ensure books_upload
-scp mhd@lin1:~/books_upload-20140923.tar.gz .
 
 # install mongo
 # http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
@@ -170,7 +206,6 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 
 sudo apt-get update
-
 sudo apt-get install -y mongodb-org=2.6.4 mongodb-org-server=2.6.4 mongodb-org-shell=2.6.4 mongodb-org-mongos=2.6.4 mongodb-org-tools=2.6.4
 
 echo "mongodb-org hold" | sudo dpkg --set-selections
@@ -193,15 +228,17 @@ sudo service mongod restart
 # when extracting a tar dumped from production, untar and then go into 
 # the directory rm -rf admin/  and rename mhd_production to mhd_development if needed
 
-mongorestore /home/mhd/mongo_dump/lin1-20140923114602/mhd_production/
+mongorestore /home/mhd/mongo_dump/lin1-20140529004235/mhd_development/
 
-# create indexes with mongoid rake task
 
-### HERE ####
+###############################
+##    VM snapshot MONGO      ##
+###############################
 
 ####################################
 ##    setup nginx-passenger       ##
 ####################################
+#sudo apt-get install nginx
 
 # from https://www.phusionpassenger.com/documentation/Users%20guide%20Nginx.html#install_on_debian_ubuntu
 
@@ -220,118 +257,92 @@ sudo apt-get install nginx-extras passenger
 passenger_max_pool_size 2;
 passenger_pool_idle_time 0;
 # add to bottom of http block, after sites-enabled is included
-passenger_pre_start http://vr1.mihudie.com/; 
-# ensure service can resolve vr1.mihudie.com.  Edit /etc/hosts
-
-sudo cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.original
-sudo cp /home/mhd/rails/misc/nginx/nginx.conf /etc/nginx/nginx.conf
+passenger_pre_start http://dev.mihudie.com/; 
+# ensure service can resolve dev.mihudie.com.  Edit /etc/hosts
 
 sudo service nginx restart
-# ensure basic auth is present while still developing
 
 # setup old shellshadow.com static site
 # from /home/jhancock 
 git clone git@bitbucket.org:jhancock/ss-www-static.git ~/ss-www-static
 
-sudo cp /home/mhd/rails/misc/nginx/sites-available/shellshadow.com /etc/nginx/sites-available
+sudo cp /home/mhd/rails/misc/nginx/sites-available/dev.shellshadow.com /etc/nginx/sites-available
 
-sudo ln -s /etc/nginx/sites-available/shellshadow.com /etc/nginx/sites-enabled/shellshadow.com
+sudo ln -s /etc/nginx/sites-available/dev.shellshadow.com /etc/nginx/sites-enabled/dev.shellshadow.com
 
 # setup mihudie.com config
-sudo cp /home/mhd/rails/misc/nginx/sites-available/mihudie.com /etc/nginx/sites-available/mihudie.com
+sudo cp /home/mhd/rails/misc/nginx/sites-available/dev.mihudie.com /etc/nginx/sites-available/dev.mihudie.com
 
-sudo ln -s /etc/nginx/sites-available/mihudie.com /etc/nginx/sites-enabled/mihudie.com
+sudo ln -s /etc/nginx/sites-available/dev.mihudie.com /etc/nginx/sites-enabled/dev.mihudie.com
 
 sudo service nginx restart
+
+################################
+##   VM snapshot PASSENGER    ##
+################################
 
 # test! ;)
 # sudo passenger-status
 # sudo passenger-memory-stats
 
-# if in production mode, this url should not work
-# http://vr1.mihudie.com/rails/info/properties
-
+# http://dev.mihudie.com/rails/info/properties
 
 
 # add grc generic colorizer
 sudo apt-get install grc
-grc tail -f ~/rails/log/production.log
+grc tail -f ~/rails/log/development.log
 
 
-##########################
-##    Sidekiq / Redis   ##
-##########################
+#########################
+##   Sidekiq / Redis   ##
+#########################
+
+# see /etc/init/sidekiq.conf on dev
 
 sudo apt-get install redis-server
 
+# add to Gemfile:
+gem 'sidekiq'
+
+bundle install
+
+# add config/initializer/sidekiq.rb:
+Sidekiq.configure_server do |config|
+  config.redis = { :url => 'redis://localhost:6379/12', :namespace => 'mhd-sidekiq' }
+end
+
+Sidekiq.configure_client do |config|
+  config.redis = { :url => 'redis://localhost:6379/12', :namespace => 'mhd-sidekiq' }
+end
+
+# rehash
+rbenv rehash
+
+# review config/sidekiq.yml
+
+sudo cp misc/sidekiq/sidekiq-dev.conf /etc/init/sidekiq.conf
+
+# sidekiq web ui
 
 
-#########################
-##       SCOUT         ##
-#########################
+#################################
+##  erlang / elixir / phoenix  ##
+#################################
 
-scoutapp.com/jhancock
-# installed under mhd@vr1
+# install erlang from https://www.erlang-solutions.com/downloads/download-erlang-otp
+wget http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+sudo dpkg -i erlang-solutions_1.0_all.deb
 
-sudo gem install scout 
-# next command run as mhd user
-scout install nF4A61hTGlmBAtuOFA0lR1rMw7VU8ABx3hDaPjJZ 
+# install elixir
 
-## Ruby on Rails plugin
-sudo gem install elif
-sudo gem install request-log-analyzer
-# from https://scoutapp.com/plugin_urls/181-ruby-on-rails-monitoring/help_entries/351
-
-## Do not do!  This install process is for tracking mem usage and does not work.
-# in Rails app
-#add to Gemfile:
-#gem 'oink'
-#gem 'oink', group: :production
-# add initialer file config/initializers/oink/rb with contents:
-#Rails.application.middleware.use( Oink::Middleware, :logger => Rails.logger )
-
-#add to Gemfile:
-#gem 'hodel_3000_compliant_logger'
-
-# add file https://raw.githubusercontent.com/topfunky/hodel_3000_compliant_logger/master/lib/hodel_3000_compliant_logger.rb to lib/hodel_3000_compliant_logger.rb 
-
-# add to config/application.rb:
-#config.logger = Hodel3000CompliantLogger.new(config.paths['log'].first)
-
-#bundle install --without development test
+# 
 
 
-## END Ruby on Rails plugin
-
-## Passenger plugin
-sudo su – # change to the root user
-visudo # edit the sudoers file.  Add to bottom:
-mhd ALL=(root)NOPASSWD:/usr/sbin/passenger-status
-mhd ALL=(root)NOPASSWD:/usr/sbin/passenger-memory-stats
-
-
-# Mongo Slow Queries and MongoDB Database Stats plugins - MongoDB Database Stats, MongoDB Server Status, MongoDB Slow Queries
-sudo apt-get install ruby-dev
-sudo gem install mongo mongo_ext bson_ext
-
-
-########################
-##       TARSNAP      ##
-########################
-
+#SKIP
 # install tarsnap
 cd ~/download
 wget https://www.tarsnap.com/download/tarsnap-autoconf-1.0.35.tgz .
 sudo make all install clean
 # cp tarsnap.conf.sample
-# put vr1 key in ~/tarsnap
+# generate key for vr1
 # test
-# grab ss-archive from tarsnap
-
-cp books.tar and mongo-lin1-prod-dump
-
-
-
-
-
-

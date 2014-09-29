@@ -11,7 +11,17 @@ AMAZON order QC25 - send email to Sree Monday AM.  Call UPS to get redelivered.
 
 DONE nginx logs should be seperate for mihudie and shellshadow.  added mihudie.access.log. and mihudie.error.log.  shellshadow logs go to normal access.log and error.log
 
+ActiveRecord is installed.  Need to change Gemfile to not include.
+
+setup sidekiq and redis
+
+test email with sidekiq
+
+setup exception_notificaion w/ sidekiq. test.
+
 setup rails logrotate.  ensure it works right with scout processing
+setup redis logrotate
+setup sidekiq logrotate
 
 setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
 

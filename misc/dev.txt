@@ -293,6 +293,44 @@ sudo apt-get install grc
 grc tail -f ~/rails/log/development.log
 
 
+#########################
+##   Sidekiq / Redis   ##
+#########################
+
+# see /etc/init/sidekiq.conf on dev
+
+sudo apt-get install redis-server
+
+# add to Gemfile:
+gem 'sidekiq'
+
+bundle install
+
+# add config/initializer/sidekiq.rb:
+Sidekiq.configure_server do |config|
+  config.redis = { :url => 'redis://localhost:6379/12', :namespace => 'mhd-sidekiq' }
+end
+
+Sidekiq.configure_client do |config|
+  config.redis = { :url => 'redis://localhost:6379/12', :namespace => 'mhd-sidekiq' }
+end
+
+# rehash
+rbenv rehash
+
+# review config/sidekiq.yml
+
+sudo cp misc/sidekiq/sidekiq-dev.conf /etc/init/sidekiq.conf
+
+# sidekiq web ui
+
+
+#################################
+##  erlang / elixir / phoenix  ##
+#################################
+
+
+
 #SKIP
 # install tarsnap
 cd ~/download
