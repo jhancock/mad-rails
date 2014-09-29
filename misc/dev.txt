@@ -329,6 +329,40 @@ sudo cp misc/sidekiq/sidekiq-dev.conf /etc/init/sidekiq.conf
 ##  erlang / elixir / phoenix  ##
 #################################
 
+# install erlang from https://www.erlang-solutions.com/downloads/download-erlang-otp
+wget http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+sudo dpkg -i erlang-solutions_1.0_all.deb
+
+sudo apt-get update
+sudo apt-get install erlang
+
+# install elixir
+
+sudo apt-get install elixir
+
+# install phoenix
+
+git clone https://github.com/phoenixframework/phoenix.git phoenix_src && cd phoenix_src && git checkout v0.4.1 && mix do deps.get, compile
+
+# create phoenix project
+
+cd ~/phoenix_src
+mix phoenix.new mihudie /home/mhd
+cd ~/
+mv mihudie phoenix
+
+cd ~/phoenix
+mix do deps.get, compile
+mix phoenix.start
+
+# production start
+MIX_ENV=prod mix compile.protocols
+MIX_ENV=prod PORT=4001 elixir -pa _build/prod/consolidated -S mix phoenix.start
+
+################################
+##    end erlang / elixir     ##
+################################
+
 
 
 #SKIP
