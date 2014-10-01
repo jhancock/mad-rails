@@ -6,29 +6,21 @@
     %title= @page_title
     %meta{:name => "keywords", :content => "#{@page_keywords}"}
     %meta{:name => "description", :content => "#{@page_description}"}
-    = stylesheet_link_tag '/stylesheets/pure-0.5.0-min', media: 'all'
-    = stylesheet_link_tag '/stylesheets/pure-0.5.0-responsive-min', media: 'all'
-    = stylesheet_link_tag '/stylesheets/baby-blue', media: 'all'
-    = stylesheet_link_tag '/stylesheets/mytip', media: 'all'
+    = stylesheet_link_tag '/stylesheets/mihudie', media: 'all'
     = javascript_include_tag '/javascripts/jquery-1.11.1.min'
-    = javascript_include_tag '/javascripts/mihudie'
+    = javascript_include_tag '/javascripts/mihudie-all'
     = csrf_meta_tags
 
-  %body{:class => "pure-g"}
-    = render 'layouts/sidebar'
-    %main{:role => "main", :class => "content pure-u-1 pure-u-md-1-2"}
-      = render 'layouts/header'
-      - flash.each do |name, msg|
-        = content_tag :div, msg, class: name
-      = yield
-      %footer
-        = render 'layouts/footer'
-  :javascript
-    $(document).ready(function () {
-      $(document).bind("contextmenu", function (e) {return false;});
-      $(document).ready(function() {
-        $("a.tip").myTips({position: 'right', width: 400});
-      });
-    });
+  %body
+    = render 'layouts/header'
+    %div{:class => "content index clearfix"}
+      %div{:class => "index-l l"}
+        = render 'layouts/genres'
+      %div{:role => "main", :class => "index-r r"}
+        - flash.each do |name, msg|
+          = content_tag :div, msg, class: name
+        = yield
+        %footer
+          = render 'layouts/footer'
 
 

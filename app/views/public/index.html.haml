@@ -7,6 +7,11 @@
 = page_entries_info @books
 = paginate @books, :params => {:controller => 'books', :action => 'list', :sort => @sort}
 %hr
-= render @books 
+%div{:class => "boo-show index-list"}
+  %h3
+    书库
+  %div{:class => "book-list"}
+    %ul
+      = render @books 
 
 

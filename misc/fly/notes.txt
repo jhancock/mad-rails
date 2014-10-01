@@ -1,0 +1,18 @@
+header
+	area with logo, login and search should be in menu bar.  No need for two lines
+	
+	search button.  when width is narrow on desktop, there needs to be a margin on the right of the button.
+
+	don't want categories in main area.  Would like to see sidebar
+
+btn styles should be button.
+btn btn-warning
+	lets find another name beside warning for a secondary option.  We do want a warning button though!
+
+need footer
+
+book list used to have meta-data of title, data-summary, data-tags, data-chars.  Which of these is good for SEO?
+
+main div should be called main with role main
+
+boo-show => book-show

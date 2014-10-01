@@ -1,0 +1,3 @@
+%div{:class => "content pure-u-1 pure-u-md-1-4"}
+  %a{:class => 'tip', :href => read_book_path(author: book.author, title: book.title), 'title' => "#{book.title} - #{book.author}", 'data-summary' => "#{book.summary_html}", 'data-tags' => "#{book.tag_names_pp}", 'data-chars' => "#{book.chars}"}
+    = "#{book.title}"

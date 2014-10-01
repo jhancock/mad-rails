@@ -1,12 +1,53 @@
-- if current_user
-  %p
-    %a{:href => account_home_path}
-      我的账户
-    %a{:href => logout_path}
-      退出
-- else
-  %p
-    %a{:href => login_path}
-      登录
-    %a{:href => register_path}
-      注册
+%div{:class => "header"}
+  %div{:class => "top clearfix"}
+    %h1{:class => "logo l"}
+      %a{:href => root_path}
+        迷蝴蝶
+    %ul{:class => "r"}
+      - if current_user
+        %li
+          %a{:href => account_home_path}
+            我的账户
+        %li
+          %a{:href => logout_path}
+            退出
+      - else
+        %li
+          %a{:href => login_path}
+            登录
+        %li
+          %a{:href => register_path}
+            注册        
+      %li
+        %a{:href => "#", :class => "menu-link"}
+          %span
+      %li
+        %div{:class => "search-bar"}
+          %a{:href => "javascript:;", :class => "icon_search"}
+            %span
+          %form{:class => "form"}
+            %input{:type => "text", :placeholder => "关键字"}
+            %button{:type => "submit", :class => "btn btn-primary"}
+              搜索
+  %div{:class => "nav"}
+    %ul
+      %li
+        %a{:href => "book-marks.html"}
+          我的书签
+      %li
+        %a{:href => "book-upload.html"}
+          上传书籍
+      %li
+        %a{:href => "profile.html"}
+          我的个人资料
+      %li{:class => "show_category"}
+        %a{:href => "javascript:;"
+          分类
+        %ul
+          %li
+            %a{:href => "category.html"}
+              穿越时空
+          %li
+            %a{:href => "category.html"}
+              穿越时空
+
