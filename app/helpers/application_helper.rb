@@ -12,7 +12,7 @@ module ApplicationHelper
     GenreTag.all.each do |tag|
       tags_list << "<li>"
       tags_list << "<a href='#{books_by_tag_path(tag: tag.name)}'>#{tag.cn}</a>"
-      tags_table << "</li>"
+      tags_list << "</li>"
     end
     @@tags_list = tags_list << "</ul>"
   end
