@@ -1,12 +1,18 @@
 %li
   %span
-    尤四姐
+    #{book.author}
   %a{:href => read_book_path(author: book.author, title: book.title)}
     :plain
       #{book.title}
   %div{:class => "detail-span"}
     :plain
       #{book.summary_html}
+    %br
+      %strong
+        - if book.tag_names_pp.length > 0
+          #{book.tag_names_pp} - #{book.chars} 字数
+        - else
+          #{book.chars} 字数
     %div{:class => "detail-span-action"}
       %a{:class => "btn btn-warning", :href => read_book_path(author: book.author, title: book.title)}
         购买

@@ -13,17 +13,24 @@ DONE nginx logs should be seperate for mihudie and shellshadow.  added mihudie.a
 
 ActiveRecord is installed.  Need to change Gemfile to not include.
 
-setup sidekiq and redis
+create admin page so Fly can update css on lin1
 
-test email with sidekiq
+use suckerpunch instead of sidekiq
+record suckerpunch email sends so I can verify the integrity of the backround processes.
 
-setup exception_notificaion w/ sidekiq. test.
+finish all user & password behavior
+
+if User has a bad cookie, remove the cookie.  Test case:  I'm an admin user and login as myself.  I go to the admin page to remove myself.  After removing, I get redirected to the home page.  My cookie should get deleted when the home page renders as it contains an invalid user id.
+
+setup exception_notificaion test.
+  see if we can write exceptions to file and have scout pick them up.  
+
+optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data just like genre_tags_pp
 
 setup rails logrotate.  ensure it works right with scout processing
-setup redis logrotate
-setup sidekiq logrotate
 
 setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
+awstats config to exclude scoutapp and uptimerobot.
 
 Scout Mongodb plugin reporting size of storage around 400mb, but he files in /var/lib/mongodb are over 1G.  Send support email.
 
@@ -31,16 +38,16 @@ Scout Rails plugin is properly triggering alert when over 500 request/minute.  B
 
 setup tarsnap on vr1
 
-add suckerpunch
+turn off redis-server on dev
 
-finish all user & password behavior
+setup mina for more reliable deploys
 
-create admin page so Fly can update css on lin1
-
-if User has a bad cookie, remove the cookie.  Test case:  I'm an admin user and login as myself.  I go to the admin page to remove myself.  After removing, I get redirected to the home page.  My cookie should get deleted when the home page renders as it contains an invalid user id.
+#setup sidekiq and redis
+#test email with sidekiq
+#setup redis logrotate
+#setup sidekiq logrotate
 
 try http://emailtosms.com for a low cost email2sms service with Scoutapp
-
 
 cleanup email TODOs
 
