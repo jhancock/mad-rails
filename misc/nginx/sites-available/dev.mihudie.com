@@ -5,7 +5,7 @@ server {
 	access_log /var/log/nginx/mihudie.access.log;
 	error_log /var/log/nginx/mihudie.error.log;
 
-        server_name dev.mihudie.com;
+        server_name dev.mihudie.com 192.168.1.6;
         passenger_enabled on;
         passenger_ruby /home/mhd/.rbenv/shims/ruby;
         passenger_app_env development;
