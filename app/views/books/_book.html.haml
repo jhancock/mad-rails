@@ -5,7 +5,8 @@
     :plain
       #{book.title}
   %div{:class => "detail-span"}
-    #{book.summary_html}
+    :plain
+      #{book.summary_html}
     %div{:class => "detail-span-action"}
       %a{:class => "btn btn-warning", :href => read_book_path(author: book.author, title: book.title)}
         购买

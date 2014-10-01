@@ -8,6 +8,11 @@ header
 btn styles should be button.
 btn btn-warning
 	lets find another name beside warning for a secondary option.  We do want a warning button though!
+button use for next and previous chapters need work
+
+need pagination styling
+should put pagination at top and bottom for mobile so user doesdn't have to scroll too much.
+maybe pagination on mobile should hide numbered pages and only show prev, next, first, last?
 
 need footer
 
