@@ -15,7 +15,7 @@ gem 'kaminari'
 
 gem 'mandrill-api'
 
-gem 'sidekiq'
+#gem 'sidekiq'
 # bundle install
 
 
