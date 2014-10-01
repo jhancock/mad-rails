@@ -1,23 +1,30 @@
 header
-	area with logo, login and search should be in menu bar.  No need for two lines
+  area with logo, login and search should be in menu bar.  No need for two lines
 	
-	search button.  when width is narrow on desktop, there needs to be a margin on the right of the button.
+  search button.  when width is narrow on desktop, there needs to be a margin on the right of the button.
 
-	don't want categories in main area.  Would like to see sidebar
+  don't want categories in main area.  Would like to see sidebar similar to old site.
 
 btn styles should be button.
 btn btn-warning
-	lets find another name beside warning for a secondary option.  We do want a warning button though!
+  lets find another name beside warning for a secondary option.  We do want a warning button though!
 button use for next and previous chapters need work
 
 need pagination styling
 should put pagination at top and bottom for mobile so user doesdn't have to scroll too much.
 maybe pagination on mobile should hide numbered pages and only show prev, next, first, last?
 
+need theme menu item.  should display similar to catgories.
+
+three font sizes.  small medium large.  6 themes.  Other fonts in the system should change depending on user's choice of small medium large.
+
 need footer
 
 book list used to have meta-data of title, data-summary, data-tags, data-chars.  Which of these is good for SEO?
 
+detail-span needs area for tags and #chars
+
 main div should be called main with role main
 
 boo-show => book-show
+  this style does not seem to be in the css.  What is it doing?
