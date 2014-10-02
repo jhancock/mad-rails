@@ -85,7 +85,7 @@ sudo ntpq -p
 # install emacs
 sudo apt-get install -y emacs24-nox
 
-sudo apt-get install build-essential git curl zlib1g-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev libcurl4-openssl-dev python-software-properties autoconf automake libtool bison pkg-config htop
+sudo apt-get install build-essential git curl zlib1g-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev libcurl4-openssl-dev software-properties-common python-software-properties autoconf automake libtool bison pkg-config htop
 
 # setup dotfiles on both jhancock and mhd
 git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
@@ -93,6 +93,13 @@ git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
 
 # copy .rails_env to /home/mhd/.rails_env
 # edit for production
+
+# install mosh
+sudo apt-get install software-properties-common python-software-properties
+sudo add-apt-repository ppa:keithw/mosh
+sudo apt-get update
+sudo apt-get install mosh
+
 
 ##############################
 ##       base READY         ##

@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
     render :file => "/public/404.html", :layout => false, :status => 404
   end
 
+  def send_mail(mailer, method, *args)
+    AsyncMailerJob.new.async.perform(mailer, method, *args)
+  end
+
   def email_valid?(value)
     # return false if value =~ /\s/
     return false if value =~ /;|,|:|\/|<|>|\s/

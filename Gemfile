@@ -15,9 +15,8 @@ gem 'kaminari'
 
 gem 'mandrill-api'
 
-#gem 'sidekiq'
+gem 'sucker_punch'
 # bundle install
-
 
 # add exception_notifier http://amberonrails.com/rails-exception_notification-setup/
 #    https://github.com/smartinez87/exception_notification

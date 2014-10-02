@@ -57,7 +57,7 @@ class AccountPublicController < ApplicationController
     user.set_password_hash(params[:password])
     user.save
     set_login(user.id)
-    #TODO send_user_mail(:new_user, {:user => @user, :subscribe_special_url => absolute_url(:subscribe, :code => User.create_special_code(@user[:_id]))})
+    send_mail(UserMailer, :welcome, user.id)
     #TODO return_to_or(url(:home), :message => {:notice => "registered_success"})
     flash[:notice] = "Login success"
     redirect_to root_url
