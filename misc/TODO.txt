@@ -11,36 +11,41 @@ AMAZON order QC25 - send email to Sree Monday AM.  Call UPS to get redelivered.
 
 DONE nginx logs should be seperate for mihudie and shellshadow.  added mihudie.access.log. and mihudie.error.log.  shellshadow logs go to normal access.log and error.log
 
-ActiveRecord is installed.  Need to change Gemfile to not include.
-
-create admin page so Fly can update css on lin1
-
 use suckerpunch instead of sidekiq
 record suckerpunch email sends so I can verify the integrity of the backround processes.
 
 finish all user & password behavior
 
-if User has a bad cookie, remove the cookie.  Test case:  I'm an admin user and login as myself.  I go to the admin page to remove myself.  After removing, I get redirected to the home page.  My cookie should get deleted when the home page renders as it contains an invalid user id.
+DONE if User has a bad cookie, remove the cookie.  Test case:  I'm an admin user and login as myself.  I go to the admin page to remove myself.  After removing, I get redirected to the home page.  My cookie should get deleted when the home page renders as it contains an invalid user id.
+
+create admin page so Fly can update css on lin1
+
+see nginx error.log.  when passenger starts, ssh-keychain causes an error.
+
+optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data just like genre_tags_pp
+
+setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
+awstats config to exclude scoutapp and uptimerobot.
 
 setup exception_notificaion test.
   see if we can write exceptions to file and have scout pick them up.  
 
-optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data just like genre_tags_pp
-
 setup rails logrotate.  ensure it works right with scout processing
-
-setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
-awstats config to exclude scoutapp and uptimerobot.
 
 Scout Mongodb plugin reporting size of storage around 400mb, but he files in /var/lib/mongodb are over 1G.  Send support email.
 
 Scout Rails plugin is properly triggering alert when over 500 request/minute.  But when I go to the web console, the history shows almost nothing.  I don't see the spike.
 
+setup mina for more reliable deploys
+
 setup tarsnap on vr1
 
-turn off redis-server on dev
+sitemap.xml script
 
-setup mina for more reliable deploys
+new model: user gets 2 weeks to the backyard free on registration.  after register tell user they must verify their email to get their referral code.  use referral link to get a friend to register.  friend gets 2 weeks free and referee get another month free.  User can buy one year access to mihudie backyard for $9.95...no recurring fees.
+
+DONE turn off redis-server on dev
+
 
 #setup sidekiq and redis
 #test email with sidekiq

@@ -29,6 +29,8 @@ rails -v
 
 cd ~/mhd
 rails new mhd --skip-test-unit --skip-sprockets --skip-active-record
+rails new mhd -T -S -O
+
 # rename mhd directory to rails  ~/mhd/rails
 # init git repo
 

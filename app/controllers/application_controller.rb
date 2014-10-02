@@ -6,7 +6,23 @@ class ApplicationController < ActionController::Base
   before_action :current_user
 
   def current_user
-    session[:id] ? @_current_user ||= User.find(session[:id]) : nil
+    if @_current_user then return @_current_user end
+    if session[:id]
+      user = User.find(session[:id])
+      if user
+        #logger.info "user with id #{session[:id]} FOUND"
+        @_current_user = user
+      else
+        #logger.info "user with id #{session[:id]} NOT FOUND. reseting session"
+        reset_session
+        #cookies.delete Rails.configuration.mihudie.session_cookie_name
+        @_current_user = nil
+      end
+    else
+      #logger.info "no user id in session"
+      @_current_user = nil
+    end
+    @_current_user
   end
 
   def render_404
