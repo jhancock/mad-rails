@@ -329,6 +329,28 @@ sudo cp misc/sidekiq/sidekiq-dev.conf /etc/init/sidekiq.conf
 
 # sidekiq web ui
 
+#########################
+##     SSL for dev     ##
+#########################
+
+# edit ~/rails/.gitignore  ignore ssl directory
+mkdir ~/rails/ssl
+cd ~/rails/ssl
+openssl genrsa -des3 -passout pass:x -out dev.mihudie.pass.key 2048
+
+openssl rsa -passin pass:x -in dev.mihudie.pass.key -out dev.mihudie.key
+rm dev.mihudie.pass.key
+
+openssl req -new -key dev.mihudie.key -out dev.mihudie.csr
+# press enter when asked for password
+
+openssl x509 -req -days 365 -in dev.mihudie.csr -signkey dev.mihudie.key -out dev.mihudie.crt
+
+openssl dhparam -out dev.mihudie.dhparam.pem 2048
+
+# ensure dev.mihudie.key is not stored in git
+
+
 
 #################################
 ##  erlang / elixir / phoenix  ##

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 class AccountPublicController < ApplicationController
+  force_ssl except: :login_help
   before_action :ensure_no_user, except: :login_help
 
   def login

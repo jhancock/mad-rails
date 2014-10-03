@@ -6,9 +6,11 @@ index mongo with mongoid rake task
 index solr
 
 DNS stuff - lin1 to vr1
+SSL - namecheap Rapid SSL cert
 
 mandrill
 	ensure production API key
+	money in mandrill account
 
 remove basic auth from Rails
 ApplicationController
@@ -30,4 +32,4 @@ ensure nginx request without domain is default server and returns nothing
 fix mongodump_mhd.sh
 cron for mongo and other data
 tarsnap cron jobs
-money in mandrill account
+

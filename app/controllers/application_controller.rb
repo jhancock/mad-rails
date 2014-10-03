@@ -41,7 +41,6 @@ class ApplicationController < ActionController::Base
     false
   end
 
-
   protected
 
   def http_auth

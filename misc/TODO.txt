@@ -8,8 +8,19 @@ fix paypal mihudie account.  need to find mihudie EIN.  get files from backup di
 find solution for Alipay
 
 finish all user & password behavior
+DONE force SSL for login, register
+see about adding HTTPS strict.  
+    Verify if it effects crawlers:  Baidu Google Bing
+    Verify if China has problems with it
 
 create admin page so Fly can update css on lin1
+
+geoip - only store user.cn and city
+
+SEO - Baidu cares about changes o page titles
+    add schema.org microdata
+    http://www.google.com/webmasters/tools/richsnippets
+    http://www.heppnetz.de/projects/goodrelations/
 
 optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data just like genre_tags_pp
 
@@ -22,6 +33,12 @@ setup exception_notificaion and test.
 setup rails logrotate.  ensure it works right with scout processing
 
 setup UFW - uncomplicated firewall
+
+review email template.  It may not be repsonsive for email readers.
+
+add PayPal Express
+
+add Alipay
 
 Scout Mongodb plugin reporting size of storage around 400mb, but the files in /var/lib/mongodb are over 1G.  Send support email.
 
