@@ -27,6 +27,8 @@ nginx sites-available mihudie.com
 	change server_name vr1.mihudie.com;
 	to server_name mihudie.com;
 
+nginx mihudie.com config location for static files needs to have expires max working.  It may be commeted out pre-production.
+
 ensure www.mihudie.com redirects to mihudie.com
 	see shellshadow.com for example
 

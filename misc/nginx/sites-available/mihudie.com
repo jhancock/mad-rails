@@ -75,6 +75,10 @@ server {
   add_header X-Frame-Options DENY;
   add_header X-Content-Type-Options nosniff;
 
+  location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+    expires max;
+  }
+
   passenger_enabled on;
   passenger_ruby /home/mhd/.rbenv/shims/ruby;
   passenger_app_env production;

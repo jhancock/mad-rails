@@ -40,7 +40,6 @@ fix nginx conf so there is a default server that returns nothing.  This will kee
 Write script to fix this:
 mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
 
-
 add PayPal Express
 
 add Alipay

@@ -13,18 +13,18 @@ server {
 
   ssl on;
   ## dev self-signed cert
-  #ssl_certificate /home/mhd/rails/ssl/dev.mihudie.crt;
-  #ssl_certificate_key /home/mhd/rails/ssl/dev.mihudie.key;
+  ssl_certificate /home/mhd/rails/ssl/dev.mihudie.crt;
+  ssl_certificate_key /home/mhd/rails/ssl/dev.mihudie.key;
   # next line possibly not needed as ssl_certificate contains intermediates
   #ssl_trusted_certificate /home/mhd/rails/ssl/dev.mihudie.crt;
-  #ssl_dhparam /home/mhd/rails/ssl/dev.mihudie.dhparam.pem;
+  ssl_dhparam /home/mhd/rails/ssl/dev.mihudie.dhparam.pem;
 
   ## production Comodo cert via Namecheap
-  ssl_certificate /home/mhd/rails/ssl/mihudie-bundle.crt;
-  ssl_certificate_key /home/mhd/rails/ssl/mihudie.key;
+  #ssl_certificate /home/mhd/rails/ssl/mihudie-bundle.crt;
+  #ssl_certificate_key /home/mhd/rails/ssl/mihudie.key;
   # next line possibly not needed as ssl_certificate contains intermediates
   #ssl_trusted_certificate /home/mhd/rails/ssl/mihudie-bundle.crt;
-  ssl_dhparam /home/mhd/rails/ssl/mihudie.dhparam.pem;
+  #ssl_dhparam /home/mhd/rails/ssl/mihudie.dhparam.pem;
 
   ssl_prefer_server_ciphers on;
   ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
@@ -60,18 +60,18 @@ server {
 
   ssl on;
   ## dev self-signed cert
-  #ssl_certificate /home/mhd/rails/ssl/dev.mihudie.crt;
-  #ssl_certificate_key /home/mhd/rails/ssl/dev.mihudie.key;
+  ssl_certificate /home/mhd/rails/ssl/dev.mihudie.crt;
+  ssl_certificate_key /home/mhd/rails/ssl/dev.mihudie.key;
   # next line possibly not needed as ssl_certificate contains intermediates
   #ssl_trusted_certificate /home/mhd/rails/ssl/dev.mihudie.crt;
-  #ssl_dhparam /home/mhd/rails/ssl/dev.mihudie.dhparam.pem;
+  ssl_dhparam /home/mhd/rails/ssl/dev.mihudie.dhparam.pem;
 
   ## production Comodo cert via Namecheap
-  ssl_certificate /home/mhd/rails/ssl/mihudie-bundle.crt;
-  ssl_certificate_key /home/mhd/rails/ssl/mihudie.key;
+  #ssl_certificate /home/mhd/rails/ssl/mihudie-bundle.crt;
+  #ssl_certificate_key /home/mhd/rails/ssl/mihudie.key;
   # next line possibly not needed as ssl_certificate contains intermediates
   #ssl_trusted_certificate /home/mhd/rails/ssl/mihudie-bundle.crt;
-  ssl_dhparam /home/mhd/rails/ssl/mihudie.dhparam.pem;
+  #ssl_dhparam /home/mhd/rails/ssl/mihudie.dhparam.pem;
 
   ssl_prefer_server_ciphers on;
   ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
@@ -88,6 +88,10 @@ server {
 
   add_header X-Frame-Options DENY;
   add_header X-Content-Type-Options nosniff;
+
+  location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+    expires max;
+  }
 
   passenger_enabled on;
   passenger_ruby /home/mhd/.rbenv/shims/ruby;
