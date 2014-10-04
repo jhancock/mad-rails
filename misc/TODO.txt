@@ -10,11 +10,7 @@ find solution for Alipay
 finish all user & password behavior
 force_ssl on account/password-change 
 
-DONE force SSL for login, register
-
-setup dev nginx for mihudie.com with SSL cert.  use OS X hosts to point ot it.  change lin1 nginx to accept lin1.mihudie.com.
-
-setup vr1 with SSL cert
+nginx static file serving.  set expire to forever
 
 create admin page so Fly can update css on lin1
 
@@ -39,6 +35,12 @@ setup UFW - uncomplicated firewall
 
 review email template.  It may not be repsonsive for email readers.
 
+fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
+
+Write script to fix this:
+mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
+
+
 add PayPal Express
 
 add Alipay
@@ -59,6 +61,10 @@ see about adding HTTPS strict.
     Verify if it effects crawlers:  Baidu Google Bing
     Verify if China has problems with it
 
+see about adding spdy to nginx ssl
+http://www.nginxtips.com/what-is-spdy/
+http://www.nginxtips.com/how-to-install-and-configure-spdy-on-nginx/
+
 try http://emailtosms.com for a low cost email2sms service with Scoutapp
 
 cleanup email TODOs
@@ -71,6 +77,10 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE force SSL for login, register
+
+DONE setup dev and vr1 nginx for mihudie.com with SSL cert.  use OS X hosts to point ot it.  change lin1 nginx to accept lin1.mihudie.com.
 
 DONE turn off redis-server on dev
 

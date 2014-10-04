@@ -1,12 +1,15 @@
 PRE_LAUNCH.txt
-
-mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand mnigrate to an ObjectId pre-launch.
+===============
+mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
 
 index mongo with mongoid rake task
 index solr
 
 DNS stuff - lin1 to vr1
-SSL - namecheap Rapid SSL cert
+
+verify SSL at https://www.ssllabs.com/
+
+ensure nginx mihudie.com has static files expiry turned on.  I may have this commented out during dev.
 
 mandrill
 	ensure production API key
@@ -22,7 +25,7 @@ nginx.conf
 
 nginx sites-available mihudie.com
 	change server_name vr1.mihudie.com;
-	to server_name mihudie.com www.mihudie.com;
+	to server_name mihudie.com;
 
 ensure www.mihudie.com redirects to mihudie.com
 	see shellshadow.com for example

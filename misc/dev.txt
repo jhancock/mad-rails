@@ -380,16 +380,39 @@ openssl rsa -noout -modulus -in mihudie.key | openssl md5
 # use the main crt, not the full bundle
 openssl x509 -noout -modulus -in mihudie_com.crt | openssl md5
 
-############################################
-##  SSL Stapling OCSP firewall exception  ##
-############################################
+#########################
+##  SSL Stapling OCSP  ##
+#########################
 
+#######  Verify Start  #########
+
+# verify stapling is working
+
+openssl s_client -connect mihudie.com:443 -tls1 -tlsextdebug -status
+
+# output should include:
+OCSP response: 
+======================================
+OCSP Response Data:
+    OCSP Response Status: successful (0x0)
+    Response Type: Basic OCSP Response
+
+########  Verify End  #########
+
+##### Firewall Start ######
+# do this to see what URLs need to be unblocked with firewall for outgoing connections 
 # https://raymii.org/s/tutorials/OCSP_Stapling_on_nginx.html
+# the following command does not work on OS X.  run from the dev VM.
 
-OLDIFS=$IFS; IFS=':' certificates=$(openssl s_client -connect google.com:443 -showcerts -tlsextdebug -tls1 2>&1 </dev/null | sed -n '/-----BEGIN/,/-----END/ {/-----BEGIN/ s/^/:/; p}'); for certificate in ${certificates#:}; do echo $certificate | openssl x509 -noout -ocsp_uri; done; IFS=$OLDIFS
+OLDIFS=$IFS; IFS=':' certificates=$(openssl s_client -connect mihudie.com:443 -showcerts -tlsextdebug -tls1 2>&1 </dev/null | sed -n '/-----BEGIN/,/-----END/ {/-----BEGIN/ s/^/:/; p}'); for certificate in ${certificates#:}; do echo $certificate | openssl x509 -noout -ocsp_uri; done; IFS=$OLDIFS                        
 
-
-
+# should output something like this:
+http://ocsp.comodoca.com
+http://ocsp.comodoca.com
+http://ocsp.usertrust.com
+					
+# firewall needs to allow outbound connect to those locations
+####### Firewall End  #######
 
 #################################
 ##  erlang / elixir / phoenix  ##
