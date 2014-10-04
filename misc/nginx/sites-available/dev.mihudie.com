@@ -90,6 +90,7 @@ server {
   add_header X-Content-Type-Options nosniff;
 
   location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+    gzip_static on;
     expires max;
   }
 

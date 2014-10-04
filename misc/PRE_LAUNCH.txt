@@ -29,6 +29,9 @@ nginx sites-available mihudie.com
 
 nginx mihudie.com config location for static files needs to have expires max working.  It may be commeted out pre-production.
 
+nginx gzip js and css files
+      gzip -1 -c mihudie.css > mihudie.css.gz
+
 ensure www.mihudie.com redirects to mihudie.com
 	see shellshadow.com for example
 
