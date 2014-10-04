@@ -77,7 +77,7 @@ server {
 
   passenger_enabled on;
   passenger_ruby /home/mhd/.rbenv/shims/ruby;
-  passenger_app_env development;
+  passenger_app_env production;
   passenger_min_instances 1;
   root         /home/mhd/rails/public;
 
