@@ -10,8 +10,6 @@ find solution for Alipay
 finish all user & password behavior
 force_ssl on account/password-change 
 
-nginx static file serving.  set expire to forever
-
 create admin page so Fly can update css on lin1
 
 geoip - only store user.cn and city
@@ -76,6 +74,8 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE nginx static file serving.  set expire to forever.  turn gzip_static on
 
 DONE force SSL for login, register
 

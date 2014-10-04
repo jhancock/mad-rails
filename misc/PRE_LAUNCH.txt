@@ -9,8 +9,6 @@ DNS stuff - lin1 to vr1
 
 verify SSL at https://www.ssllabs.com/
 
-ensure nginx mihudie.com has static files expiry turned on.  I may have this commented out during dev.
-
 mandrill
 	ensure production API key
 	money in mandrill account
