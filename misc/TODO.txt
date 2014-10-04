@@ -8,10 +8,13 @@ fix paypal mihudie account.  need to find mihudie EIN.  get files from backup di
 find solution for Alipay
 
 finish all user & password behavior
+force_ssl on account/password-change 
+
 DONE force SSL for login, register
-see about adding HTTPS strict.  
-    Verify if it effects crawlers:  Baidu Google Bing
-    Verify if China has problems with it
+
+setup dev nginx for mihudie.com with SSL cert.  use OS X hosts to point ot it.  change lin1 nginx to accept lin1.mihudie.com.
+
+setup vr1 with SSL cert
 
 create admin page so Fly can update css on lin1
 
@@ -51,6 +54,10 @@ setup tarsnap on vr1
 sitemap.xml script
 
 new model: user gets 2 weeks to the backyard free on registration.  after register tell user they must verify their email to get their referral code.  use referral link to get a friend to register.  friend gets 2 weeks free and referee get another month free.  User can buy one year access to mihudie backyard for $9.95...no recurring fees.
+
+see about adding HTTPS strict.  
+    Verify if it effects crawlers:  Baidu Google Bing
+    Verify if China has problems with it
 
 try http://emailtosms.com for a low cost email2sms service with Scoutapp
 

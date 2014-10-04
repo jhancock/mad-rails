@@ -351,6 +351,45 @@ openssl dhparam -out dev.mihudie.dhparam.pem 2048
 # ensure dev.mihudie.key is not stored in git
 
 
+#########################
+##     SSL for prod    ##
+#########################
+
+
+# edit ~/rails/.gitignore  ignore ssl directory
+mkdir ~/rails/ssl
+cd ~/rails/ssl
+openssl genrsa -des3 -passout pass:x -out mihudie.pass.key 2048
+
+openssl rsa -passin pass:x -in mihudie.pass.key -out mihudie.key
+rm mihudie.pass.key
+
+openssl req -new -key mihudie.key -out mihudie.csr
+# press enter when asked for password
+
+# This line completed by Comodo SSL service ;)
+#openssl x509 -req -days 365 -in mihudie.csr -signkey mihudie.key -out mihudie.crt
+
+openssl dhparam -out mihudie.dhparam.pem 2048
+
+# ensure dev.mihudie.key is not stored in git
+
+# verify cert.  The md5 of both commands should be the same
+openssl rsa -noout -modulus -in mihudie.key | openssl md5
+
+# use the main crt, not the full bundle
+openssl x509 -noout -modulus -in mihudie_com.crt | openssl md5
+
+############################################
+##  SSL Stapling OCSP firewall exception  ##
+############################################
+
+# https://raymii.org/s/tutorials/OCSP_Stapling_on_nginx.html
+
+OLDIFS=$IFS; IFS=':' certificates=$(openssl s_client -connect google.com:443 -showcerts -tlsextdebug -tls1 2>&1 </dev/null | sed -n '/-----BEGIN/,/-----END/ {/-----BEGIN/ s/^/:/; p}'); for certificate in ${certificates#:}; do echo $certificate | openssl x509 -noout -ocsp_uri; done; IFS=$OLDIFS
+
+
+
 
 #################################
 ##  erlang / elixir / phoenix  ##
