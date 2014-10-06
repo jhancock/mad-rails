@@ -20,6 +20,8 @@ class AccountPublicController < ApplicationController
     end
     # we remove any referral cookies when a user successfully logs in.  May solve the internet cafe problem
     # self.pop_captured_referral
+    user.set_geo(request.remote_ip, :login)
+    user.save
     set_login(user.id)
     #TODO return_to_or(url(:home), :message => {:notice => "login_success"})
     flash[:notice] = "Login success"
@@ -36,26 +38,27 @@ class AccountPublicController < ApplicationController
     @page_title = "注册迷蝴蝶 电子书在线阅读"
     @page_description = "注册迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "注册 电子书 在线阅读"
-    unless email_valid?(params[:email])
+    unless email_valid?(params[:user][:email])
       #TODO EventLog.log({:event => "invalid_email_format", :email => params[:email]})
       #TODO decide how to handle i18n and message by id
       #message[:error] = "invalid_email_format"
       flash.now[:error] = "invalid_email_format"
       render 'register' and return
     end
-    unless params[:password] == params[:password_confirm]
+    unless params[:user][:password] == params[:user][:password_confirm]
       flash.now[:error] = "passwords_do_not_match"
       render 'register' and return
     end
-    if User.find_by(email: params[:email])
+    if User.find_by(email: params[:user][:email])
       #TODO dont tell user they are already registered?
       flash.now[:error] = "email_already_registered"
       render 'register' and return
     end
-    user = User.new({:email => params[:email], :registered => Time.now})
+    user = User.new({:email => params[:user][:email], :registered => Time.now})
     #referral_code = self.pop_captured_referral
     #@user[:referred_by] = referral_code if referral_code
-    user.set_password_hash(params[:password])
+    user.set_password_hash(params[:user][:password])
+    user.set_geo(request.remote_ip, :register)
     user.save
     set_login(user.id)
     send_mail(UserMailer, :welcome, user.id)
@@ -73,7 +76,6 @@ class AccountPublicController < ApplicationController
   private
   def set_login(user_id)
     session[:id] = user_id.to_s
-    #TODO User.set_geo(user_id, self.request.remote_ip)
   end
 
   def ensure_no_user

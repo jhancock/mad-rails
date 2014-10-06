@@ -2,6 +2,10 @@ scss needs variables everywhere
 
 when done, see if we can write the js without jquery.  
 
+need styles for flash: notice, success, error
+
+see register form.  link to area with message for terms of service needs better top/bottom margins
+
 header
   area with logo, login and search should be in menu bar.  No need for two lines
 	

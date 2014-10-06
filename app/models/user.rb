@@ -1,4 +1,5 @@
 class User
+  require 'geoip'
   include Mongoid::Document
   include Mongoid::Timestamps
 
@@ -17,8 +18,12 @@ class User
   field :premium, type: Time
   field :admin, type: Time
 
+  # TODO remove geo attribute.  cn, city and ip are all we need
   field :geo, type: Array
   field :cn, type: String  # country name (two char code) from the geo array
+  field :city, type: String
+  field :register_ip, type: String
+  field :login_ip, type: String
 
   # only used twice in old system for testing
   field :referral_code, type: String
@@ -27,10 +32,12 @@ class User
 
   # intended for arbitrary error info for debugging purposes 
   # and to ensure we don't try to send to bad addresses more than once
+  # TODO can I get rid of :email_error attribute?
   field :email_error, type: String
 
   index email: 1
   index cn: 1
+  index register_ip: 1
 
   # returns an authenticated user or nil
   def self.authenticate(email, password)
@@ -48,6 +55,30 @@ class User
     # create a password_salt if it doesn't exist
     self.password_salt = create_password_salt
     self.password_hash = OpenSSL::Digest::SHA1.hexdigest("#{self.password_salt}#{password}")
+  end
+
+  def self.set_geo(user_id, ip, purpose)
+    if user = self.find(user_id)
+      user.set_geo(ip, purpose)
+      user.save
+    end
+  end
+
+  def set_geo(ip, purpose)
+    # set country code, city, and ip
+    # 
+    #if (purpose == :register) || (purpose == :login)
+    if true
+      info = GeoIP.new(Rails.root.join(Rails.configuration.mihudie.geolitecity_path)).city(ip)
+      Rails.logger.info "IP >>> #{ip}  class: #{ip.class}"
+      Rails.logger.info "GEOIP >>> #{info}  class: #{info.class}"
+      if info
+        #self.cn = 
+        #self.city = 
+        #if purpose == :register then self.register_ip = :blah end
+        #if purpose == :login then self.login_ip = :blah end
+      end
+    end
   end
 
   private

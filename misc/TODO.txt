@@ -9,14 +9,14 @@ find solution for Alipay
 
 TWO - finish all user & password behavior
 
-ONE - use form_builders
-
 force_ssl on account/password-change, password-reset-reuqest and password-reset
 
 geoip - only store user.cn and city
   set cn in session cookie.  then we will have for all visitors.
   store in db on login/register.
   whenever it is not in the cookie, set it and store in db if user is logged in.
+
+better flash notices.  better form errors. 
 
 HALF - create admin page so Fly can update css on lin1
 
@@ -64,6 +64,7 @@ Scout Mongodb plugin reporting size of storage around 400mb, but the files in /v
 Scout Rails plugin is properly triggering alert when over 500 request/minute.  But when I go to the web console, the history shows almost nothing.  I don't see the spike.
 
 ONE - setup mina for more reliable deploys
+learn how to store version of gems for relase.  bundle vendor?
 
 HALF - setup tarsnap on vr1
 
@@ -91,6 +92,8 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE - use form_builders
 
 DONE nginx static file serving.  set expire to forever.  turn gzip_static on
 

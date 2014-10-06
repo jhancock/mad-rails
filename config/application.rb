@@ -32,9 +32,13 @@ module Mhd
     #config.action_view.default_form_builder = "ActionView::Helpers::FormBuilder"
 
     config.mihudie = ActiveSupport::OrderedOptions.new 
-    # config/initializers/session_store.rb has this value hard coded
+
     config.mihudie.session_cookie_name = '_mhd_session'
+
     config.mihudie.books_path_prefix = '/home/mhd/books/'
+
+    # http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz 
+    config.mihudie.geolitecity_path = '/home/mhd/rails/geoip/GeoLiteCity.dat'
 
     #config.mihudie.suppress_tags = [19, 35]
   end

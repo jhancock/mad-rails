@@ -9,14 +9,13 @@ gem 'bson_ext'
 # after bundle mongoid and bson_ext run rails mongoid config script
 
 gem 'kaminari'
-# bundle install
+# after bundle
 #   rails g kaminari:config
 #   rails g kaminari:views default -e haml
 
 gem 'mandrill-api'
-
 gem 'sucker_punch'
-# bundle install
+gem 'geoip', '~> 1.4.0'
 
 # add exception_notifier http://amberonrails.com/rails-exception_notification-setup/
 #    https://github.com/smartinez87/exception_notification
