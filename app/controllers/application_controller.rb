@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_filter :http_auth
+  before_action :http_auth
+  before_action :set_country
   before_action :current_user
 
   def current_user
@@ -23,6 +24,21 @@ class ApplicationController < ActionController::Base
       @_current_user = nil
     end
     @_current_user
+  end
+
+  # set :cn in session cookie so we always know what country a user is from.  Even unregistered and not logged in users. 
+  def set_country
+    unless session[:cn]
+      info = GeoIP.new(Rails.root.join(Rails.configuration.mihudie.geolitecity_path)).city(request.remote_ip)
+      if info
+        session[:cn] = info.country_code2
+      else
+        session[:cn] = "unknown"
+    end
+  end
+
+  def china?
+    session[:cn] == "CN"
   end
 
   def render_404

@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   post 'login' => 'account_public#login_post'
   get 'logout' => 'account#logout', as: 'logout'
   get 'login_help' => 'account_public#login_help', as: 'login_help'
-  #TODO register
   get 'register' => 'account_public#register', as: 'register'
   post 'register' => 'account_public#register_post'
 
@@ -18,8 +17,8 @@ Rails.application.routes.draw do
   #TODO password_reset
   get 'password_reset_request' => 'account_public#password_reset_request', as: 'password_reset_request'
   post 'password_reset_request' => 'account_public#password_reset_request_post'  
-  get 'password-reset/:code' => 'account_public#password_reset', as: 'password_reset'
-  post 'password-reset/:code' => 'account_public#password_reset_post'
+  get 'password_reset/:code' => 'account_public#password_reset', as: 'password_reset'
+  post 'password_reset/:code' => 'account_public#password_reset_post'
 
   get 'privacy_policy' => 'public#privacy_policy', as: 'privacy_policy'
   get 'terms_of_service' => 'public#terms_of_service', as: 'terms_of_service'

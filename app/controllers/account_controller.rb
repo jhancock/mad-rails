@@ -9,7 +9,8 @@ class AccountController < ApplicationController
   end
 
   def logout
-    session[:id] = nil
+    reset_session
+    #session[:id] = nil
     @_current_user = nil
     redirect_to root_url, :notice => "logout_success"
   end

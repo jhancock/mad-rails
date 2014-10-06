@@ -13,31 +13,36 @@ header
 
   don't want categories in main area.  Would like to see sidebar similar to old site.
 
+  logout link in menu bar if not mobile
+
 btn styles should be button.
 btn btn-warning
   lets find another name beside warning for a secondary option.  We do want a warning button though!
 button use for next and previous chapters need work
+Why do I need to specify btn and btn-primary?  Should be just button-primary
 
 ipt-text need better name
+  lets assume any text field is in a form and has style of ipt-text.  should not have to set class.
 
 need pagination styling
 should put pagination at top and bottom for mobile so user doesdn't have to scroll too much.
 maybe pagination on mobile should hide numbered pages and only show prev, next, first, last?
 
-need theme menu item.  should display similar to catgories.
+need theme menu item in sub-menu bar.  should display similar to catgories.
+  for not mobile, when in reading mode, theme setting link should be in main menu.
 
 three font sizes.  small medium large.  6 themes.  Other fonts in the system should change depending on user's choice of small medium large.
 
-reading mode need better line spacing.  probably need better line spacing everywhere.
+reading mode needs better line spacing.  probably need better line spacing everywhere.
 
-need footer
+need footer styles
 
 book list used to have meta-data of title, data-summary, data-tags, data-chars.  Which of these is good for SEO?
 
-detail-span needs area for tags and #chars
+detail-span needs styling for tags and #chars area.
   using strong now.  maybe need custom styling.  also need a bit of line spacing above
 
-sometime when I select a book and the div expands, the top of the ares of off screen.  Is there an easy way to get the top to scroll in a better position?
+sometime when I select a book on mobile and the div expands, the top of the ares of off screen.  Is there an easy way to get the top to scroll in a better position?
 
 main div should be called main with role main
 
