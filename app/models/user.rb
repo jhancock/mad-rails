@@ -65,18 +65,20 @@ class User
   end
 
   def set_geo(ip, purpose)
-    # set country code, city, and ip
-    # 
-    #if (purpose == :register) || (purpose == :login)
-    if true
+    if [:register, :login].include? purpose
       info = GeoIP.new(Rails.root.join(Rails.configuration.mihudie.geolitecity_path)).city(ip)
-      Rails.logger.info "IP >>> #{ip}  class: #{ip.class}"
-      Rails.logger.info "GEOIP >>> #{info}  class: #{info.class}"
+      #Rails.logger.info "IP >>> #{ip}  class: #{ip.class}"
+      #Rails.logger.info "GEOIP >>> #{info}  class: #{info.class}"
       if info
-        #self.cn = 
-        #self.city = 
-        #if purpose == :register then self.register_ip = :blah end
-        #if purpose == :login then self.login_ip = :blah end
+        self.cn = info.country_code2 if info.country_code2
+        self.city = info.city_name if info.city_name 
+        if purpose == :register 
+          self.register_ip = ip
+          self.login_ip = ip 
+        end
+        if purpose == :login 
+          self.login_ip = ip 
+        end
       end
     end
   end
