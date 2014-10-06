@@ -20,10 +20,7 @@ class AccountPublicController < ApplicationController
     end
     # we remove any referral cookies when a user successfully logs in.  May solve the internet cafe problem
     # self.pop_captured_referral
-    user.set_geo(request.remote_ip, :login)
-    user.updated_at = Time.now
-    user.save
-    set_login(user.id)
+    set_login(user)
     #TODO return_to_or(url(:home), :message => {:notice => "login_success"})
     flash[:notice] = "Login success"
     redirect_to root_url
@@ -59,9 +56,9 @@ class AccountPublicController < ApplicationController
     #referral_code = self.pop_captured_referral
     #@user[:referred_by] = referral_code if referral_code
     user.set_password_hash(params[:user][:password])
-    user.set_geo(request.remote_ip, :register)
+    user.register_ip = request.remote_ip
     user.save
-    set_login(user.id)
+    set_login(user)
     send_mail(UserMailer, :welcome, user.id)
     #TODO return_to_or(url(:home), :message => {:notice => "registered_success"})
     flash[:notice] = "Login success"
@@ -75,7 +72,11 @@ class AccountPublicController < ApplicationController
   end
 
   private
-  def set_login(user_id)
+  def set_login(user)
+    remote_ip = request.remote_ip
+    user.set_geo(remote_ip)
+    user.save
+    LoginLog.log(user.id, request.remote_ip)
     session[:id] = user_id.to_s
   end
 

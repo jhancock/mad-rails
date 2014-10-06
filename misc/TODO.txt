@@ -16,6 +16,8 @@ geoip - only store user.cn and city
   store in db on login/register.
   whenever it is not in the cookie, set it and store in db if user is logged in.
 
+create LoginLog.  track user logins by ip
+
 better flash notices.  better form errors. 
 
 HALF - create admin page so Fly can update css on lin1

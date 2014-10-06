@@ -23,7 +23,6 @@ class User
   field :cn, type: String  # country name (two char code) from the geo array
   field :city, type: String
   field :register_ip, type: String
-  field :login_ip, type: String
 
   # only used twice in old system for testing
   field :referral_code, type: String
@@ -57,29 +56,13 @@ class User
     self.password_hash = OpenSSL::Digest::SHA1.hexdigest("#{self.password_salt}#{password}")
   end
 
-  def self.set_geo(user_id, ip, purpose)
-    if user = self.find(user_id)
-      user.set_geo(ip, purpose)
-      user.save
-    end
-  end
-
-  def set_geo(ip, purpose)
-    if [:register, :login].include? purpose
-      info = GeoIP.new(Rails.root.join(Rails.configuration.mihudie.geolitecity_path)).city(ip)
-      #Rails.logger.info "IP >>> #{ip}  class: #{ip.class}"
-      #Rails.logger.info "GEOIP >>> #{info}  class: #{info.class}"
-      if info
-        self.cn = info.country_code2 if info.country_code2
-        self.city = info.city_name if info.city_name 
-        if purpose == :register 
-          self.register_ip = ip
-          self.login_ip = ip 
-        end
-        if purpose == :login 
-          self.login_ip = ip 
-        end
-      end
+  def set_geo(ip)
+    info = GeoIP.new(Rails.root.join(Rails.configuration.mihudie.geolitecity_path)).city(ip)
+    #Rails.logger.info "IP >>> #{ip}  class: #{ip.class}"
+    #Rails.logger.info "GEOIP >>> #{info}  class: #{info.class}"
+    if info
+      self.cn = info.country_code2 if info.country_code2
+      self.city = info.city_name if info.city_name 
     end
   end
 
