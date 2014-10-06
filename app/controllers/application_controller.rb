@@ -34,6 +34,7 @@ class ApplicationController < ActionController::Base
         session[:cn] = info.country_code2
       else
         session[:cn] = "unknown"
+      end
     end
   end
 

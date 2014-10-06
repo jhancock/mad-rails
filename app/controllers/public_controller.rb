@@ -6,6 +6,7 @@ class PublicController < ApplicationController
     @page_keywords = "电子书 在线阅读 安全 简便"
     @sort = 'recent'
     @books = Book.online_recent.page(1)
+    @china = china?
   end
 
   def self.home_page_title

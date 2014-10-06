@@ -77,7 +77,7 @@ class AccountPublicController < ApplicationController
     user.set_geo(remote_ip)
     user.save
     LoginLog.log(user.id, request.remote_ip)
-    session[:id] = user_id.to_s
+    session[:id] = user.id.to_s
   end
 
   def ensure_no_user
