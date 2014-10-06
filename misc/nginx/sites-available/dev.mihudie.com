@@ -89,8 +89,12 @@ server {
   add_header X-Frame-Options DENY;
   add_header X-Content-Type-Options nosniff;
 
-  location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+  location ~* \.(js|css)$ {
     gzip_static on;
+    expires max;
+  }
+
+  location ~* \.(png|jpg|jpeg|gif|ico)$ {
     expires max;
   }
 

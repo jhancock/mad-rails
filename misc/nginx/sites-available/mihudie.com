@@ -75,15 +75,19 @@ server {
   add_header X-Frame-Options DENY;
   add_header X-Content-Type-Options nosniff;
 
-  location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+  location ~* \.(js|css)$ {
     gzip_static on;
+    expires max;
+  }
+
+  location ~* \.(png|jpg|jpeg|gif|ico)$ {
     expires max;
   }
 
   passenger_enabled on;
   passenger_ruby /home/mhd/.rbenv/shims/ruby;
   passenger_app_env production;
-  passenger_min_instances 1;
+  passenger_min_instances 6;
   root         /home/mhd/rails/public;
 
   # redirect server error pages to the static page /50x.html
