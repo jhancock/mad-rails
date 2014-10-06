@@ -29,6 +29,8 @@ module Mhd
 
     #config.colorize_logging = true
 
+    #config.action_view.default_form_builder = "ActionView::Helpers::FormBuilder"
+
     config.mihudie = ActiveSupport::OrderedOptions.new 
     # config/initializers/session_store.rb has this value hard coded
     config.mihudie.session_cookie_name = '_mhd_session'

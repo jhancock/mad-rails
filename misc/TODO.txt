@@ -7,52 +7,69 @@ sign up for braintree - CC and PayPal.  test from China.
 fix paypal mihudie account.  need to find mihudie EIN.  get files from backup disks
 find solution for Alipay
 
-finish all user & password behavior
-force_ssl on account/password-change 
+TWO - finish all user & password behavior
 
-create admin page so Fly can update css on lin1
+ONE - use form_builders
+
+force_ssl on account/password-change, password-reset-reuqest and password-reset
 
 geoip - only store user.cn and city
+  set cn in session cookie.  then we will have for all visitors.
+  store in db on login/register.
+  whenever it is not in the cookie, set it and store in db if user is logged in.
 
+HALF - create admin page so Fly can update css on lin1
+
+find out why firebug shows cookie as http only
+
+****  After Fly gets things settled ******
 SEO - Baidu cares about changes o page titles
     add schema.org microdata
     http://www.google.com/webmasters/tools/richsnippets
     http://www.heppnetz.de/projects/goodrelations/
 
 optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data just like genre_tags_pp
+*****************************************
 
-setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
+ONE - setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
 awstats config to exclude scoutapp and uptimerobot and 127.0.0.1
 
-setup exception_notificaion and test. 
+HALF - setup exception_notificaion and test. 
   see if we can write exceptions to file and have scout pick them up.  
 
-setup rails logrotate.  ensure it works right with scout processing
+HALF - setup rails logrotate.  ensure it works right with scout processing
 
-setup UFW - uncomplicated firewall
+HALF - setup UFW - uncomplicated firewall
 
-review email template.  It may not be repsonsive for email readers.
+ONE - review email template.  It may not be repsonsive for email readers.
 
-fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
+HALF - fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
 
-Write script to fix this:
+HALF - Write script to fix this:
 mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
 
-add PayPal Express
+HALF - script to ensure all books have tag_names_pp
 
-add Alipay
+TWO - admin pages
+
+ONE - add PayPal Express
+
+THREE - add Alipay
+
+ONE - send to kindle behavior
+     set limits per month for backyard books.  all purchased books can send.
 
 Scout Mongodb plugin reporting size of storage around 400mb, but the files in /var/lib/mongodb are over 1G.  Send support email.
 
 Scout Rails plugin is properly triggering alert when over 500 request/minute.  But when I go to the web console, the history shows almost nothing.  I don't see the spike.
 
-setup mina for more reliable deploys
+ONE - setup mina for more reliable deploys
 
-setup tarsnap on vr1
+HALF - setup tarsnap on vr1
 
-sitemap.xml script
+HALF - sitemap.xml script
 
-new model: user gets 2 weeks to the backyard free on registration.  after register tell user they must verify their email to get their referral code.  use referral link to get a friend to register.  friend gets 2 weeks free and referee get another month free.  User can buy one year access to mihudie backyard for $9.95...no recurring fees.
+TWO - new model: user gets 2 weeks to the backyard free on registration.  after register tell user they must verify their email to get their referral code.  use referral link to get a friend to register.  friend gets 2 weeks free and referee get another month free.  User can buy one year access to mihudie backyard for $9.95...no recurring fees.
 
 see about adding HTTPS strict.  
     Verify if it effects crawlers:  Baidu Google Bing

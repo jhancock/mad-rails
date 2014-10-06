@@ -13,10 +13,10 @@ class AccountPublicController < ApplicationController
     @page_title = "登录迷蝴蝶 电子书在线阅读"
     @page_description = "登录迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "登录 电子书 在线阅读"
-    user = User.authenticate(params[:email], params[:password])
+    user = User.authenticate(params[:user][:email], params[:user][:password])
     unless user
       flash.now[:error] = "Login error"
-      render 'account_public/login' and return
+      render 'login' and return
     end
     # we remove any referral cookies when a user successfully logs in.  May solve the internet cafe problem
     # self.pop_captured_referral
@@ -41,16 +41,16 @@ class AccountPublicController < ApplicationController
       #TODO decide how to handle i18n and message by id
       #message[:error] = "invalid_email_format"
       flash.now[:error] = "invalid_email_format"
-      render 'account_public/register' and return
+      render 'register' and return
     end
     unless params[:password] == params[:password_confirm]
       flash.now[:error] = "passwords_do_not_match"
-      render 'account_public/register' and return
+      render 'register' and return
     end
     if User.find_by(email: params[:email])
       #TODO dont tell user they are already registered?
       flash.now[:error] = "email_already_registered"
-      render 'account_public/register' and return
+      render 'register' and return
     end
     user = User.new({:email => params[:email], :registered => Time.now})
     #referral_code = self.pop_captured_referral

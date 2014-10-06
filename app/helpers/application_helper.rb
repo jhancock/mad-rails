@@ -40,4 +40,11 @@ module ApplicationHelper
     html
   end
 
+  def my_form_for(record_or_name_or_array, *args, &block)
+    options = args.extract_options!
+    content_tag(:div, :class => "form-model") do
+      form_for(record_or_name_or_array, *(args << options.merge(builder: MyFormBuilder, :html => {:class => "form"})), &block)
+    end
+  end
+
 end

@@ -30,6 +30,8 @@ nginx mihudie.com config location for static files needs to have expires max wor
 nginx gzip js and css files
       gzip -1 -c mihudie.css > mihudie.css.gz
 
+ensure session_cookie works for both http and https.  Firebug shows cookie as http only
+
 ensure www.mihudie.com redirects to mihudie.com
 	see shellshadow.com for example
 
