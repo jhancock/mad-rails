@@ -301,6 +301,8 @@ grc tail -f ~/rails/log/development.log
 #########################
 ##   Sidekiq / Redis   ##
 #########################
+##	 NOT USED      ##
+#########################
 
 # see /etc/init/sidekiq.conf on dev
 
@@ -414,9 +416,69 @@ http://ocsp.usertrust.com
 # firewall needs to allow outbound connect to those locations
 ####### Firewall End  #######
 
+################################
+##        ElasticSearch       ##
+################################
+
+# install Oracle Java
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+
+# auto-install accept license.  haven't tried:
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+
+sudo apt-get install oracle-java8-set-default
+# check
+java -version
+
+# install elasticsearch
+# http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-repositories.html
+# http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-service.html
+
+wget -qO - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+
+# add to /etc/apt/sources.list 
+deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main
+
+sudo apt-get update 
+sudo apt-get install elasticsearch
+
+# check /etc/elasticsearch/elasticsearch.yml
+
+# setup to startup at boot
+sudo update-rc.d elasticsearch defaults 95 10
+
+# service does not start on install and does not restart on package upgrade
+sudo service elasticsearch start | stop | restart
+# or sudo /etc/init.d/elasticsearch start
+
+# test
+curl http://localhost:9200
+curl http://localhost:9200/_cluster/health
+curl http://localhost:9200/_nodes
+
+# smartcn plugin
+# https://github.com/elasticsearch/elasticsearch-analysis-smartcn
+/usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-analysis-smartcn/2.3.0
+
+# edit /etc/elasticsearch/elasticsearch.yml
+# set mandatory plugin
+plugin.mandatory: analysis-smartcn
+
+
+
+################################
+##    END  ElasticSearch      ##
+################################
+
+
 #################################
 ##  erlang / elixir / phoenix  ##
 #################################
+##       NOT installed         ##
+#################################
+
 
 # install erlang from https://www.erlang-solutions.com/downloads/download-erlang-otp
 wget http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb

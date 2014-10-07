@@ -19,15 +19,18 @@ ONE - finish all user & password behavior
     DONE test mods to user login, LoginLog, logout kills cookie, register stores ip, etc
     logout link in menu bar if not mobile.  only on account page for mobile
 
-send Dave/Geoff invoice for $2000
-wire $1000 from HSBC to mihudie Bank of Dudley
+Add ElasticSearch or Sunspot 
+  need styles for search results
+http://blog.dt.org/index.php/2014/07/running-sunspot-and-solr-with-rails-4-in-production/
+
+
 
 Wednesday
 ----------
 meet Fly
 
-Add Sunspot search
-  need styles for search results
+send Dave/Geoff invoice for $2000
+wire $1000 from HSBC to mihudie Bank of Dudley
 
 HALF - setup UFW - uncomplicated firewall.  go ahead and get this done so I can verify to ensure everything is correct as I test the app
 

@@ -47,4 +47,9 @@ module ApplicationHelper
     end
   end
 
+  def my_inline_form_for(record_or_name_or_array, *args, &block)
+    options = args.extract_options!
+    form_for(record_or_name_or_array, *(args << options.merge(builder: MyFormBuilder, :html => {:class => "form"})), &block)
+  end
+
 end

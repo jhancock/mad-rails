@@ -1,0 +1,8 @@
+%h1 Search#search
+%p Find me in app/views/search/search.html.haml
+%ul
+  - @books.each do |book|
+    %li
+      %h3
+        = link_to book.title, read_book_path(author: book.author, title: book.title)
+        

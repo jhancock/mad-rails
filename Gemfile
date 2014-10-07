@@ -9,19 +9,20 @@ gem 'bson_ext'
 # after bundle mongoid and bson_ext run rails mongoid config script
 
 gem 'kaminari'
+gem 'sucker_punch'
 # after bundle
 #   rails g kaminari:config
 #   rails g kaminari:views default -e haml
 
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 gem 'mandrill-api'
-gem 'sucker_punch'
 gem 'geoip', '~> 1.4.0'
 
 # add exception_notifier http://amberonrails.com/rails-exception_notification-setup/
 #    https://github.com/smartinez87/exception_notification
 # or https://github.com/rails/exception_notification
-
-# add sunspot http://sunspot.github.io/
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
