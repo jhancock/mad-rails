@@ -1,10 +1,20 @@
-scss needs variables everywhere
+LATER - scss needs variables everywhere
 
-when done, see if we can write the js without jquery.  
+LATER - when done, see if we can write the js without jquery.  
+
+beta server
+-----------
+205.147.105.160 www.mihudie.com
+205.147.105.160 mihudie.com
+
+http auth - foo / bar
+-----------
+
+search style
 
 need styles for flash: notice, success, error
 
-see register form.  link to area with message for terms of service needs better top/bottom margins
+see register form.  link to area with message for terms of service needs better top/bottom margins.  link style needs to show user it is an ACTION.
 
 header
   area with logo, login and search should be in menu bar.  No need for two lines
@@ -21,6 +31,9 @@ btn btn-warning
 button use for next and previous chapters need work
 Why do I need to specify btn and btn-primary?  Should be just button-primary
 
+login button on mobile is wrong style.
+login button on desktop is too small.  bigger and to the right.
+
 ipt-text need better name
   lets assume any text field is in a form and has style of ipt-text.  should not have to set class.
 
@@ -33,11 +46,11 @@ need theme menu item in sub-menu bar.  should display similar to catgories.
 
 three font sizes.  small medium large.  6 themes.  Other fonts in the system should change depending on user's choice of small medium large.
 
-reading mode needs better line spacing.  probably need better line spacing everywhere.
+reading mode needs better line spacing.  probably need better line spacing everywhere.  http://practicaltypography.com/typography-in-ten-minutes.html
 
-need footer styles
+need footer styles - centered
 
-book list used to have meta-data of title, data-summary, data-tags, data-chars.  Which of these is good for SEO?
+IGNORE - book list used to have meta-data of title, data-summary, data-tags, data-chars.  Which of these is good for SEO?
 
 detail-span needs styling for tags and #chars area.
   using strong now.  maybe need custom styling.  also need a bit of line spacing above

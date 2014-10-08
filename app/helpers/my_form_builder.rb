@@ -1,10 +1,6 @@
 class MyFormBuilder < ActionView::Helpers::FormBuilder
   def text_field(attribute, label, options = {})
-    if label
-      label(attribute, label) + super(attribute, options.merge({:class => "ipt-text", :placeholder => label}))
-    else
-      super(attribute, options.merge({:class => "ipt-text"}))
-    end
+    label(attribute, label) + super(attribute, options.merge({:class => "ipt-text", :placeholder => label}))
   end
 
   def password_field(attribute, label, options = {})
@@ -22,8 +18,8 @@ class MyFormBuilder < ActionView::Helpers::FormBuilder
 
   def submit_no_div(label, options = {})
     @template.submit_tag(
-                         label, objectify_options(options.merge({:class => "btn btn-primary"}))
-                         )
+      label, objectify_options(options.merge({:class => "btn btn-primary"}))
+    )
   end
 
 end

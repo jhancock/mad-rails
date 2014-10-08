@@ -24,7 +24,6 @@ Add ElasticSearch or Sunspot
 http://blog.dt.org/index.php/2014/07/running-sunspot-and-solr-with-rails-4-in-production/
 
 
-
 Wednesday
 ----------
 meet Fly
