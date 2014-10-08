@@ -13,8 +13,14 @@ class AccountPublicController < ApplicationController
     @page_title = "登录迷蝴蝶 电子书在线阅读"
     @page_description = "登录迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "登录 电子书 在线阅读"
-    user = User.authenticate(params[:user][:email], params[:user][:password])
+    user = User.find_by(email: params[:user][:email])
     unless user
+      LoginEvents.log_invalid_user(params[:user][:email], request.remote_ip)
+      flash.now[:error] = "Login error"
+      render 'login' and return
+    end
+    unless User.verify_password?(params[:user][:password], user.password_hash, user.password_salt)
+      LoginEvents.log_bad_password(user.id, request.remote_ip)
       flash.now[:error] = "Login error"
       render 'login' and return
     end
@@ -37,7 +43,7 @@ class AccountPublicController < ApplicationController
     @page_description = "注册迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "注册 电子书 在线阅读"
     unless email_valid?(params[:user][:email])
-      #TODO EventLog.log({:event => "invalid_email_format", :email => params[:email]})
+      #TODO SystemEvents.log(:invalid_email_format, {:email => params[:email]})
       #TODO decide how to handle i18n and message by id
       #message[:error] = "invalid_email_format"
       flash.now[:error] = "invalid_email_format"
@@ -58,8 +64,9 @@ class AccountPublicController < ApplicationController
     user.set_password_hash(params[:user][:password])
     user.register_ip = request.remote_ip
     user.save
+    UserEvents.log(user.id, :registered)
     set_login(user)
-    send_mail(UserMailer, :welcome, user.id)
+    send_user_mail(user.id, :welcome)
     #TODO return_to_or(url(:home), :message => {:notice => "registered_success"})
     flash[:notice] = "Login success"
     redirect_to root_url
@@ -76,7 +83,7 @@ class AccountPublicController < ApplicationController
     remote_ip = request.remote_ip
     user.set_geo(remote_ip)
     user.save
-    LoginLog.log(user.id, request.remote_ip)
+    LoginEvents.log_success(user.id, request.remote_ip)
     session[:id] = user.id.to_s
   end
 

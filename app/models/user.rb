@@ -38,12 +38,13 @@ class User
   index cn: 1
   index register_ip: 1
 
+  # not used
   # returns an authenticated user or nil
-  def self.authenticate(email, password)
-    user = self.find_by(email: email)
-    return user if user && verify_password?(password, user.password_hash, user.password_salt)
-    nil
-  end
+  #def self.authenticate(email, password)
+  #  user = self.find_by(email: email)
+  #  return user if user && verify_password?(password, user.password_hash, user.password_salt)
+  #  nil
+  #end
 
   # returns true if the password is correct
   def self.verify_password?(password, password_hash, password_salt)

@@ -22,11 +22,13 @@ ONE - finish all user & password behavior
 Add ElasticSearch or Sunspot 
   need styles for search results
 http://blog.dt.org/index.php/2014/07/running-sunspot-and-solr-with-rails-4-in-production/
+  find out how to ste smartcn correct
+  find out how to search with offline_at attribute
 
 
 Wednesday
 ----------
-meet Fly
+DONE meet Fly
 
 send Dave/Geoff invoice for $2000
 wire $1000 from HSBC to mihudie Bank of Dudley
@@ -35,8 +37,11 @@ HALF - setup UFW - uncomplicated firewall.  go ahead and get this done so I can 
 
 ONE - sitemap.xml script
   Should sitemap include old book links with objectId?
+  Shoudl canonical url be the one with ID or author/title?
 
 ONE - add PayPal Express
+
+UserEvents - need to track many user events.  money added, points awarded, backyard access given, point deducted for purchase, etc.  Keep these seperate from LoginEvents and general SystemEvents.  Move user email events to UserEvents ?  so rename EventLog to SystemEventLog?
 
 HALF - Write script to fix this:
 mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
@@ -109,6 +114,14 @@ author publishes chapter at a time
 need to log login failures
 
 on login failure, be sure to show user password-reset link
+
+v1.4
+------
+book uplaods
+  need quarantine
+  need admin area to take uploaded books, clean them up and publish
+  give users opints for useful submissions.
+
 
 EMAIL Scout Mongodb plugin reporting size of storage around 400mb, but the files in /var/lib/mongodb are over 1G.  Send support email.
 

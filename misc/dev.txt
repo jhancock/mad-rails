@@ -467,7 +467,6 @@ curl http://localhost:9200/_nodes
 plugin.mandatory: analysis-smartcn
 
 
-
 ################################
 ##    END  ElasticSearch      ##
 ################################

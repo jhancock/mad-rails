@@ -46,8 +46,8 @@ class ApplicationController < ActionController::Base
     render :file => "/public/404.html", :layout => false, :status => 404
   end
 
-  def send_mail(mailer, method, *args)
-    AsyncMailerJob.new.async.perform(mailer, method, *args)
+  def send_user_mail(user_id, method, hash = {})
+    AsyncUserMailerJob.new.async.perform(user_id, method, hash)
   end
 
   def email_valid?(value)
