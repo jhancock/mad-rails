@@ -6,8 +6,13 @@ fix Georgia corp registration for mihudie and shellshadow.
 fix paypal mihudie account.  get mihudie EIN.  Call Mom
 find solution for Alipay
 
-Tuesday
----------
+Thursday
+----------
+send Dave/Geoff invoice for $2000
+wire $1000 from HSBC to mihudie Bank of Dudley
+
+email TODOs...see below
+
 ONE - finish all user & password behavior
     account page.  logout link, bookmarks link, change_password link.
     bookmarks page
@@ -19,48 +24,44 @@ ONE - finish all user & password behavior
     DONE test mods to user login, LoginLog, logout kills cookie, register stores ip, etc
     logout link in menu bar if not mobile.  only on account page for mobile
 
-Add ElasticSearch or Sunspot 
-  need styles for search results
-http://blog.dt.org/index.php/2014/07/running-sunspot-and-solr-with-rails-4-in-production/
-  find out how to ste smartcn correct
-  find out how to search with offline_at attribute
-
-
-Wednesday
-----------
-DONE meet Fly
-
-send Dave/Geoff invoice for $2000
-wire $1000 from HSBC to mihudie Bank of Dudley
-
-HALF - setup UFW - uncomplicated firewall.  go ahead and get this done so I can verify to ensure everything is correct as I test the app
-
-ONE - sitemap.xml script
-  Should sitemap include old book links with objectId?
-  Shoudl canonical url be the one with ID or author/title?
-
-ONE - add PayPal Express
-
-UserEvents - need to track many user events.  money added, points awarded, backyard access given, point deducted for purchase, etc.  Keep these seperate from LoginEvents and general SystemEvents.  Move user email events to UserEvents ?  so rename EventLog to SystemEventLog?
-
-HALF - Write script to fix this:
-mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
-
-HALF - script to ensure all books have tag_names_pp and all books have li data
-
 user referal tracking.
+
+new model: user gets 2 weeks to the backyard free on registration.  after register tell user they must verify their email to get their referral code.  use referral link to get a friend to register.  friend gets 2 weeks free and referee get another month free.  User can buy one year access to mihudie backyard for $9.95...no recurring fees.
+
+admin page v1.0
+
+elasticsearch
+  EMAIL find out how to set smartcn correct
+  EMAIL find out how to search with offline_at attribute
+  search result style
+
+sitemap.xml script
+  EMAIL Should sitemap include old book links with objectId?
+  EMAIL Shoudl canonical url be the one with ID or author/title?
+
+EMAIL Scout Mongodb plugin reporting size of storage around 400mb, but the files in /var/lib/mongodb are over 1G.  Send support email.
+
+EMAIL Scout Rails plugin is properly triggering alert when over 500 request/minute.  But when I go to the web console, the history shows almost nothing.  I don't see the spike.
+
+EMAIL Scout seems to be checking my URL more than every one minute
+
+add PayPal Express
+
+add Alipay
+ 
+Write script to fix this:
+mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
 
 better flash notices.  better form errors. 
 
 set theme behavior
 
-ONE - review email template.  It may not be repsonsive for email readers.
+review email template.  It may not be repsonsive for email readers.
    add my own unsubscribe link to email template.  the default one is too prominent.
    email footer has  mihudie address which links to map on iPhone.  See if this can be removed
 
 MAYBE - create admin page so Fly can update css on lin1
 
-****  After Fly gets things settled ******
 SEO - Baidu cares about changes o page titles
     add schema.org microdata
     http://www.google.com/webmasters/tools/richsnippets
@@ -68,50 +69,47 @@ SEO - Baidu cares about changes o page titles
 
 optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data just like genre_tags_pp
 lazy save pre-rendered book li and genre_tags_pp if doesn't exist
-*****************************************
+
+script to ensure all books have tag_names_pp and all books have li data
 
 Andrea needs to write new emails and help translate site messages
 
-ONE - setup mina for more reliable deploys
+setup UFW - uncomplicated firewall.  go ahead and get this done so I can verify to ensure everything is correct as I test the app
+
+setup mina for more reliable deploys
 learn how to store version of gems for release.  bundle vendor?
 gzip js and css files on deploy
 
-ONE - setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
+setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
 awstats config to exclude scoutapp and uptimerobot and 127.0.0.1
 generated reports accessible by secret URL..through Rails or HTTP auth?
 
-HALF - setup exception_notificaion and test. 
+setup exception_notificaion and test. 
   see if we can write exceptions to file and have scout pick them up.  
 
-HALF - setup rails logrotate.  ensure it works right with scout processing
+setup rails logrotate.  ensure it works right with scout processing
 
-HALF - fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
+fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
 
-HALF - setup tarsnap on vr1
-     check money in tarsnap account
+setup tarsnap on vr1
+  check money in tarsnap account
 
 v1.1
 -----
-TWO - admin pages
+author publishes whole book
 
-THREE - add Alipay
-
-TWO - send to kindle behavior
-    need to package book in epub or Kinld preferred format
-    set limits per month for backyard books.  all purchased books can send.
-    get Andrea to write instruction page
-
-TWO - new model: user gets 2 weeks to the backyard free on registration.  after register tell user they must verify their email to get their referral code.  use referral link to get a friend to register.  friend gets 2 weeks free and referee get another month free.  User can buy one year access to mihudie backyard for $9.95...no recurring fees.
+admin pages v1.1
 
 v1.2
 ------
-author publishes whole book
+send to kindle behavior
+  need to package book in epub or Kinld preferred format
+  set limits per month for backyard books.  all purchased books can send.
+  get Andrea to write instruction page
 
 v1.3
 -----
 author publishes chapter at a time
-
-need to log login failures
 
 on login failure, be sure to show user password-reset link
 
@@ -121,13 +119,6 @@ book uplaods
   need quarantine
   need admin area to take uploaded books, clean them up and publish
   give users opints for useful submissions.
-
-
-EMAIL Scout Mongodb plugin reporting size of storage around 400mb, but the files in /var/lib/mongodb are over 1G.  Send support email.
-
-EMAIL Scout Rails plugin is properly triggering alert when over 500 request/minute.  But when I go to the web console, the history shows almost nothing.  I don't see the spike.
-
-EMAIL Scout seems to be checking my URL more than every one minute
 
 see about adding HTTPS strict.  
     Verify if it effects crawlers:  Baidu Google Bing
@@ -141,7 +132,7 @@ http://www.nginxtips.com/how-to-install-and-configure-spdy-on-nginx/
 try http://emailtosms.com for a low cost email2sms service with Scoutapp
 
 cleanup email TODOs
-
+--------------------
 email Wiley Stuckey
 see about NZ telecom HR director.  See if he's the same guy I met
 email Aaron Bellingham
@@ -150,6 +141,12 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE Add ElasticSearch basics
+
+DONE - UserEvents - need to track user events:  money added, points awarded, backyard access given, point deducted for purchase, etc.  Keep these seperate from LoginEvents and SystemEvents.  Move user email events to UserEvents.  Rename EventLog to SystemEvents
+
+DONE need to log login failures
 
 DONE ensure session cookie is destroyed on logout
 
