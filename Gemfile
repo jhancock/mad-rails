@@ -20,7 +20,7 @@ gem 'elasticsearch-rails'
 gem 'mandrill-api'
 gem 'geoip', '~> 1.4.0'
 
-gem "skylight"
+#gem "skylight"
 
 # add exception_notifier http://amberonrails.com/rails-exception_notification-setup/
 #    https://github.com/smartinez87/exception_notification
