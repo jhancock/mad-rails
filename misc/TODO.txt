@@ -6,10 +6,9 @@ fix Georgia corp registration for mihudie and shellshadow.
 fix paypal mihudie account.  get mihudie EIN.  Call Mom
 find solution for Alipay
 
-Thursday
+Saturday
 ----------
 send Dave/Geoff invoice for $2000
-wire $1000 from HSBC to mihudie Bank of Dudley
 
 email TODOs...see below
 
@@ -26,24 +25,25 @@ ONE - finish all user & password behavior
 
 user referal tracking.
 
-new model: user gets 2 weeks to the backyard free on registration.  after register tell user they must verify their email to get their referral code.  use referral link to get a friend to register.  friend gets 2 weeks free and referee get another month free.  User can buy one year access to mihudie backyard for $9.95...no recurring fees.
+new model: user gets 2 weeks to the backyard free on registration and email verification.  after register tell user they must verify their email to get their referral code.  use referral link to get a friend to register.  friend gets 2 weeks free and referee get another month free.  User can buy one year access to mihudie backyard for $9.95...no recurring fees.
+
+send all users offer email for free period.  offier email has link to validate email address.  should not send emails to users unless validated.
+
+script to grant premium (backyard access)
+  admin feature
+
+multi-variant testing on annual backyard price
+
+learn how to unpin mongodb apt - upgrade vr1 and repin
 
 admin page v1.0
+  elaticsearch hooks to update on model change.  maybe call this from admin pages.
 
-elasticsearch
-  EMAIL find out how to set smartcn correct
-  EMAIL find out how to search with offline_at attribute
-  search result style
+if book is offline, gracefully return user to home or prior page with error message.
 
 sitemap.xml script
   EMAIL Should sitemap include old book links with objectId?
-  EMAIL Shoudl canonical url be the one with ID or author/title?
-
-EMAIL Scout Mongodb plugin reporting size of storage around 400mb, but the files in /var/lib/mongodb are over 1G.  Send support email.
-
-EMAIL Scout Rails plugin is properly triggering alert when over 500 request/minute.  But when I go to the web console, the history shows almost nothing.  I don't see the spike.
-
-EMAIL Scout seems to be checking my URL more than every one minute
+  EMAIL Should canonical url be the one with ID or author/title?
 
 add PayPal Express
 
@@ -62,15 +62,20 @@ review email template.  It may not be repsonsive for email readers.
 
 MAYBE - create admin page so Fly can update css on lin1
 
-SEO - Baidu cares about changes o page titles
+SEO - Baidu cares about changes on page titles
     add schema.org microdata
     http://www.google.com/webmasters/tools/richsnippets
     http://www.heppnetz.de/projects/goodrelations/
 
 optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data just like genre_tags_pp
-lazy save pre-rendered book li and genre_tags_pp if doesn't exist
+lazy save pre-rendered book li, genre_tags_pp and summary_html if doesn't exist
 
-script to ensure all books have tag_names_pp and all books have li data
+script to ensure all books have li, genre_tags_pp and summary_html
+
+EMAIL elasticsearch find out how to set smartcn correct.  lexir?  why does highlighting open an close em when four character in a row are exact match?
+EMAIL elasticsearch pagination is BROKEN!
+elasticsearch result style
+
 
 Andrea needs to write new emails and help translate site messages
 
@@ -98,6 +103,8 @@ v1.1
 -----
 author publishes whole book
 
+periodic scan for too many logins from same account.  send email to admin when this happens.  enable admin to suspend account:  login will fail and report user that account is suspended.  when looking up current_user need to verify account is not suspended.  If it is, must reset session and notify user.
+
 admin pages v1.1
 
 v1.2
@@ -106,6 +113,8 @@ send to kindle behavior
   need to package book in epub or Kinld preferred format
   set limits per month for backyard books.  all purchased books can send.
   get Andrea to write instruction page
+
+admin pages v1.2
 
 v1.3
 -----
@@ -118,7 +127,7 @@ v1.4
 book uplaods
   need quarantine
   need admin area to take uploaded books, clean them up and publish
-  give users opints for useful submissions.
+  give users points for useful submissions.
 
 see about adding HTTPS strict.  
     Verify if it effects crawlers:  Baidu Google Bing
@@ -142,9 +151,23 @@ email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
 
+DONE wire $1200 from HSBC to Bank of Dudley
+
+DONE elasticsearch
+  DONE find out how to search with offline_at attribute
+  DONE search highlighting - see http://www.sitepoint.com/full-text-search-rails-elasticsearch/
+  DONE change /search to get.  add no_follow to the link
+  DONE scripts to delete and rebuild index
+
 DONE Add ElasticSearch basics
 
 DONE - UserEvents - need to track user events:  money added, points awarded, backyard access given, point deducted for purchase, etc.  Keep these seperate from LoginEvents and SystemEvents.  Move user email events to UserEvents.  Rename EventLog to SystemEvents
+
+DONE EMAIL Scout Mongodb plugin reporting size of storage around 400mb, but the files in /var/lib/mongodb are over 1G.  Send support email.
+
+DONE EMAIL Scout Rails plugin is properly triggering alert when over 500 request/minute.  But when I go to the web console, the history shows almost nothing.  I don't see the spike.
+
+DONE EMAIL Scout seems to be checking my URL more than every one minute
 
 DONE need to log login failures
 

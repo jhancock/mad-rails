@@ -18,10 +18,9 @@
         %div{:class => "search-bar"}
           %a{:href => "javascript:;", :class => "icon_search"}
             %span
-          %form{:class => "form", :method => "post", :action => "/search", "accept-charset" => "UTF-8"}
-            %input{:name => "authenticity_token", :value => "#{form_authenticity_token}", :type => "hidden"}
+          %form{:class => "form", :method => "get", :action => "/search", "accept-charset" => "UTF-8"}
             %input{:type => "text", :name => "query", :id => "query", :placeholder => "关键字"}
-            %button{:type => "submit", :class => "btn btn-primary"}
+            %button{:type => "submit", :class => "btn btn-primary", :name => nil}
               搜索
   %div{:class => "nav"}
     %ul

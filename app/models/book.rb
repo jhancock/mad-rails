@@ -30,22 +30,18 @@ class Book
   index updated_at: -1
   index read_count: -1
 
-  #after_commit on: [:create] do
-  #  index_document if self.published?
-  #end
-
-  #after_commit on: [:update] do
-  #  update_document if self.published?
-  #end
-
-  #after_commit on: [:destroy] do
-  #  delete_document if self.published?
-  #end
+  #after_create :index_document
+  #TODO do not want to do this when only read_count is updated
+  #after_update :update_document
+  #after_upsert :update_document
+  #after_destroy :delete_document
 
   #after_save    { Indexer.perform_async(:index,  self.id) }
   #after_destroy { Indexer.perform_async(:delete, self.id) }
 
-  # will delete and recreate index
+  # Delete everything
+  # Book.__elasticsearch__.client.indices.delete index: Book.index_name rescue nil
+  # will delete and recreate index?
   # Book.__elasticsearch__.create_index! force: true
   # Book.import
   # response = Book.search '如花春梦'
@@ -56,39 +52,52 @@ class Book
   # response.results.first._source.title
   settings index: { number_of_shards: 1 } do
     mappings dynamic: 'false' do
-      indexes :title, type: 'string', analyzer: 'smartcn', index_options: 'offsets'
-      indexes :author, type: 'string', analyzer: 'smartcn', index_options: 'offsets'
-      indexes :summary, type: 'string', analyzer: 'smartcn', index_options: 'offsets'
-      indexes :tag_names_pp, type: 'string', analyzer: 'smartcn', index_options: 'offsets'
+      #indexes :title, type: 'string', analyzer: 'smartcn', index_options: 'offsets'
+      indexes :title, type: 'string', analyzer: 'smartcn', store: 'true', term_vector: 'with_positions_offsets'
+      indexes :author, type: 'string', analyzer: 'smartcn', store: 'true', term_vector: 'with_positions_offsets'
+      indexes :summary, type: 'string', analyzer: 'smartcn', store: 'true', term_vector: 'with_positions_offsets'
+      indexes :tag_names_pp, type: 'string', analyzer: 'smartcn', store: 'true', term_vector: 'with_positions_offsets'
       indexes :offline_at
+      indexes :chars, type: 'integer'
     end
   end
 
   def as_indexed_json(options={})
-    as_json(only: [:title, :author, :summary, :tag_names_pp, :offline_at])
+    as_json(only: [:title, :author, :summary, :tag_names_pp, :offline_at, :chars])
   end
 
   def self.search(query)
     __elasticsearch__.search(
-                             {
-                               query: {
-                                 multi_match: {
-                                   query: query,
-                                   fields: ['title^10', 'author^10', 'tag_names_pp^6', 'summary']
-                                 }
-                               },
-                               highlight: {
-                                 pre_tags: ['<em>'],
-                                 post_tags: ['</em>'],
-                                 fields: {
-                                   title: {},
-                                   author: {},
-                                   tag_names_pp: {},
-                                   summary: {}
-                                 }
-                               }
-                             }
-                             )
+       {
+         query: {
+           filtered: {
+             query: {
+               multi_match: {
+                 query: query,
+                 fields: ['title^2', 'author^2', 'tag_names_pp', 'summary']
+               }
+             },
+             filter: {
+               missing: {
+                 field: 'offline_at',
+                 existence: true,
+                 null_value: true
+               }
+             }
+           }
+         },
+         highlight: {
+           pre_tags: ['<em>'],
+           post_tags: ['</em>'],
+           fields: {
+             title: {},
+             author: {},
+             tag_names_pp: {},
+             summary: {}
+           }
+         }
+       }
+     )
   end
 
   def self.online_recent

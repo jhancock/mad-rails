@@ -322,6 +322,119 @@ sudo apt-get install ruby-dev
 sudo gem install mongo mongo_ext bson_ext
 
 
+
+#########################
+##     SSL for prod    ##
+#########################
+
+
+# edit ~/rails/.gitignore  ignore ssl directory
+mkdir ~/rails/ssl
+cd ~/rails/ssl
+openssl genrsa -des3 -passout pass:x -out mihudie.pass.key 2048
+
+openssl rsa -passin pass:x -in mihudie.pass.key -out mihudie.key
+rm mihudie.pass.key
+
+openssl req -new -key mihudie.key -out mihudie.csr
+# press enter when asked for password
+
+# This line completed by Comodo SSL service ;)
+#openssl x509 -req -days 365 -in mihudie.csr -signkey mihudie.key -out mihudie.crt
+
+openssl dhparam -out mihudie.dhparam.pem 2048
+
+# ensure dev.mihudie.key is not stored in git
+
+# verify cert.  The md5 of both commands should be the same
+openssl rsa -noout -modulus -in mihudie.key | openssl md5
+
+# use the main crt, not the full bundle
+openssl x509 -noout -modulus -in mihudie_com.crt | openssl md5
+
+#########################
+##  SSL Stapling OCSP  ##
+#########################
+
+#######  Verify Start  #########
+
+# verify stapling is working
+
+openssl s_client -connect mihudie.com:443 -tls1 -tlsextdebug -status
+
+# output should include:
+OCSP response: 
+======================================
+OCSP Response Data:
+    OCSP Response Status: successful (0x0)
+    Response Type: Basic OCSP Response
+
+########  Verify End  #########
+
+##### Firewall Start ######
+# do this to see what URLs need to be unblocked with firewall for outgoing connections 
+# https://raymii.org/s/tutorials/OCSP_Stapling_on_nginx.html
+# the following command does not work on OS X.  run from the dev VM.
+
+OLDIFS=$IFS; IFS=':' certificates=$(openssl s_client -connect mihudie.com:443 -showcerts -tlsextdebug -tls1 2>&1 </dev/null | sed -n '/-----BEGIN/,/-----END/ {/-----BEGIN/ s/^/:/; p}'); for certificate in ${certificates#:}; do echo $certificate | openssl x509 -noout -ocsp_uri; done; IFS=$OLDIFS                        
+
+# should output something like this:
+http://ocsp.comodoca.com
+http://ocsp.comodoca.com
+http://ocsp.usertrust.com
+					
+# firewall needs to allow outbound connect to those locations
+####### Firewall End  #######
+
+################################
+##        ElasticSearch       ##
+################################
+
+# install Oracle Java
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+
+# auto-install accept license.  haven't tried:
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+
+sudo apt-get install oracle-java8-set-default
+# check
+java -version
+
+# install elasticsearch
+# http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-repositories.html
+# http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-service.html
+
+wget -qO - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+
+# add to /etc/apt/sources.list 
+deb http://packages.elasticsearch.org/elasticsearch/1.3/debian stable main
+
+sudo apt-get update 
+sudo apt-get install elasticsearch
+
+# setup to startup at boot
+sudo update-rc.d elasticsearch defaults 95 10
+
+# service does not start on install and does not restart on package upgrade
+sudo service elasticsearch start | stop | restart
+# or sudo /etc/init.d/elasticsearch start
+
+# test
+curl http://localhost:9200
+curl http://localhost:9200/_cluster/health
+curl http://localhost:9200/_nodes
+
+# smartcn plugin
+# https://github.com/elasticsearch/elasticsearch-analysis-smartcn
+sudo /usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-analysis-smartcn/2.3.0
+
+# edit /etc/elasticsearch/elasticsearch.yml
+# set mandatory plugin
+plugin.mandatory: analysis-smartcn
+
+
 ########################
 ##       TARSNAP      ##
 ########################

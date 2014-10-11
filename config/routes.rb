@@ -20,8 +20,7 @@ Rails.application.routes.draw do
   get 'password_reset/:code' => 'account_public#password_reset', as: 'password_reset'
   post 'password_reset/:code' => 'account_public#password_reset_post'
 
-  get 'search' => 'search#search', as: 'search'
-  post 'search' => 'search#search_post'
+  get 'search(/:query)(/page/:page)' => 'search#search', as: 'search'
 
   get 'privacy_policy' => 'public#privacy_policy', as: 'privacy_policy'
   get 'terms_of_service' => 'public#terms_of_service', as: 'terms_of_service'
