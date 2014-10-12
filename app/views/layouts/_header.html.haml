@@ -4,13 +4,17 @@
       %a{:href => root_path}
         迷蝴蝶
     %ul{:class => "r"}
-      - unless current_user
+      - if current_user
+        %li
+          %a{:href => logout_path}
+            退出
+      - else
         %li
           %a{:href => login_path}
             登录
         %li
           %a{:href => register_path}
-            注册        
+            注册
       %li
         %a{:href => "#", :class => "menu-link"}
           %span
