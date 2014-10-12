@@ -32,6 +32,10 @@ send all users offer email for free period.  offier email has link to validate e
 script to grant premium (backyard access)
   admin feature
 
+EMAIL elasticsearch find out how to set smartcn correct.  lexir?  why does highlighting open an close em when four character in a row are exact match?
+EMAIL elasticsearch pagination is BROKEN!
+elasticsearch result style
+
 multi-variant testing on annual backyard price
 
 learn how to unpin mongodb apt - upgrade vr1 and repin
@@ -71,11 +75,6 @@ optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data ju
 lazy save pre-rendered book li, genre_tags_pp and summary_html if doesn't exist
 
 script to ensure all books have li, genre_tags_pp and summary_html
-
-EMAIL elasticsearch find out how to set smartcn correct.  lexir?  why does highlighting open an close em when four character in a row are exact match?
-EMAIL elasticsearch pagination is BROKEN!
-elasticsearch result style
-
 
 Andrea needs to write new emails and help translate site messages
 

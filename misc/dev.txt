@@ -460,7 +460,12 @@ curl http://localhost:9200/_nodes
 
 # smartcn plugin
 # https://github.com/elasticsearch/elasticsearch-analysis-smartcn
-/usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-analysis-smartcn/2.3.0
+sudo /usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-analysis-smartcn/2.3.1
+
+# remove plugin
+sudo service elasticsearch stop
+sudo /usr/share/elasticsearch/bin/plugin --remove analysis-smartcn
+
 
 # edit /etc/elasticsearch/elasticsearch.yml
 # set mandatory plugin
