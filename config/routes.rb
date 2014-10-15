@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'bookmarks/index'
+
+  get 'bookmarks/remove'
+
   root 'public#index'
 
   get 'login' => 'account_public#login', as: 'login'
@@ -14,6 +18,10 @@ Rails.application.routes.draw do
   #TODO change_password
   get 'account/change_password' => 'account#change_password', as: 'change_password'
   post 'account/change_password' => 'account#change_password_post'
+  get 'account/change_email' => 'account#change_email', as: 'change_email'
+  post 'account/change_email' => 'account#change_email_post'
+  get 'account/send_verification_email' => 'account#send_verification_email', as: 'send_verification_email'
+
   #TODO password_reset
   get 'password_reset_request' => 'account_public#password_reset_request', as: 'password_reset_request'
   post 'password_reset_request' => 'account_public#password_reset_request_post'  

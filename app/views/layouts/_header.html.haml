@@ -28,12 +28,13 @@
               搜索
   %div{:class => "nav"}
     %ul
-      %li
-        %a{:href => account_home_path}
-          我的账户
-      %li
-        %a{:href => "bookmarks.html"}
-          我的书签
+      - if current_user
+        %li
+          %a{:href => account_home_path}
+            我的账户
+        %li
+          %a{:href => "bookmarks.html"}
+            我的书签
       %li{:class => "show_category"}
         %a{:href => "javascript:;"}
           分类

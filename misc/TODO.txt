@@ -13,58 +13,30 @@ send Dave/Geoff invoice for $2000
 email TODOs...see below
 
 ONE - finish all user & password behavior
-    account page.  logout link, bookmarks link, change_password link.
-    bookmarks page
+    account page.  logout link, recent bookmarks, manage bookmarks link, change_password link, change email link, set theme link
+    send_email_verification_path - make this a get so there is no form needed.
+      log event for email_sent
+      log event when verified
+    show backyard access date
+    show referral link if not used
+    bookmarks page - page through and remove bookmarks
        BooksController#read needs to set bookmark
     change_password page
     password_reset_request page
     password_reset page
+    change_email page
+    set theme page
     force_ssl on account/password_change, password_reset_reuqest and password_reset
     DONE test mods to user login, LoginLog, logout kills cookie, register stores ip, etc
     logout link in menu bar if not mobile.  only on account page for mobile
 
-user referal tracking.
-
-new model: user gets 2 weeks to the backyard free on registration and email verification.  after register tell user they must verify their email to get their referral code.  use referral link to get a friend to register.  friend gets 2 weeks free and referee get another month free.  User can buy one year access to mihudie backyard for $9.95...no recurring fees.
-
-send all users offer email for free period.  offier email has link to validate email address.  should not send emails to users unless validated.
-
-script to grant premium (backyard access)
-  admin feature
-
-EMAIL elasticsearch find out how to set smartcn correct.  lexir?  why does highlighting open an close em when four character in a row are exact match?
-EMAIL elasticsearch pagination is BROKEN!
-elasticsearch result style
-
-multi-variant testing on annual backyard price
-
-learn how to unpin mongodb apt - upgrade vr1 and repin
-
-admin page v1.0
-  elaticsearch hooks to update on model change.  maybe call this from admin pages.
-
 if book is offline, gracefully return user to home or prior page with error message.
-
-sitemap.xml script
-  EMAIL Should sitemap include old book links with objectId?
-  EMAIL Should canonical url be the one with ID or author/title?
-
-add PayPal Express
-
-add Alipay
- 
-Write script to fix this:
-mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
 
 better flash notices.  better form errors. 
 
 set theme behavior
 
-review email template.  It may not be repsonsive for email readers.
-   add my own unsubscribe link to email template.  the default one is too prominent.
-   email footer has  mihudie address which links to map on iPhone.  See if this can be removed
-
-MAYBE - create admin page so Fly can update css on lin1
+on login failure, be sure to show user password-reset link
 
 SEO - Baidu cares about changes on page titles
     add schema.org microdata
@@ -76,13 +48,53 @@ lazy save pre-rendered book li, genre_tags_pp and summary_html if doesn't exist
 
 script to ensure all books have li, genre_tags_pp and summary_html
 
+new model: 
+    user gets 2 weeks to the backyard free on registration and email verification.  
+    after verification, send user email with referral code to invite user for one more month backyard access.
+    friend gets 2 weeks free and referee get another month free.  
+    add money to account.  min 30 rmb for alipay.  min $10 for Paypal.  user gets 1 month backyard access when they add the min to account.  more backyard access when they add more money:  100 rmb gets 6 months.  $20 paypal gets 6 months.  user can extend backyard access with account points.
+
+Andrea
+-------
+user legal agreement.  include backyard access rules and refund fee rules.
+
 Andrea needs to write new emails and help translate site messages
+--------
 
-setup UFW - uncomplicated firewall.  go ahead and get this done so I can verify to ensure everything is correct as I test the app
+minimum 30 or 50 rmb
+	1 rmb = 100 points
+	3 to 5 points per 1000 characters
+be careful not to count spaces in char count! 
 
-setup mina for more reliable deploys
-learn how to store version of gems for release.  bundle vendor?
-gzip js and css files on deploy
+send all users offer email for free period.  offer email has link to validate email address.  should not send emails to users unless validated.
+
+EMAIL elasticsearch find out how to set smartcn correct.  lexir?  why does highlighting open an close em when four character in a row are exact match?
+EMAIL elasticsearch pagination is BROKEN!
+elasticsearch result style
+
+learn how to unpin mongodb apt - upgrade vr1 and repin
+
+admin page v1.0
+  elaticsearch hooks to update on model change.  maybe call this from admin pages.
+  grant backyard access - amount of time or specific date
+  	send email to user unless checkbox is selected to not
+
+sitemap.xml script
+  EMAIL Should sitemap include old book links with objectId?
+  EMAIL Should canonical url be the one with ID or author/title?
+
+add PayPal Express
+
+add Alipay
+
+Write script to fix this:
+mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
+
+review email template.  It may not be repsonsive for email readers.
+   add my own unsubscribe link to email template.  the default one is too prominent.
+   email footer has  mihudie address which links to map on iPhone.  See if this can be removed
+
+MAYBE - create admin page so Fly can update css on lin1
 
 setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
 awstats config to exclude scoutapp and uptimerobot and 127.0.0.1
@@ -106,10 +118,17 @@ periodic scan for too many logins from same account.  send email to admin when t
 
 admin pages v1.1
 
+setup UFW - uncomplicated firewall.  go ahead and get this done so I can verify to ensure everything is correct as I test the app
+
+setup mina for more reliable deploys
+learn how to store version of gems for release.  bundle vendor?
+gzip js and css files on deploy
+
+
 v1.2
 ------
 send to kindle behavior
-  need to package book in epub or Kinld preferred format
+  use Kindle packaging tool
   set limits per month for backyard books.  all purchased books can send.
   get Andrea to write instruction page
 
@@ -118,8 +137,6 @@ admin pages v1.2
 v1.3
 -----
 author publishes chapter at a time
-
-on login failure, be sure to show user password-reset link
 
 v1.4
 ------

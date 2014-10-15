@@ -5,6 +5,7 @@ class User
 
   # TODO add index on email and probably many others ;)
   field :email, type: String
+  field :email_verified, type: Time
   # password_hash and password_salt are old hash method.
   field :password_hash, type: String
   field :password_salt, type: String
@@ -45,6 +46,10 @@ class User
   #  return user if user && verify_password?(password, user.password_hash, user.password_salt)
   #  nil
   #end
+
+  def email_verified?
+    self.email_verified != nil
+  end
 
   # returns true if the password is correct
   def self.verify_password?(password, password_hash, password_salt)

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 class AccountController < ApplicationController
+  force_ssl except: :logout
   before_action :ensure_user
 
   def index
@@ -25,6 +26,24 @@ class AccountController < ApplicationController
     @page_title = "修改密码"
     @page_description = "修改自己的登录密码"
     @page_keywords = "密码 在线阅读"
+  end
+
+  def change_email
+    #TODO need chinese txt
+    @page_title = "change email"
+    @page_description = "change email"
+    @page_keywords = "change email"
+  end
+
+  def change_email_post
+    #TODO need chinese txt
+    @page_title = "change email"
+    @page_description = "change email"
+    @page_keywords = "change email"
+  end
+
+  def send_verification_email
+    # send email and redirect to prior page with message"
   end
         
   private
