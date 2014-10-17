@@ -13,14 +13,11 @@
 
   %body
     = render 'layouts/header'
-    %div{:class => "content index clearfix"}
-      %div{:class => "index-l l"}
-        = render 'layouts/genres'
-      %div{:role => "main", :class => "index-r r"}
-        - flash.each do |name, msg|
-          = content_tag :div, msg, class: name
-        = yield
-        %footer
-          = render 'layouts/footer'
-
-
+    %div{:class => "content clearfix"}
+      = render 'layouts/content_left'
+      %div{:class => "content_main" :role => "main"}
+        %div{:class => "main_text"}
+          - flash.each do |name, msg|
+            = content_tag :div, msg, class: name
+          = yield
+          = render 'layouts/footer'        

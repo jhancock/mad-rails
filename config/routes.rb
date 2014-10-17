@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'bookmarks/index'
-
-  get 'bookmarks/remove'
-
   root 'public#index'
 
   get 'login' => 'account_public#login', as: 'login'
@@ -27,6 +23,9 @@ Rails.application.routes.draw do
   post 'password_reset_request' => 'account_public#password_reset_request_post'  
   get 'password_reset/:code' => 'account_public#password_reset', as: 'password_reset'
   post 'password_reset/:code' => 'account_public#password_reset_post'
+
+  get 'bookmarks/index' => 'bookmarks#index', as: 'bookmarks'
+  get 'bookmarks/remove' => 'bookmarks#remove', as: 'remove_bookmark'
 
   get 'search(/:query)(/page/:page)' => 'search#search', as: 'search'
 

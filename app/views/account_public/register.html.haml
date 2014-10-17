@@ -1,19 +1,16 @@
-%p
 %h2 注册免费  请提供正确邮件地址  接收迷蝴蝶大礼及精彩品书荐书贴！
 %h2
   我们绝不会与任何第三方分享您的邮件地址，详细请参见
   = link_to("隐私声明", privacy_policy_path)
-%h2
-  已经注册?
-  = link_to(' 请登录', login_path)
 
 = my_form_for :user do |f|
   = f.text_field :email, "电子邮箱"
   = f.password_field :password, "密码"
   = f.password_field :password_confirm, "确认密码"
-  %div
-    %p
-      点击注册按钮则表示您完全同意并接受我们的
-      = link_to("服务协议", terms_of_service_path)
-  = f.submit "注册"
-
+  %p
+    点击注册按钮则表示您完全同意并接受我们的
+    = link_to("服务协议", terms_of_service_path)
+  %div{:class => "form-action clearfix"}
+    %div{:class => "l"}
+      = link_to "请登录?", login_path, {:rel => "nofollow"}
+    = f.submit "注册"

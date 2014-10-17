@@ -1,0 +1,10 @@
+notes3.txt
+
+<ul class="header-side">
+should be called header-right
+
+header-warp => header-wrap
+
+pure-checkbox
+
+bg-primary, etc need names that match the flash message types

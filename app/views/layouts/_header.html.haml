@@ -1,44 +1,4 @@
 %div{:class => "header"}
-  %div{:class => "top clearfix"}
-    %h1{:class => "logo l"}
-      %a{:href => root_path}
-        迷蝴蝶
-    %ul{:class => "r"}
-      - if current_user
-        %li
-          %a{:href => logout_path}
-            退出
-      - else
-        %li
-          %a{:href => login_path}
-            登录
-        %li
-          %a{:href => register_path}
-            注册
-      %li
-        %a{:href => "#", :class => "menu-link"}
-          %span
-      %li
-        %div{:class => "search-bar"}
-          %a{:href => "javascript:;", :class => "icon_search"}
-            %span
-          %form{:class => "form", :method => "get", :action => "/search", "accept-charset" => "UTF-8"}
-            %input{:type => "text", :name => "query", :id => "query", :placeholder => "关键字"}
-            %button{:type => "submit", :class => "btn btn-primary", :name => nil}
-              搜索
-  %div{:class => "nav"}
-    %ul
-      - if current_user
-        %li
-          %a{:href => account_home_path}
-            我的账户
-        %li
-          %a{:href => "bookmarks.html"}
-            我的书签
-      %li{:class => "show_category"}
-        %a{:href => "javascript:;"}
-          分类
-        :plain
-          #{tags_list}
-
-
+  %div{:class => "clearfix header-warp"}
+    = render 'layouts/header_right'
+    = render 'layouts/header_left'

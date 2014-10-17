@@ -1,7 +1,9 @@
 %h1  登录 迷蝴蝶 - mihudie.com
-%h2
-  = link_to "尚未注册?", register_path, {:rel => "nofollow"} 
+
 = my_form_for :user  do |f|
   = f.text_field :email, "电子邮箱"
   = f.password_field :password, "密码"
-  = f.submit "登录"
+  %div{:class => "form-action clearfix"}
+  	%div{:class => "l"}
+  	  = link_to "尚未注册?", register_path, {:rel => "nofollow"}
+  	= f.submit "登录"

@@ -1,3 +1,5 @@
+%div{:class => "bg-light tips_remove"}
+  登录成功
 %h1 Welcome to Mihudie 2.0
 %p
   = " 欢迎来到迷蝴蝶文学社区，与同好一同品评、分享和创作。以文会友，不亦悦乎？期待你添砖加瓦，也衷心希望你能在此获得最愉悦的体验。"
@@ -9,11 +11,9 @@
 = page_entries_info @books
 = paginate @books, :params => {:controller => 'books', :action => 'list', :sort => @sort}
 %hr
-%div{:class => "boo-show index-list"}
+%div{:class => "book-show index-list"}
   %h3
     书库
   %div{:class => "book-list"}
     %ul
-      = render @books 
-
-
+      = render @books

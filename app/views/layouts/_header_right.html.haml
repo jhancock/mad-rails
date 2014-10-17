@@ -1,0 +1,23 @@
+%ul{:class => "header-side"}
+  %li{:class => "l"}
+    %a{:href => "#", :class => "menu-link"}
+      %span
+  - if current_user
+    %li{:class => "l"}
+      %a{:href => logout_path}
+        退出
+  - else
+    %li{:class => "l"}
+      %a{:href => login_path}
+        登录
+    %li{:class => "l"}
+      %a{:href => register_path}
+        注册
+  %li{:class => "r"}
+    %div{:class => "search-bar"}
+      %a{:href => "javascript:;", :class => "icon_search"}
+        %span
+      %form{:class => "form", :method => "get", :action => "/search", "accept-charset" => "UTF-8"}
+        %input{:type => "text", :name => "query", :id => "query", :placeholder => "关键字"}
+        %button{:type => "submit", :class => "button-primary", :name => nil}
+          搜索
