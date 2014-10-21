@@ -23,6 +23,13 @@ class BooksController < ApplicationController
       #TODO need better error messgase here
       @content = "file not found: #{path}"
     end
+    if @page == 1
+      @page_title = "#{@book.title} - #{@book.author}"
+    else
+      @page_title = "第#{@page}页 #{@book.title} - #{@book.author}"
+    end
+    @page_description = "按近期被点击次数排行的电子书，在线阅读最吸引人的中文电子书"
+    @page_keywords = "关注 流行 中文电子书 在线阅读"
     render
   end
 

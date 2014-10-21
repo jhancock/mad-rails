@@ -1,9 +1,8 @@
-%h2 注册免费  请提供正确邮件地址  接收迷蝴蝶大礼及精彩品书荐书贴！
-%h2
-  我们绝不会与任何第三方分享您的邮件地址，详细请参见
-  = link_to("隐私声明", privacy_policy_path)
-
 = my_form_for :user do |f|
+  %h3 注册免费  请提供正确邮件地址  接收迷蝴蝶大礼及精彩品书荐书贴！
+  %h3
+    我们绝不会与任何第三方分享您的邮件地址，详细请参见
+    = link_to("隐私声明", privacy_policy_path)
   = f.text_field :email, "电子邮箱"
   = f.password_field :password, "密码"
   = f.password_field :password_confirm, "确认密码"

@@ -11,9 +11,7 @@
         = link_to book.try(:highlight).try(:title) ? book.highlight.title[0].html_safe : book.title, read_book_path(author: book.author, title: book.title)
         = " - #{book.try(:highlight).try(:author) ? book.highlight.author[0] : book.author}".html_safe
         %p
+          = "#{book.try(:highlight).try(:summary) ? book.highlight.summary[0] : book.summary}".html_safe
+        %p
           = "#{book.try(:highlight).try(:tag_names_pp) ? book.highlight.tag_names_pp[0] : book.tag_names_pp}".html_safe
           = "- #{book.chars} 字数"
-        %p
-          = "#{book.try(:highlight).try(:summary) ? book.highlight.summary[0] : book.summary}".html_safe
-      %br
-  }

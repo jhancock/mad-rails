@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get 'password_reset/:code' => 'account_public#password_reset', as: 'password_reset'
   post 'password_reset/:code' => 'account_public#password_reset_post'
 
-  get 'bookmarks/index' => 'bookmarks#index', as: 'bookmarks'
+  get 'bookmarks' => 'bookmarks#index', as: 'bookmarks'
   get 'bookmarks/remove' => 'bookmarks#remove', as: 'remove_bookmark'
 
   get 'search(/:query)(/page/:page)' => 'search#search', as: 'search'

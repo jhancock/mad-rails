@@ -1,10 +1,54 @@
 notes3.txt
+===========
+menus for 'nav l'
+------------------
+menu-left>>menu-item>>menu-content>>
+
+for example:
+ul#nav,l>>li#nav-menu>>ul#nav-flow
+ul#nav,l>>li#nav-menu>>ul#nav-line
+  an li can have a class "notice" to be highlighted with an orange "*"
+    if one line has this mark, the parent anchor text has this mark.
+
+menu content area should be light background and dark text.
+
+-------------------
+
+form-model needs a max-width.  two choices.  default is normal (less than today).  add class "wide" for wider form.
+
+button font on mobile needs to be stronger/larger.  hard to read the white on blue.
+form-action div should have margin on right so button is not too far to right.
+form-model should not be so wide.  Do not need long entry fields.  Need bigger entry fields and buttons.
+
+form field height and text is too small on desktop.  ok on mobile.
+
+admin pages need layout with permanent left sidebar for nav.  This will make the whole width wider.  The main content div stays the same width.
+  admin page "main content" might need to be able to have two columns in it.
+
+flash message two styles: notice and error
+  light background.  dark text.  thin darker border.
+  need class "flash-removable".  removable means if the user taps somewhere in the right, it closes.
+  also need class "flash" for if it is not removable.
+
+all class names should use - not _
 
 <ul class="header-side">
 should be called header-right
 
 header-warp => header-wrap
 
-pure-checkbox
+detail-span not working on desktop
+ mobile will click-through  on first click.
+buttons in detail-span have wrong text color.  hard to read.
 
-bg-primary, etc need names that match the flash message types
+pure-checkbox  Is this being used?
+
+get rid of bg-primary, etc.
+
+change to type button - login button still not right
+
+mobile search icon needs bottom padding.
+
+on desktop, search field and login/register/logout links  need more top margin.
+
+on mobile, the previous page button (on page-bar) when reading a book is missing (when on page greater than 1).  On desktop it shows.

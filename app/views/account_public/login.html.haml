@@ -4,6 +4,6 @@
   = f.text_field :email, "电子邮箱"
   = f.password_field :password, "密码"
   %div{:class => "form-action clearfix"}
-  	%div{:class => "l"}
-  	  = link_to "尚未注册?", register_path, {:rel => "nofollow"}
-  	= f.submit "登录"
+    %div{:class => "l"}
+      = link_to "尚未注册?", register_path, {:rel => "nofollow"}
+    = f.submit "登录"
