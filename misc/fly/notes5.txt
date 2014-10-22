@@ -1,2 +1,19 @@
 change them-list -> theme-list
 
+Theme behviors work well. Nice ;)  Need a method to select theme in the account page.  It will be on a page account/set-theme
+
+I added a little padding to the bottom of the screen under the two buttons (theme and scroll to top) by creating an empty <p>.  Need to do this as the iPhone wil pull up its nav menu if you touh too close to the bottom.
+
+Scroll to top buttom changes its background and font on click.  But on mobile, the style changes to do go back after the behavior is complete. 	      	     	 
+
+change class names:
+theme-1 -> theme-lite-small
+theme-2 -> theme-dark-small
+theme-3 -> theme-lite-medium
+theme-4 -> theme-dark-medium
+theme-5 -> theme-lite-large
+theme-6 -> theme-dark-large
+
+I need a plan for how the user's theme selection will be stored.  If you can set a cookie named mhd_theme with a value of the theme class name, that might be easiest.  
+
+
