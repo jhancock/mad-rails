@@ -14,7 +14,7 @@ module ApplicationHelper
       tags_list << "<a href='#{books_by_tag_path(tag: tag.name)}'>#{tag.cn}</a>"
       tags_list << "</li>"
     end
-    @@tags_list = tags_list << "</ul>"
+    @@tags_list = (tags_list << "</ul>").html_safe
   end
 
   # pretty print a Mongoid document

@@ -1,7 +1,6 @@
 %div{:class => "reading-page"}
   %div{:class => "reading-page-md"}
-    :plain
-      #{@content}
+    = @content
 
 %div{:class => "page-bar"}
   - if @page > 1  

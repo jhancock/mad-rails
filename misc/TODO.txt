@@ -12,6 +12,8 @@ send Dave/Geoff invoice for $2000
 
 email TODOs...see below
 
+reading mode max line length is too much.
+
 ONE - finish all user & password behavior
     account page.  logout link, recent bookmarks, manage bookmarks link, change_password link, change email link, set theme link
     send_email_verification_path - make this a get so there is no form needed.

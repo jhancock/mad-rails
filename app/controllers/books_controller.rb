@@ -18,10 +18,10 @@ class BooksController < ApplicationController
     begin
       path = @book.chunk_path(@page)
       logger.info "PATH: #{path}"
-      @content = IO.read(path)
+      @content = IO.read(path).html_safe
     rescue Errno::ENOENT
       #TODO need better error messgase here
-      @content = "file not found: #{path}"
+      @content = "file not found: #{path}".html_safe
     end
     if @page == 1
       @page_title = "#{@book.title} - #{@book.author}"
