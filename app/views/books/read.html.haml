@@ -1,8 +1,7 @@
-%h2
-  #{@book.title} - #{@book.author} - 第#{@page}页
-
-:plain
-  #{@content}
+%div{:class => "reading-page"}
+  %div{:class => "reading-page-md"}
+    :plain
+      #{@content}
 
 %div{:class => "page-bar"}
   - if @page > 1  

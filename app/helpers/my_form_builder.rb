@@ -15,4 +15,11 @@ class MyFormBuilder < ActionView::Helpers::FormBuilder
       :class => "r form-action-r"
     )
   end
+
+#  def submit(label, options = {})
+#    @template.button_tag(
+#      label, objectify_options(options.merge({:class => "button-primary"}))
+#    )
+#  end
+
 end

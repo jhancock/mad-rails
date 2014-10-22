@@ -1,0 +1,29 @@
+****
+Names and behavior for book-show index-list, last-review index-list, etc.
+There are two behaviors: 
+1 - The li's are flowing or in a grid.  In "last-review index-list", it is flowing.  in "book-show index-list" there are 3 or 1 columns.
+2 - Detail-span's have behavior: hover, click, etc.  This should be part of the containing div's class names.  I will want to reuse this pattern when showing lists of Authors, Users, Rating, etc. 
+
+For example. the last-review list could be in  <div class="list-flow details">
+The book-show list would be in <div class="list-column details">.  If I don't need the detail-span behavior I leave off the "details" class: <div class="list-flow"> or <div class="list-column">.
+
+Do we need <div class="book-list"> nested.  Isn't one div containing the list enough?
+****
+
+change ipt-text -> input-text
+
+logout link in header shows up on mobile
+
+on desktop, nav lists (categories list) should open/close on hover.
+
+on mobile, the previous page button (on page-bar) when reading a book is missing (when on page greater than 1).  On desktop it shows.
+
+font in form fields is too small.
+
+font in error and notice divs is too small.
+
+I'm using div's for error notices in forms.  Try a login error to see.  I don't think I need the <p> classes for notice and error.  The div classes are enough.
+
+error and notice font should be black..not red or blue. For an error div, lets try adding a solid red vertical bar in the left margin.
+
+footer should be centered

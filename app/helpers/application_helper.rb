@@ -8,7 +8,7 @@ module ApplicationHelper
   @@tags_list = nil
   def tags_list
     return @@tags_list if @@tags_list
-    tags_list = "<ul>"
+    tags_list = "<ul class='nav-flow'>"
     GenreTag.all.each do |tag|
       tags_list << "<li>"
       tags_list << "<a href='#{books_by_tag_path(tag: tag.name)}'>#{tag.cn}</a>"
@@ -28,9 +28,18 @@ module ApplicationHelper
 
   #TODO add flash messages inside form-model div
   def my_form_for(record_or_name_or_array, *args, &block)
+    flash_content = ""
     options = args.extract_options!
     content_tag(:div, :class => "form-model") do
-      form_for(record_or_name_or_array, *(args << options.merge(builder: MyFormBuilder, :html => {:class => "form"})), &block)
+      flash.each do |name, msg|
+        if name == "form_error"
+          flash_content << content_tag(:div, msg, class:"error")
+        end
+        if name == "form_notice"
+          flash_content << content_tag(:div, msg, class: "notice")
+        end
+      end
+      flash_content.html_safe + form_for(record_or_name_or_array, *(args << options.merge(builder: MyFormBuilder, :html => {:class => "form"})), &block)
     end
   end
 

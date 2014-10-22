@@ -4,24 +4,24 @@ class AccountPublicController < ApplicationController
   before_action :ensure_no_user, except: :login_help
 
   def login
-    @page_title = "登录迷蝴蝶 电子书在线阅读"
+    @page_title = "Login"
     @page_description = "登录迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "登录 电子书 在线阅读"
   end
 
   def login_post
-    @page_title = "登录迷蝴蝶 电子书在线阅读"
+    @page_title = "Login"
     @page_description = "登录迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "登录 电子书 在线阅读"
     user = User.find_by(email: params[:user][:email])
     unless user
       LoginEvents.log_invalid_user(params[:user][:email], request.remote_ip)
-      flash.now[:error] = "Login error"
+      flash.now[:form_error] = "Login error"
       render 'login' and return
     end
     unless User.verify_password?(params[:user][:password], user.password_hash, user.password_salt)
       LoginEvents.log_bad_password(user.id, request.remote_ip)
-      flash.now[:error] = "Login error"
+      flash.now[:form_error] = "Login error"
       render 'login' and return
     end
     # we remove any referral cookies when a user successfully logs in.  May solve the internet cafe problem
@@ -33,29 +33,29 @@ class AccountPublicController < ApplicationController
   end
 
   def register
-    @page_title = "注册迷蝴蝶 电子书在线阅读"
+    @page_title = "Register"
     @page_description = "注册迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "注册 电子书 在线阅读"
   end
 
   def register_post
-    @page_title = "注册迷蝴蝶 电子书在线阅读"
+    @page_title = "Register"
     @page_description = "注册迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "注册 电子书 在线阅读"
     unless email_valid?(params[:user][:email])
       #TODO SystemEvents.log(:invalid_email_format, {:email => params[:email]})
       #TODO decide how to handle i18n and message by id
       #message[:error] = "invalid_email_format"
-      flash.now[:error] = "invalid_email_format"
+      flash.now[:form_error] = "invalid_email_format"
       render 'register' and return
     end
     unless params[:user][:password] == params[:user][:password_confirm]
-      flash.now[:error] = "passwords_do_not_match"
+      flash.now[:form_error] = "passwords_do_not_match"
       render 'register' and return
     end
     if User.find_by(email: params[:user][:email])
       #TODO dont tell user they are already registered?
-      flash.now[:error] = "email_already_registered"
+      flash.now[:form_error] = "email_already_registered"
       render 'register' and return
     end
     user = User.new({:email => params[:user][:email], :registered => Time.now})
