@@ -14,6 +14,10 @@ email TODOs...see below
 
 reading mode max line length is too much.
 
+set email text field to type understood by iPhone
+
+home page h2 looks good "welcome to Mihudie 2.0".  An h1 is too big.  We shoul make h1 look like h2.
+
 ONE - finish all user & password behavior
     account page.  logout link, recent bookmarks, manage bookmarks link, change_password link, change email link, set theme link
     send_email_verification_path - make this a get so there is no form needed.

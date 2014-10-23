@@ -2,7 +2,7 @@
   %h3
     Login &nbsp;&nbsp;&nbsp; 
     = link_to "尚未注册?", register_path, {:rel => "nofollow"}
-  = f.text_field :email, "电子邮箱"
+  = f.email_field :email, "电子邮箱"
   = f.password_field :password, "密码"
   %div{:class => "form-action clearfix"}
     = f.submit "登录"
