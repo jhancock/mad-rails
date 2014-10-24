@@ -14,9 +14,14 @@ email TODOs...see below
 
 reading mode max line length is too much.
 
-set email text field to type understood by iPhone
-
 home page h2 looks good "welcome to Mihudie 2.0".  An h1 is too big.  We shoul make h1 look like h2.
+
+backtracks - can a controller be asked for its tracks_parent or its tracks_all. use fore tracks menu content.  Include referral URL as top item in tracks_all if its a mihudue.com page.
+
+* script to rewrite book summary's as replacing <br> with wrapping <p>
+* if this works ok.  See about doing it for book reading files...big task.
+
+* Find out from Fly how the editor he wants to use stores writings.  How about when copy/paste from Word doc?
 
 ONE - finish all user & password behavior
     account page.  logout link, recent bookmarks, manage bookmarks link, change_password link, change email link, set theme link
@@ -36,11 +41,21 @@ ONE - finish all user & password behavior
     DONE test mods to user login, LoginLog, logout kills cookie, register stores ip, etc
     logout link in menu bar if not mobile.  only on account page for mobile
 
+need an Action Link.  This is an anchor styled so the user knows its an action.  Bigger and bold but not a button.  Need this for account page links like password_change, manage bookmarks, etc.
+
+add shortcuts to account behavior on account nav list
+
+add bookmarks to bookmarks nav list
+
+decide how to handle breadcrumbs and its menu.
+
 if book is offline, gracefully return user to home or prior page with error message.
 
 better flash notices.  better form errors. 
 
-set theme behavior
+set theme behavior.  js needs to set cookie mhd_theme value to be the theme class.  server can ignore this cookie.
+
+account/theme pages needs an action link to toggle "show/don't show theme tools in reading mode.  This setting can be stored in the same mhd_theme cookie.
 
 on login failure, be sure to show user password-reset link
 
@@ -53,6 +68,12 @@ optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data ju
 lazy save pre-rendered book li, genre_tags_pp and summary_html if doesn't exist
 
 script to ensure all books have li, genre_tags_pp and summary_html
+
+test on iPad and Anbdroid phones.  Test on popular Chinese browsers.
+
+remove SSLv3.  requires reconfiginzing old browsers and serving a page from nginx that recommends the use to install Firefox.
+
+find out how HTTP_STRICT deals with search engine spiders.
 
 new model: 
     user gets 2 weeks to the backyard free on registration and email verification.  
@@ -172,6 +193,9 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+
+DONE set email text field to type understood by iPhone
 
 DONE wire $1200 from HSBC to Bank of Dudley
 
