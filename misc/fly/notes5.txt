@@ -1,3 +1,5 @@
+NOTE - see https://cloud.digitalocean.com/login  I like their input fields
+
 change them-list -> theme-list
 
 Theme behviors work well. Nice ;)  Need a method to select theme in the account page.  It will be on a page account/set-theme

@@ -16,6 +16,9 @@ reading mode max line length is too much.
 
 home page h2 looks good "welcome to Mihudie 2.0".  An h1 is too big.  We shoul make h1 look like h2.
 
+NOTE - see https://cloud.digitalocean.com/login  I like their input fields
+also fields from bitbucket.org login page
+
 backtracks - can a controller be asked for its tracks_parent or its tracks_all. use fore tracks menu content.  Include referral URL as top item in tracks_all if its a mihudue.com page.
 
 * script to rewrite book summary's as replacing <br> with wrapping <p>
@@ -133,6 +136,7 @@ setup exception_notificaion and test.
 setup rails logrotate.  ensure it works right with scout processing
 
 fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
+see: https://github.com/perusio/piwik-nginx/blob/master/sites-available/000-default
 
 setup tarsnap on vr1
   check money in tarsnap account
