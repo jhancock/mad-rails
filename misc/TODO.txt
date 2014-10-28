@@ -4,6 +4,7 @@ fix BoD personal debit card.
 
 fix Georgia corp registration for mihudie and shellshadow.
 fix paypal mihudie account.  get mihudie EIN.  Call Mom
+  EIN should be on old IRS returns.  May have copies in Chengdu.
 find solution for Alipay
 
 Saturday
@@ -12,6 +13,21 @@ send Dave/Geoff invoice for $2000
 
 email TODOs...see below
 
+DONE Pay SREE ;)
+
+pay for scoutapp
+
+clean up elastic search / logstash docs and commit.
+
+review elasticsearch config on vr1.  should be only 1 shard?  and not look for other nodes?  and only listen on localhost?
+
+setup logrotation for rails.
+change nginx log rotation to day and only save 90 days.
+
+install goaccess.  basic tests.
+
+for next/prev page on lists, try using jvascript technique used for book theme and top buttons.
+
 reading mode max line length is too much.
 
 home page h2 looks good "welcome to Mihudie 2.0".  An h1 is too big.  We shoul make h1 look like h2.
@@ -19,7 +35,7 @@ home page h2 looks good "welcome to Mihudie 2.0".  An h1 is too big.  We shoul m
 NOTE - see https://cloud.digitalocean.com/login  I like their input fields
 also fields from bitbucket.org login page
 
-backtracks - can a controller be asked for its tracks_parent or its tracks_all. use fore tracks menu content.  Include referral URL as top item in tracks_all if its a mihudue.com page.
+v1.1? backtracks - can a controller be asked for its tracks_parent or its tracks_all. use fore tracks menu content.  Include referral URL as top item in tracks_all if its a mihudue.com page.
 
 * script to rewrite book summary's as replacing <br> with wrapping <p>
 * if this works ok.  See about doing it for book reading files...big task.
@@ -50,7 +66,7 @@ add shortcuts to account behavior on account nav list
 
 add bookmarks to bookmarks nav list
 
-decide how to handle breadcrumbs and its menu.
+v1.1? decide how to handle breadcrumbs and its menu.
 
 if book is offline, gracefully return user to home or prior page with error message.
 
@@ -58,7 +74,7 @@ better flash notices.  better form errors.
 
 set theme behavior.  js needs to set cookie mhd_theme value to be the theme class.  server can ignore this cookie.
 
-account/theme pages needs an action link to toggle "show/don't show theme tools in reading mode.  This setting can be stored in the same mhd_theme cookie.
+v1.1? account/theme pages needs an action link to toggle "show/don't show theme tools in reading mode.  This setting can be stored in the same mhd_theme cookie.
 
 on login failure, be sure to show user password-reset link
 

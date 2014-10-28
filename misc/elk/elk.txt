@@ -1,0 +1,288 @@
+elk - 74.207.242.102 - ubuntu 14.04 x64
+------------------------------------------
+
+root     / <on file>
+jhancock / <old usual nanny>
+
+# ensure DNS stats.mihudie.com points here
+
+# as root
+# set timezone to 'Etc/UTC'.  Already set.
+dpkg-reconfigure tzdata
+# update system
+apt-get update
+apt-get -y upgrade
+
+# set hostname
+# edit /etc/hostname
+#hostname -F /etc/hostname
+
+# edit /etc/hosts  
+# change: 127.0.1.1 ubuntu -> elk
+# add:
+205.147.105.160  vr1
+50.116.1.15  lin1
+
+# add jhancock & mhd users and give sudo
+adduser jhancock
+adduser jhancock sudo
+
+# reboot
+shutdown -r now
+
+# install mosh
+sudo apt-get install software-properties-common python-software-properties
+sudo add-apt-repository ppa:keithw/mosh
+sudo apt-get update
+sudo apt-get install mosh
+
+# install byobu
+sudo apt-get install byobu
+byobu-config  # choose to enable byobu at login
+# F-9 -> Change Escape Sequence, set to Ctr-S so Ctr-A works for beginning of line
+
+# install vim - already installed
+#sudo apt-get install -y vim-nox
+
+# setup login keys for jhancock & mhd
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+# add public key, from client
+scp ~/.ssh/new_jhancock.pub jhancock@elk:~/.ssh
+scp ~/.ssh/bitbucket_jhancock.pub ~/.ssh/bitbucket_jhancock jhancock@elk:~/.ssh
+
+# back to server
+cat ~/.ssh/new_jhancock.pub > ~/.ssh/authorized_keys 
+
+chmod 600 ~/.ssh/authorized_keys 
+
+# config sshd
+sudo vim /etc/ssh/sshd_config
+# edit:
+PermitRootLogin yes -> PermitRootLogin no
+# PasswordAuthentication yes -> PasswordAuthentication no
+
+sudo restart ssh
+
+# enable access to jhancock@bitbucket
+vim ~/.ssh/config
+# add:
+Host bitbucket.org
+  Compression yes
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/bitbucket_jhancock
+
+# install ntp.  already installed.
+#sudo apt-get install ntp
+# view ntp stats
+sudo ntpq -p
+
+# install emacs
+sudo apt-get install -y emacs24-nox
+
+sudo apt-get install build-essential git curl zlib1g-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev libcurl4-openssl-dev software-properties-common python-software-properties autoconf automake libtool bison pkg-config htop
+
+# setup dotfiles on both jhancock and mhd
+git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
+
+#mv ~/.emacs ~/.emacs.original
+ln -s ~/dotfiles/.emacs ~/.
+mv ~/.emacs.d ~/.emacs.d.original
+ln -s ~/dotfiles/.emacs.d ~/.
+cp ~/dotfiles/.gemrc ~/.
+# ensure ~/.gemrc has :sources:
+#      - https://rubygems.org/
+ln -s ~/dotfiles/.gitconfig ~/.
+ln -s ~/dotfiles/.gitignore ~/.
+ln -s ~/dotfiles/.gitignore_global ~/.
+mkdir ~/bin
+cp ~/dotfiles/bin/ps_mem.py ~/bin
+
+===================
+
+# install rbenv, ruby
+---------------------
+# install rbenv && and ruby-build plugin
+git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+
+# add these lines.  as shown in the ~/dotfiles/.bashrc
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+
+# restart shell and verify
+exec $SHELL
+type rbenv
+#=> "rbenv is a function"
+
+git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+
+# Install Ruby 2.1.2 and set it as the default version
+
+# ~/.gemrc should already be modified from the dotfiles
+#echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+
+rbenv install 2.1.2
+# go to orginal source if mirrors are giving trouble
+# RUBY_BUILD_SKIP_MIRROR=true rbenv install 2.1.2
+
+rbenv global 2.1.2
+ruby -v
+#=>ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-linux]
+# gem sources -a https://rubygems.org/
+# gem sources -r http://ruby.taobao.org/
+
+rbenv rehash
+gem update
+rbenv rehash
+gem install bundler
+rbenv rehash
+
+
+##################################
+##       ElasticSearch 1.4      ##
+##################################
+
+# install Oracle Java
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+
+# auto-install accept license.  haven't tried:
+#echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+
+sudo apt-get install oracle-java8-set-default
+# check
+java -version
+
+# install elasticsearch
+# http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-repositories.html
+# http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-service.html
+
+wget -qO - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+
+# save linode image here. labbeled "setup"
+
+# one line ;)
+echo 'deb http://packages.elasticsearch.org/elasticsearch/1.4/debian stable main' | sudo tee /etc/apt/sources.list.d/elasticsearch.list
+
+sudo apt-get update 
+sudo apt-get install elasticsearch
+
+# edit /etc/elasticsearch/elasticsearch.yml
+# change:
+#cluster.name: elasticsearch  ->  cluster.name: mhd_elk
+#node.name: "Franz Kafka"  ->  node.name: "pajamas"
+# uncomment:
+#node.max_local_storage_nodes: 1
+#index.number_of_shards: 1
+#index.number_of_replicas: 0
+# change:
+#network.host: 192.168.0.1  ->  network.host: 127.0.0.1
+
+
+# service does not start on install and does not restart on package upgrade
+sudo service elasticsearch start
+# or sudo /etc/init.d/elasticsearch start
+
+# setup to startup at boot
+sudo update-rc.d elasticsearch defaults 95 10
+
+# test
+curl http://localhost:9200
+curl http://localhost:9200/_cluster/health
+curl http://localhost:9200/_nodes
+# view an index:
+curl http://localhost:9200/index_name/_status
+curl http://localhost:9200/*/_status
+curl http://localhost:9200/logstash-2013.12.13/_status
+
+# delete an index:
+curl -XDELETE 'http://localhost:9200/logstash-2013.12.13/'
+
+# delete all indexes:
+curl -XDELETE 'http://localhost:9200/*/'
+
+
+# tools
+# <http://www.elasticsearch.org/overview/marvel/>,
+# <http://github.com/karmi/elasticsearch-paramedic>,
+# <http://github.com/lukas-vlcek/bigdesk> and
+# <http://mobz.github.com/elasticsearch-head> to inspect the cluster state.
+
+
+# smartcn plugin
+# https://github.com/elasticsearch/elasticsearch-analysis-smartcn
+#sudo /usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-analysis-smartcn/2.3.1
+
+# remove plugin
+#sudo service elasticsearch stop
+#sudo /usr/share/elasticsearch/bin/plugin --remove analysis-smartcn
+
+# edit /etc/elasticsearch/elasticsearch.yml
+# set mandatory plugin
+#plugin.mandatory: analysis-smartcn
+
+
+# install logstash 
+--------------------
+#wget https://download.elasticsearch.org/logstash/logstash/logstash-1.4.2.tar.gz
+
+echo 'deb http://packages.elasticsearch.org/logstash/1.4/debian stable main' | sudo tee /etc/apt/sources.list.d/logstash.list
+sudo apt-get update
+sudo apt-get install logstash=1.4.2-1-2c0f5a1
+
+# installed to /opt/logstash/bin.  added to path in ~/.profile
+# test
+# http://logstash.net/docs/1.4.2/tutorials/getting-started-with-logstash
+
+logstash -e 'input { stdin { } } output { elasticsearch_http { host => localhost } }'
+# test hello world
+logstash -e 'input { stdin { } } output { stdout { codec => rubydebug } }'
+# test goodnight moon
+
+# good, now lets try storing in elasticsearch
+logstash -e 'input { stdin { } } output { elasticsearch_http { host => localhost } }'
+# test you know, for logs
+# check results with: 
+curl 'http://localhost:9200/_search?pretty'
+
+# find logstash
+ps -ef | grep logstash
+
+# service logstash stop|start
+
+# install curator
+-------------------
+sudo apt-get install python-pip
+sudo pip install elasticsearch-curator
+#git clone https://github.com/elasticsearch/curator
+
+
+# install kibana
+-----------------
+wget https://download.elasticsearch.org/kibana/kibana/kibana-4.0.0-BETA1.1.tar.gz
+
+tar zxvf kibana-4.0.0-BETA1.1.tar.gz
+cd kibana-4.0.0-BETA1.1.tar.gz
+./bin/kibana
+
+# browse http://stats.mihudie.com:5601
+
+
+# process lin1-nginx-logs
+---------------------------
+# https://www.digitalocean.com/community/tutorials/adding-logstash-filters-to-improve-centralized-logging
+# http://logstash.net/docs/1.4.2/tutorials/getting-started-with-logstash
+
+# create /opt/logstash/patterns/nginx
+# contents:
+NGINXACCESS %{IPORHOST:remote_addr} - %{USERNAME:remote_user} \[%{HTTPDATE:time_local}\] %{QS:request} %{INT:status} %{INT:body_bytes_sent} %{QS:http_referer} %{QS:http_user_agent}
+
+sudo chown logstash:logstash /opt/logstash/patterns/nginx
+
+logstash -f conf_nginx_lin1.conf
+
+# https://www.digitalocean.com/community/tutorials/how-to-use-logstash-and-kibana-to-centralize-and-visualize-logs-on-ubuntu-14-04
+
+# https://www.digitalocean.com/community/tutorials/adding-logstash-filters-to-improve-centralized-logging
+

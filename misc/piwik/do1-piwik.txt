@@ -1,0 +1,284 @@
+do1 - 128.199.147.91 - ubuntu 14.04 x64
+------------------------------------------
+
+root     / <same as jhancock>
+jhancock / <old usual nanny>
+
+# ensure DNS stats.mihudie.com points here
+
+# as root
+# set timezone to 'Etc/UTC'
+dpkg-reconfigure tzdata
+# update system
+apt-get update
+apt-get -y upgrade
+
+# set hostname
+# edit /etc/hostname
+#hostname -F /etc/hostname
+
+# edit /etc/hosts  add:
+205.147.105.160  vr1
+50.116.1.15  lin1
+
+# add jhancock & mhd users and give sudo
+adduser jhancock
+adduser jhancock sudo
+
+# reboot
+shutdown -r now
+
+# install mosh
+sudo apt-get install software-properties-common python-software-properties
+sudo add-apt-repository ppa:keithw/mosh
+sudo apt-get update
+sudo apt-get install mosh
+
+# byobu - already installed
+byobu-config  # choose to enable byobu at login
+# F-9 -> Change Escape Sequence, set to Ctr-S so Ctr-A works for beginning of line
+
+# install vim - already installed
+#sudo apt-get install -y vim-nox
+
+# setup login keys for jhancock & mhd
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+# add public key, from client
+scp ~/.ssh/new_jhancock.pub jhancock@do1:~/.ssh
+scp ~/.ssh/bitbucket_jhancock.pub ~/.ssh/bitbucket_jhancock jhancock@do1:~/.ssh
+
+# back to server
+cat ~/.ssh/new_jhancock.pub > ~/.ssh/authorized_keys 
+
+chmod 600 ~/.ssh/authorized_keys 
+
+# config sshd
+sudo vim /etc/ssh/sshd_config
+# edit:
+PermitRootLogin yes -> PermitRootLogin no
+# PasswordAuthentication yes -> PasswordAuthentication no
+
+sudo restart ssh
+
+# enable access to lin1 and bitbucket
+vim ~/.ssh/config
+# add:
+Host bitbucket.org
+  Compression yes
+  HostName bitbucket.org
+  IdentityFile ~/.ssh/bitbucket_jhancock
+
+# install ntp
+sudo apt-get install ntp
+# view ntp stats
+sudo ntpq -p
+
+# install emacs
+sudo apt-get install -y emacs24-nox
+
+sudo apt-get install build-essential git curl zlib1g-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev libcurl4-openssl-dev software-properties-common python-software-properties autoconf automake libtool bison pkg-config htop
+
+# setup dotfiles on both jhancock and mhd
+git clone git@bitbucket.org:jhancock/mhd-dotfiles.git ~/dotfiles
+
+mv ~/.emacs ~/.emacs.original
+ln -s ~/dotfiles/.emacs ~/.
+mv ~/.emacs.d ~/.emacs.d.original
+ln -s ~/dotfiles/.emacs.d ~/.
+cp ~/dotfiles/.gemrc ~/.
+# ensure ~/.gemrc has :sources:
+#      - https://rubygems.org/
+ln -s ~/dotfiles/.gitconfig ~/.
+ln -s ~/dotfiles/.gitignore ~/.
+ln -s ~/dotfiles/.gitignore_global ~/.
+mkdir ~/bin
+cp ~/dotfiles/bin/ps_mem.py ~/bin
+
+===================
+
+# install percona 5.6 (MySQL)
+-------------------------------
+sudo apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
+
+# edit /etc/apt/sources.list  Add:
+deb http://repo.percona.com/apt trusty main
+deb-src http://repo.percona.com/apt trusty main
+
+sudo apt-get update
+sudo apt-get install percona-server-server-5.6 percona-server-client-5.6
+
+mysql root  /  nSE43qv7sk38
+
+# create piwik user and db
+# from http://piwik.org/docs/requirements/
+mysql -u root -p
+> CREATE DATABASE piwik;
+> CREATE USER 'piwik'@'localhost' IDENTIFIED BY 'onlyP1WikAll0wed';
+> GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON piwik.* TO 'piwik'@'localhost'
+
+
+# install rbenv, ruby
+---------------------
+# install rbenv && and ruby-build plugin
+git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+
+# add these lines.  as shown in the ~/dotfiles/.bashrc
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+
+# restart shell and verify
+exec $SHELL
+type rbenv
+#=> "rbenv is a function"
+
+git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+
+# Install Ruby 2.1.2 and set it as the default version
+
+# ~/.gemrc should already be modified from the dotfiles
+#echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+
+rbenv install 2.1.2
+# go to orginal source if mirrors are giving trouble
+# RUBY_BUILD_SKIP_MIRROR=true rbenv install 2.1.2
+
+rbenv global 2.1.2
+ruby -v
+#=>ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-linux]
+# gem sources -a https://rubygems.org/
+# gem sources -r http://ruby.taobao.org/
+
+rbenv rehash
+gem update
+rbenv rehash
+gem install bundler
+rbenv rehash
+
+
+# install nginx/passenger
+----------------------------
+# from https://www.phusionpassenger.com/documentation/Users%20guide%20Nginx.html#install_on_debian_ubuntu
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
+sudo apt-get install -y apt-transport-https ca-certificates
+
+sudo sh -c "echo 'deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' >> /etc/apt/sources.list.d/passenger.list"
+sudo chown root: /etc/apt/sources.list.d/passenger.list
+sudo chmod 600 /etc/apt/sources.list.d/passenger.list
+sudo apt-get update
+
+sudo apt-get install nginx-extras passenger
+
+# install / config php5-fpm 
+----------------------------
+https://registry.hub.docker.com/u/combro2k/nginx-piwik/dockerfile/
+
+sudo apt-get install -y php5-fpm php5-mysql php-apc php5-imagick php5-imap php5-mcrypt php5-gd libssh2-php php5-cli curl php5-curl php5-memcached php5-geoip
+
+# verify php5-fpm is running
+netstat --unix -l
+# should see a unix socket like /var/run/php5-fpm.sock
+
+### ALT_1
+sudo mv /etc/nginx /etc/nginx.old
+sudo git clone https://github.com/perusio/piwik-nginx.git /etc/nginx
+
+sudo mv stats.example.com.conf stats.mihudie.com.conf
+
+edit /etc/nginx/sites-available/stats.example.com.conf
+
+edit /etc/nginx/upstream_phpcgi.conf
+change unix socket name to:
+/var/run/php5-fpm.sock
+
+edit sudo vim /etc/nginx/apps/piwik/proxy_piwik_cache.conf
+comment out last line 
+
+### ALT_1 END
+
+### ALT_2  from https://github.com/combro2k/docker-piwik
+----------------
+# edit /etc/nginx/nginx.conf
+# change workers to 2
+
+sudo sh -c "echo 'cgi.fix_pathinfo = 0;' >> /etc/php5/fpm/php.ini"
+
+# cp https://github.com/combro2k/docker-piwik/blob/master/nginx-site.conf as template for sites-available/stats.mihudie.com.conf
+sudo cp nginx-site.conf /etc/nginx/sites-available/stats.mihudie.com.conf
+
+# edit stats.mihudie.com.conf
+# set server name
+# change root to /var/www/stats.mihudie.com/
+sudo ln -s /etc/nginx/sites-available/stats.mihudie.com.conf /etc/nginx/sites-enabled/.
+# add access and error log lines
+
+sudo mkdir /var/cache/nginx
+sudo chown www-data: /var/cache/nginx
+sudo mkdir /var/cache/nginx/fcgicache 
+sudo chown www-data: /var/cache/nginx/fcgicache 
+
+sudo mkdir /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/stats.mihudie.com.conf /etc/nginx/sites-enabled/.
+
+sudo mkdir /var/www
+sudo chown www-data: /var/www
+sudo mkdir /var/www/stats.mihudie.com
+sudo chown www-data: /var/www/stats.mihudie.com
+
+cd ~
+wget http://builds.piwik.org/piwik.zip 
+sudo apt-get install unzip
+unzip piwik.zip
+cd piwik
+sudo cp -r * /var/www/stats.mihudie.com/.
+sudo cp  .bowerrc /var/www/stats.mihudie.com/.
+sudo cp  .coveralls.yml /var/www/stats.mihudie.com/.
+sudo chown -R www-data: /var/www/stats.mihudie.com
+
+sudo service php5-fpm restart
+sudo service nginx restart
+
+go to http://stats.mihudie.com/index.php 
+
+config php5-fpm
+https://github.com/perusio/php-fpm-example-config
+
+tracking code
+--------------
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//stats.mihudie.com/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//stats.mihudie.com/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+
+# testing
+php /var/www/stats.mihudie.com/console core:update 
+
+# install piwik
+download piwik
+
+follow config and setup from https://github.com/perusio/piwik-nginx
+
+test piwik.  create website: mihudie.com (log).  should get a unique id used by import tool
+
+cp old log files to do1
+try piwik logimport
+
+python /home/jhancock/piwik/misc/log-analytics/import_logs.py --url=http://stats.mihudie.com --idsite=1 --recorders=2 --enable-http-errors --enable-http-redirects --enable-static --enable-bots /home/jhancock/logs/mihudie.access.log
+
+http://piwik.org/docs/log-analytics-tool-how-to/
+http://piwik.org/docs/log-analytics-tool-how-to/#how-to-run-the-log-file-analysis-script-with-default-options
+after import, reprocess.  increment reprocess.
+http://piwik.org/faq/log-analytics-tool/#faq_17994
+http://piwik.org/docs/setup-auto-archiving/#linuxunix-how-to-set-up-a-crontab-to-automatically-archive-the-reports
