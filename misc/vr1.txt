@@ -436,9 +436,33 @@ sudo /usr/share/elasticsearch/bin/plugin --remove analysis-smartcn
 
 
 # edit /etc/elasticsearch/elasticsearch.yml
+# uncomment
+#index.number_of_shards: 1
+#index.number_of_replicas: 0
+
 # set mandatory plugin
 plugin.mandatory: analysis-smartcn
 
+# set to listen to only 127.0.0.1
+#network.host: 192.168.0.1
+network.host: 127.0.0.1
+
+# view an index:
+curl http://localhost:9200/index_name/_status
+curl http://localhost:9200/*/_status
+curl http://localhost:9200/logstash-2013.12.13/_status
+
+# delete an index:
+curl -XDELETE 'http://localhost:9200/logstash-2013.12.13/'
+# delete all indexes:
+curl -XDELETE 'http://localhost:9200/*/'
+
+# from rails console 
+  # Delete everything
+  # Book.__elasticsearch__.client.indices.delete index: Book.index_name rescue nil
+  # will delete and recreate index?
+  # Book.__elasticsearch__.create_index! force: true
+  # Book.import
 
 ####################
 ##   GoAccess     ##
@@ -449,6 +473,21 @@ wget -O - http://deb.goaccess.io/gnugpg.key | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install goaccess
 
+# sudo goaccess -f /var/log/nginx/mihudie.access.log 
+
+##########################
+##  logrotate - RAILS   ##
+##########################
+
+# http://www.tommyblue.it/2014/04/11/how-to-logrotate-rails-logs/
+cp misc/logrotate/mhd_rails to vr1:/etc/logrotate.d/.
+sudo chown root:root /etc/logrotate.d/mhd_rails
+ 
+# check script
+sudo logrotate -d /etc/logrotate.d/mhd_rails
+
+# run now
+sudo logrotate -v /etc/logrotate.d/mhd_rails
 
 
 ########################

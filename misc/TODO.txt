@@ -13,22 +13,15 @@ send Dave/Geoff invoice for $2000
 
 email TODOs...see below
 
-DONE Pay SREE ;)
-
 pay for scoutapp
 
-clean up elastic search / logstash docs and commit.
+setup logrotation for rails. rotate daily.  keep 30 days.
 
-review elasticsearch config on vr1.  should be only 1 shard?  and not look for other nodes?  and only listen on localhost?
-
-setup logrotation for rails.
-change nginx log rotation to day and only save 90 days.
-
-install goaccess.  basic tests.
-
-for next/prev page on lists, try using jvascript technique used for book theme and top buttons.
+for next/prev page on lists, try using javascript technique used for book theme and top buttons.
 
 reading mode max line length is too much.
+
+v1.0 - tracks and bookmarks in one integrated menu item.  Need a name for it.  User can get to pure bookmarks view from account menu.  This leaves room for author menu at end (in future version).  author can have quick access to their book stats ;) and maybe post messages on mobile.
 
 home page h2 looks good "welcome to Mihudie 2.0".  An h1 is too big.  We shoul make h1 look like h2.
 
@@ -62,11 +55,11 @@ ONE - finish all user & password behavior
 
 need an Action Link.  This is an anchor styled so the user knows its an action.  Bigger and bold but not a button.  Need this for account page links like password_change, manage bookmarks, etc.
 
+handle error in search if nothing found, such as empty search.
+
 add shortcuts to account behavior on account nav list
 
 add bookmarks to bookmarks nav list
-
-v1.1? decide how to handle breadcrumbs and its menu.
 
 if book is offline, gracefully return user to home or prior page with error message.
 
@@ -214,6 +207,13 @@ email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
 
+DONE install goaccess.  basic tests.
+
+DONE review elasticsearch config on vr1.  should be only 1 shard?  and not look for other nodes?  and only listen on localhost?
+
+DONE Pay SREE ;)
+
+DONE clean up elastic search / logstash docs and commit.
 
 DONE set email text field to type understood by iPhone
 
