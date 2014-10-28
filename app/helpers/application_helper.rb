@@ -33,7 +33,7 @@ module ApplicationHelper
     content_tag(:div, :class => "form-model") do
       flash.each do |name, msg|
         if name == "form_error"
-          flash_content << content_tag(:div, msg, class:"error")
+          flash_content << content_tag(:div, msg, class: "error")
         end
         if name == "form_notice"
           flash_content << content_tag(:div, msg, class: "notice")

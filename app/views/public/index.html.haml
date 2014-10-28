@@ -11,9 +11,8 @@
   = paginate @books, :params => {:controller => 'books', :action => 'list', :sort => @sort}
   %hr
   
-%div{:class => "book-show index-list"}
+%div{:class => "book-show"}
   %h3
     书库
-  %div{:class => "book-list"}
-    %ul
-      = render @books
+  %ul{:class => "list-column details", "data-action" => "click"}
+    = render @books

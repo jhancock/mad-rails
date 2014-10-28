@@ -100,6 +100,11 @@ class Book
      )
   end
 
+  #TODO no concept of chapters.  New model needed.
+  def chapter_title(page)
+    "第#{page}页"
+  end
+
   def self.online_recent
     self.online_criteria.desc(:updated_at)
   end

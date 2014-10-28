@@ -1,15 +1,16 @@
-%h1
-  Search #{@query}
+%div{:class => "main-text"}
+  %h1
+    Search #{@query}
   
 -# = paginate @books, :params => {:controller => 'search', :action => 'search', :query => @query}
 
-%br
 %div{:class => "search-list"}
   %ul{:class => "book-list book-list-block"}
     - @books.each do |book|
       %li
-        = link_to book.try(:highlight).try(:title) ? book.highlight.title[0].html_safe : book.title, read_book_path(author: book.author, title: book.title)
-        = " - #{book.try(:highlight).try(:author) ? book.highlight.author[0] : book.author}".html_safe
+        %h4
+          = link_to book.try(:highlight).try(:title) ? book.highlight.title[0].html_safe : book.title, read_book_path(author: book.author, title: book.title)
+          = " - #{book.try(:highlight).try(:author) ? book.highlight.author[0] : book.author}".html_safe
         %p
           = "#{book.try(:highlight).try(:summary) ? book.highlight.summary[0] : book.summary}".html_safe
         %p

@@ -1,14 +1,15 @@
-%h2
-  = "#{@sort} books - page #{@page} - "
-  - opposite_sort = @sort =='recent' ? 'popular' : 'recent'
-  = link_to "sort by #{opposite_sort}", list_books_path(sort: opposite_sort)
+%div{:class => "main-text"}
+  %h2
+    = "#{@sort} books - page #{@page} - "
+    - opposite_sort = @sort =='recent' ? 'popular' : 'recent'
+    = link_to "sort by #{opposite_sort}", list_books_path(sort: opposite_sort)
 
 = page_entries_info @books
 = paginate @books, :params => {:controller => 'books', :action => 'list', :sort => @sort}
 %hr
-%div{:class => "boo-show index-list"}
+
+%div{:class => "book-show"}
   %h3
     书库
-  %div{:class => "book-list"}
-    %ul
-      = render @books
+  %ul{:class => "list-column details", "data-action" => "click"}
+    = render @books

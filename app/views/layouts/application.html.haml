@@ -6,9 +6,9 @@
     %title= @page_title
     %meta{:name => "keywords", :content => "#{@page_keywords}"}
     %meta{:name => "description", :content => "#{@page_description}"}
-    = stylesheet_link_tag '/stylesheets/mihudie-20141022', media: 'all'
+    = stylesheet_link_tag '/stylesheets/mihudie-20141028', media: 'all'
     = javascript_include_tag '/javascripts/jquery-1.11.1.min'
-    = javascript_include_tag '/javascripts/mihudie-20141022'
+    = javascript_include_tag '/javascripts/mihudie-20141028'
     = csrf_meta_tags
 
   %body
@@ -19,4 +19,4 @@
           - if name == "notice" || name == "error"
             = content_tag :div, msg, class: "#{name} flash-removable"
         = yield
-        = render 'layouts/footer'        
+    = render 'layouts/footer'        

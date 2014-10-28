@@ -480,8 +480,9 @@ sudo apt-get install goaccess
 ##########################
 
 # http://www.tommyblue.it/2014/04/11/how-to-logrotate-rails-logs/
-cp misc/logrotate/mhd_rails to vr1:/etc/logrotate.d/.
-sudo chown root:root /etc/logrotate.d/mhd_rails
+
+sudo cp ~/rails/misc/logrotate/mhd_rails /etc/logrotate.d/.
+#sudo chown root:root /etc/logrotate.d/mhd_rails
  
 # check script
 sudo logrotate -d /etc/logrotate.d/mhd_rails

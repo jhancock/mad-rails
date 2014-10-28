@@ -15,7 +15,15 @@ email TODOs...see below
 
 pay for scoutapp
 
-setup logrotation for rails. rotate daily.  keep 30 days.
+PAY DREAMHOST
+
+integrate Fly's latest
+
+_book.haml.html is not rendering author along with title.  look for <span> with author in it. 
+
+fix admin_users views
+
+commpare list.haml.html & index.haml.html & tag.haml.html.  refactor?  can I make a column or flow list of books and authors?
 
 for next/prev page on lists, try using javascript technique used for book theme and top buttons.
 
@@ -67,8 +75,6 @@ better flash notices.  better form errors.
 
 set theme behavior.  js needs to set cookie mhd_theme value to be the theme class.  server can ignore this cookie.
 
-v1.1? account/theme pages needs an action link to toggle "show/don't show theme tools in reading mode.  This setting can be stored in the same mhd_theme cookie.
-
 on login failure, be sure to show user password-reset link
 
 SEO - Baidu cares about changes on page titles
@@ -88,10 +94,15 @@ remove SSLv3.  requires reconfiginzing old browsers and serving a page from ngin
 find out how HTTP_STRICT deals with search engine spiders.
 
 new model: 
-    user gets 2 weeks to the backyard free on registration and email verification.  
-    after verification, send user email with referral code to invite user for one more month backyard access.
-    friend gets 2 weeks free and referee get another month free.  
-    add money to account.  min 30 rmb for alipay.  min $10 for Paypal.  user gets 1 month backyard access when they add the min to account.  more backyard access when they add more money:  100 rmb gets 6 months.  $20 paypal gets 6 months.  user can extend backyard access with account points.
+    user gets 1 month premium_to on registration.
+    two week after, send user a notice asking if they've enjoyed mihudie.  IF they would like to invite a friend, they can use the link in this email and both they and their friend gets another month free.
+
+    for existing users, create a new email to notice them of their free month (when I get around to writing a sscript to roll through existing users).  set their new premium_to and send them an email two month in to let them invite a friend too.
+
+    a user to buy a full year premium (added to their existing time) for 60 rmb or $10 USD.  As a user spends coins, for each 1000, they get a free premium month added.  Do some calcs to ensure the coin to pay-in-anvace numbers are balanced.  Ntoice a user when they geet a free month ;).
+
+    when books available, money gets added to their account in minimum 30rmb for alipay and $10 USD for PayPal.
+
 
 Andrea
 -------
@@ -150,6 +161,8 @@ see: https://github.com/perusio/piwik-nginx/blob/master/sites-available/000-defa
 setup tarsnap on vr1
   check money in tarsnap account
 
+http://www.cyberciti.biz/open-source/best-terminal-applications-for-linux-unix-macosx/
+
 v1.1
 -----
 author publishes whole book
@@ -163,6 +176,8 @@ setup UFW - uncomplicated firewall.  go ahead and get this done so I can verify 
 setup mina for more reliable deploys
 learn how to store version of gems for release.  bundle vendor?
 gzip js and css files on deploy
+
+account/theme pages needs an action link to toggle "show/don't show theme tools in reading mode.  This setting can be stored in the same mhd_theme cookie.
 
 
 v1.2
@@ -206,6 +221,9 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+
+DONE setup logrotation for rails. rotate daily.  keep 30 days.
 
 DONE install goaccess.  basic tests.
 

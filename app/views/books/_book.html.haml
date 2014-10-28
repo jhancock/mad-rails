@@ -14,7 +14,5 @@
         - else
           #{book.chars} 字数
     %div{:class => "detail-span-action"}
-      %a{:class => "button-orange", :href => read_book_path(author: book.author, title: book.title)}
-        购买
       %a{:class => "button-primary", :href => read_book_path(author: book.author, title: book.title)}
         阅读
