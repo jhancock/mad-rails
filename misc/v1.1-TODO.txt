@@ -1,0 +1,60 @@
+
+v1.1
+-----
+  When books available, money gets added to their account in minimum 30rmb for alipay and $10 USD for PayPal.  Books typical cost 3 to 5 points per 1000 characters (no white space).  A book is charged per chapter with points calculated by the per 1000 character rate.
+  1 RMB = 100 points.  $10 USD = 6000 points.  As a user spends points/coins, for each 1000, they get a free premium month added.  Do some calcs to ensure the coin to pay-in-anvace numbers are balanced.  Notify a user when they get a free month ;).
+
+show books list by author
+
+author home pages, book pages..all have author notices and user feedback.  Can give gifts to authors.  can give book and point gifts to friends.
+
+author publishes whole book
+
+periodic scan for too many logins from same account.  send email to admin when this happens.  enable admin to suspend account:  login will fail and report user that account is suspended.  when looking up current_user need to verify account is not suspended.  If it is, must reset session and notify user.
+
+learn how to unpin mongodb apt - upgrade vr1 and repin
+
+admin pages v1.1
+
+setup UFW - uncomplicated firewall.  go ahead and get this done so I can verify to ensure everything is correct as I test the app
+
+setup mina for more reliable deploys
+learn how to store version of gems for release.  bundle vendor?
+gzip js and css files on deploy
+
+account/theme pages needs an action link to toggle "show/don't show theme tools in reading mode.  This setting can be stored in the same mhd_theme cookie.
+
+* script to rewrite book summary's as replacing <br> with wrapping <p>
+* if this works ok.  See about doing it for book reading files...big task.
+
+find out how HTTP_STRICT deals with search engine spiders.
+
+set Mandrill call back to capture bounced email events.
+
+v1.2
+------
+send to kindle behavior
+  use Kindle packaging tool
+  set limits per month for backyard books.  all purchased books can send.
+  get Andrea to write instruction page
+
+admin pages v1.2
+
+v1.3
+-----
+author publishes chapter at a time
+
+v1.4
+------
+book uplaods
+  need quarantine
+  need admin area to take uploaded books, clean them up and publish
+  give users points for useful submissions.
+  enable admin behvaior for power users to curate uploaded content.
+
+see about adding HTTPS strict.  
+    Verify if it effects crawlers:  Baidu Google Bing
+    Verify if China has problems with it
+    need to change session cookie to https only.  this means there would be some session cookie attributes we want to track for users not logged in.  they may be accessing via http.
+
+try http://emailtosms.com for a low cost email2sms service with Scoutapp

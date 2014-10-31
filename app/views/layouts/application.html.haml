@@ -19,4 +19,6 @@
           - if name == "notice" || name == "error"
             = content_tag :div, msg, class: "#{name} flash-removable"
         = yield
-    = render 'layouts/footer'        
+    = render 'layouts/footer'
+    = content_for :side_menu
+    

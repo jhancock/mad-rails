@@ -27,7 +27,7 @@ class BooksController < ApplicationController
     @page_title = "#{@chapter_title} #{@book.title} - #{@book.author}"
     @page_description = "按近期被点击次数排行的电子书，在线阅读最吸引人的中文电子书"
     @page_keywords = "关注 流行 中文电子书 在线阅读"
-    render layout: "reading"
+    #render layout: "reading"
   end
 
   def list()

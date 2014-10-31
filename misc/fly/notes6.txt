@@ -1,7 +1,29 @@
-book-show -> ?? 
+cookie mhd_theme needs a long expire date.
 
-%ul{:class => "list-column details", "data-action" => "click"}
-  data-action can be renamed toggle or activate
+iPad - if I click outside the tooltip, it does not close.  It only closes if I click inside or on another link
+
+iPad - tooltip in third column needs to open in opposite direction.
+
+iPad - header items on left disapear after I toggle on/off a book detail.
+
+iPad has white margins when in dark reading mode.
+
+Span for author on book list.  On mobile author shows up on right.  On dekstop/tablet, author does not show at all.  Need a solution for this.
+
+nav menu does not toggle off on mobile.
+
+need pagination style for desktop.  js buttons for mobile.
+
+logout link in menu bar if not mobile.  only on account page for mobile
+
+%h2 on lists page, such as: popular books - page 1 - sort by recent
+  can not tell where the link is.  Its all blue.
+
+div class error.  red bar is too thin.  lets try for double the current.
+
+font size default is large.  I think medium would be best.
+
+book-show -> ?? 
 
 %div{:class => "content clearfix"}
   %div{:class => "main", :role => "main"}
@@ -14,11 +36,14 @@ Its not always going to be books in search results
 
 detail div popup is too easily triggered.  We want the hover closer to the text boundary.
 
+%div{:class => "detail-span-action"}
+  buttons need to be right aligned.  this shows when you have only one button
+
+in reading mode with large dark theme it is obvious there is more margin on the right.
+
 desktop view has only one color...a touch of orange and that's all.
 
 lower the bottom line of the text in header...just a touch.  including search field.
-
-need pagination style for desktop.  js buttons for mobile.
 
 form fields font needs to be bigger.
 

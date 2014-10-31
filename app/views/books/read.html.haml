@@ -1,7 +1,7 @@
 %div{:class => "reading-page"}
   %div{:class => "reading-page-md"}
-  	%h2{:class => "chapter-title"}
-  	  = @chapter_title
+    %h2{:class => "chapter-title"}
+      = @chapter_title
     = @content
 
 %div{:class => "page-bar"}
@@ -11,3 +11,6 @@
   - if @page < @book.chunks
     %a{:class => "button-primary", :href => read_book_path(author: @book.author, title: @book.title, page: (@page + 1)), :rel => "nofollow"}
       下一页 »
+
+- content_for :side_menu do
+  = render 'side_menu_reading'

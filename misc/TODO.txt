@@ -2,53 +2,37 @@ turn on mihudie BankOfDudley card
 fix PayPal mihudie and shellshadow accounts.  might need cc info updated
 fix BoD personal debit card.
 
-fix Georgia corp registration for mihudie and shellshadow.
+DONE fix Georgia corp registration for mihudie 
+   and shellshadow.
 fix paypal mihudie account.  get mihudie EIN.  Call Mom
   EIN should be on old IRS returns.  May have copies in Chengdu.
 find solution for Alipay
 
-Saturday
-----------
-send Dave/Geoff invoice for $2000
-
 email TODOs...see below
+
+Next
+-----
+send Dave/Geoff invoice for $2000
 
 pay for scoutapp
 
 PAY DREAMHOST
 
-integrate Fly's latest
-
-_book.haml.html is not rendering author along with title.  look for <span> with author in it. 
-
-fix admin_users views
+_book.haml.html.  author span is only showing on mobile.  no way to show author on besktop or tablet.
 
 commpare list.haml.html & index.haml.html & tag.haml.html.  refactor?  can I make a column or flow list of books and authors?
 
 for next/prev page on lists, try using javascript technique used for book theme and top buttons.
 
-reading mode max line length is too much.
-
-v1.0 - tracks and bookmarks in one integrated menu item.  Need a name for it.  User can get to pure bookmarks view from account menu.  This leaves room for author menu at end (in future version).  author can have quick access to their book stats ;) and maybe post messages on mobile.
-
-home page h2 looks good "welcome to Mihudie 2.0".  An h1 is too big.  We shoul make h1 look like h2.
-
-NOTE - see https://cloud.digitalocean.com/login  I like their input fields
-also fields from bitbucket.org login page
-
-v1.1? backtracks - can a controller be asked for its tracks_parent or its tracks_all. use fore tracks menu content.  Include referral URL as top item in tracks_all if its a mihudue.com page.
-
-* script to rewrite book summary's as replacing <br> with wrapping <p>
-* if this works ok.  See about doing it for book reading files...big task.
-
-* Find out from Fly how the editor he wants to use stores writings.  How about when copy/paste from Word doc?
+* Find out from Fly how the editor he wants to use stores writings (HTML,UTF8-text?).  How about when copy/paste from Word doc?
 
 ONE - finish all user & password behavior
     account page.  logout link, recent bookmarks, manage bookmarks link, change_password link, change email link, set theme link
     send_email_verification_path - make this a get so there is no form needed.
       log event for email_sent
       log event when verified
-    show backyard access date
+    on login failure, be sure to show user password-reset link
+    show premium to date
     show referral link if not used
     bookmarks page - page through and remove bookmarks
        BooksController#read needs to set bookmark
@@ -60,22 +44,41 @@ ONE - finish all user & password behavior
     force_ssl on account/password_change, password_reset_reuqest and password_reset
     DONE test mods to user login, LoginLog, logout kills cookie, register stores ip, etc
     logout link in menu bar if not mobile.  only on account page for mobile
+    add shortcuts to account behavior on account nav list
+    add bookmarks to bookmarks tracks list
 
 need an Action Link.  This is an anchor styled so the user knows its an action.  Bigger and bold but not a button.  Need this for account page links like password_change, manage bookmarks, etc.
 
+v1.0 - tracks and bookmarks in one integrated menu item.  Need a name for it.  User can get to pure bookmarks view from account menu.  This leaves room for author menu at end (in future version).  author can have quick access to their book stats ;) and maybe post messages on mobile.  A controller#action knows its tracks: an array of k,v pairs.  key is URL.  value is list item name.
+
 handle error in search if nothing found, such as empty search.
-
-add shortcuts to account behavior on account nav list
-
-add bookmarks to bookmarks nav list
 
 if book is offline, gracefully return user to home or prior page with error message.
 
-better flash notices.  better form errors. 
+fix admin_users views
 
-set theme behavior.  js needs to set cookie mhd_theme value to be the theme class.  server can ignore this cookie.
+***********************************
+Hand over to Andrea for translation
+***********************************
 
-on login failure, be sure to show user password-reset link
+nginx
+------
+remove SSLv3.  requires reconfiginzing old browsers and serving a page from nginx that recommends the use to install Firefox.
+
+fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
+see: https://github.com/perusio/piwik-nginx/blob/master/sites-available/000-default
+
+see about adding spdy to nginx ssl
+http://www.nginxtips.com/what-is-spdy/
+http://www.nginxtips.com/how-to-install-and-configure-spdy-on-nginx/
+-------
+
+ensure session does not expire between opening and closing browser.
+
+ensure rails logrotate is working
+
+_mhd_session cookie shows in firefox for both dev.mihudie.com and mihudie.com at the same time.  
+
 
 SEO - Baidu cares about changes on page titles
     add schema.org microdata
@@ -87,21 +90,22 @@ lazy save pre-rendered book li, genre_tags_pp and summary_html if doesn't exist
 
 script to ensure all books have li, genre_tags_pp and summary_html
 
-test on iPad and Anbdroid phones.  Test on popular Chinese browsers.
+test on iPad and Android phones.  Test on popular Chinese browsers.
 
-remove SSLv3.  requires reconfiginzing old browsers and serving a page from nginx that recommends the use to install Firefox.
+add PayPal Express
 
-find out how HTTP_STRICT deals with search engine spiders.
+add Alipay
 
-new model: 
-    user gets 1 month premium_to on registration.
-    two week after, send user a notice asking if they've enjoyed mihudie.  IF they would like to invite a friend, they can use the link in this email and both they and their friend gets another month free.
 
-    for existing users, create a new email to notice them of their free month (when I get around to writing a sscript to roll through existing users).  set their new premium_to and send them an email two month in to let them invite a friend too.
+new model
+---------- 
+  User gets 1 month premium_to on registration.  After they validate their email.
+change premium attribute to premium_at. 
+  Two week after, send user email asking if they've enjoyed mihudie.  If they would like to invite a friend, they can use the link in this email and both they and their friend gets another month free.  Try if Mandrill can send the two-week-later email when the validate-success mail is sent. 
 
-    a user to buy a full year premium (added to their existing time) for 60 rmb or $10 USD.  As a user spends coins, for each 1000, they get a free premium month added.  Do some calcs to ensure the coin to pay-in-anvace numbers are balanced.  Ntoice a user when they geet a free month ;).
+  For existing users, create a new email to notice them of their free month (when I get around to writing a script to roll through existing users).  These users must verify their email too!  We can fix this by having a seperate landing page for this email to claim their referral URL.  Set their new premium_to and send them an email as well two weeks later to let them invite a friend.
 
-    when books available, money gets added to their account in minimum 30rmb for alipay and $10 USD for PayPal.
+  A user may buy a full year premium (added to their existing time) for 60 rmb or $10 USD. 
 
 
 Andrea
@@ -111,31 +115,14 @@ user legal agreement.  include backyard access rules and refund fee rules.
 Andrea needs to write new emails and help translate site messages
 --------
 
-minimum 30 or 50 rmb
-	1 rmb = 100 points
-	3 to 5 points per 1000 characters
-be careful not to count spaces in char count! 
-
-send all users offer email for free period.  offer email has link to validate email address.  should not send emails to users unless validated.
-
-EMAIL elasticsearch find out how to set smartcn correct.  lexir?  why does highlighting open an close em when four character in a row are exact match?
-EMAIL elasticsearch pagination is BROKEN!
-elasticsearch result style
-
-learn how to unpin mongodb apt - upgrade vr1 and repin
-
 admin page v1.0
-  elaticsearch hooks to update on model change.  maybe call this from admin pages.
-  grant backyard access - amount of time or specific date
+  elaticsearch calls on book change.  
+  grant premium_to access - amount of time or specific date
   	send email to user unless checkbox is selected to not
 
 sitemap.xml script
   EMAIL Should sitemap include old book links with objectId?
   EMAIL Should canonical url be the one with ID or author/title?
-
-add PayPal Express
-
-add Alipay
 
 Write script to fix this:
 mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
@@ -144,72 +131,12 @@ review email template.  It may not be repsonsive for email readers.
    add my own unsubscribe link to email template.  the default one is too prominent.
    email footer has  mihudie address which links to map on iPhone.  See if this can be removed
 
-MAYBE - create admin page so Fly can update css on lin1
-
-setup awstats...install, setup processing prior to nginx logrotate, auto-create reports.  see if old us1 and lin1 data can be brought in.  maybe its easier to segment the old data and keep them as archives.
-awstats config to exclude scoutapp and uptimerobot and 127.0.0.1
-generated reports accessible by secret URL..through Rails or HTTP auth?
-
 setup exception_notificaion and test. 
   see if we can write exceptions to file and have scout pick them up.  
-
-setup rails logrotate.  ensure it works right with scout processing
-
-fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
-see: https://github.com/perusio/piwik-nginx/blob/master/sites-available/000-default
 
 setup tarsnap on vr1
   check money in tarsnap account
 
-http://www.cyberciti.biz/open-source/best-terminal-applications-for-linux-unix-macosx/
-
-v1.1
------
-author publishes whole book
-
-periodic scan for too many logins from same account.  send email to admin when this happens.  enable admin to suspend account:  login will fail and report user that account is suspended.  when looking up current_user need to verify account is not suspended.  If it is, must reset session and notify user.
-
-admin pages v1.1
-
-setup UFW - uncomplicated firewall.  go ahead and get this done so I can verify to ensure everything is correct as I test the app
-
-setup mina for more reliable deploys
-learn how to store version of gems for release.  bundle vendor?
-gzip js and css files on deploy
-
-account/theme pages needs an action link to toggle "show/don't show theme tools in reading mode.  This setting can be stored in the same mhd_theme cookie.
-
-
-v1.2
-------
-send to kindle behavior
-  use Kindle packaging tool
-  set limits per month for backyard books.  all purchased books can send.
-  get Andrea to write instruction page
-
-admin pages v1.2
-
-v1.3
------
-author publishes chapter at a time
-
-v1.4
-------
-book uplaods
-  need quarantine
-  need admin area to take uploaded books, clean them up and publish
-  give users points for useful submissions.
-
-see about adding HTTPS strict.  
-    Verify if it effects crawlers:  Baidu Google Bing
-    Verify if China has problems with it
-    need to change session cookie to https only.  this means there would be some session cookie attributes we want to track for users not logged in.  they may be accessing via http.
-
-see about adding spdy to nginx ssl
-http://www.nginxtips.com/what-is-spdy/
-http://www.nginxtips.com/how-to-install-and-configure-spdy-on-nginx/
-
-try http://emailtosms.com for a low cost email2sms service with Scoutapp
 
 cleanup email TODOs
 --------------------
@@ -222,6 +149,13 @@ email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
 
+DONE reading layout.  The only diff is
+     = render 'layouts/reading_menu'
+     refactor? or use rails content_for?
+
+DONE set theme behavior.  js needs to set cookie mhd_theme value to be the theme class.  server can ignore this cookie.
+
+DONE better flash notices.  better form errors. 
 
 DONE setup logrotation for rails. rotate daily.  keep 30 days.
 
