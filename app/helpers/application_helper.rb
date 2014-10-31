@@ -26,7 +26,6 @@ module ApplicationHelper
     html
   end
 
-  #TODO add flash messages inside form-model div
   def my_form_for(record_or_name_or_array, *args, &block)
     flash_content = ""
     options = args.extract_options!

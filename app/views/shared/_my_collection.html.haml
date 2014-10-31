@@ -1,0 +1,10 @@
+= page_entries_info collection
+= paginate collection, :params => url_params
+%hr
+
+%div{:class => "book-show"}
+  %h3
+    = name
+  %ul{:class => "list-column details"}
+    = render collection
+

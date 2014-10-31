@@ -7,3 +7,7 @@
 -#    remote:        data-remote
 %span.next
   = link_to_unless current_page.last?, t('views.pagination.next').html_safe, url, :rel => 'next', :remote => remote
+
+- content_for :side_menu_page_next do
+  %li
+  = link_to_unless current_page.last?, t('views.pagination.next').html_safe, url, :rel => 'next', :remote => remote

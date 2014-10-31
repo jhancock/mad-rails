@@ -44,6 +44,7 @@ class BooksController < ApplicationController
   def tag()
     @page = params[:page].to_i > 0 ? params[:page].to_i : 1
     @tag = GenreTag.by_name(params[:tag])
+    #TODO redirect home with notice
     render_404 and return unless @tag
     @sort = params[:sort] || 'popular'
     criteria = Book.online_popular_by_tag(@tag) if @sort == "popular"

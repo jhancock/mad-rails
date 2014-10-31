@@ -7,22 +7,15 @@ DONE fix Georgia corp registration for mihudie
 fix paypal mihudie account.  get mihudie EIN.  Call Mom
   EIN should be on old IRS returns.  May have copies in Chengdu.
 find solution for Alipay
+pay for scoutapp - Need working credit card
 
 email TODOs...see below
 
 Next
 -----
-send Dave/Geoff invoice for $2000
+WIP - need HSBC from Andrea - send Dave/Geoff invoice for $2000
 
-pay for scoutapp
-
-PAY DREAMHOST
-
-_book.haml.html.  author span is only showing on mobile.  no way to show author on besktop or tablet.
-
-commpare list.haml.html & index.haml.html & tag.haml.html.  refactor?  can I make a column or flow list of books and authors?
-
-for next/prev page on lists, try using javascript technique used for book theme and top buttons.
+_book.haml.html.  author span is only showing on mobile.  no way to show author on desktop or tablet.
 
 * Find out from Fly how the editor he wants to use stores writings (HTML,UTF8-text?).  How about when copy/paste from Word doc?
 
@@ -148,6 +141,12 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE commpare list.haml.html & index.haml.html & tag.haml.html.  refactor?  can I make a column or flow list of books and authors?
+
+DONE for next/prev page on lists, try using javascript technique used for book theme and top buttons.
+
+DONE - PAY DREAMHOST
 
 DONE reading layout.  The only diff is
      = render 'layouts/reading_menu'

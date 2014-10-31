@@ -10,6 +10,8 @@ iPad has white margins when in dark reading mode.
 
 Span for author on book list.  On mobile author shows up on right.  On dekstop/tablet, author does not show at all.  Need a solution for this.
 
+detail-span-action needs less top padding.
+
 nav menu does not toggle off on mobile.
 
 need pagination style for desktop.  js buttons for mobile.
