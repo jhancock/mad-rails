@@ -12,6 +12,8 @@ author publishes whole book
 
 periodic scan for too many logins from same account.  send email to admin when this happens.  enable admin to suspend account:  login will fail and report user that account is suspended.  when looking up current_user need to verify account is not suspended.  If it is, must reset session and notify user.
 
+replace elasticsearch with solr
+
 learn how to unpin mongodb apt - upgrade vr1 and repin
 
 admin pages v1.1

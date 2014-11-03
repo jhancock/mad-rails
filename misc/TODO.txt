@@ -15,13 +15,13 @@ Next
 -----
 WIP - need HSBC from Andrea - send Dave/Geoff invoice for $2000
 
+Need to find out how to set nginx/passenger in maintainance mode while I'm upgrading
+
 _book.haml.html.  author span is only showing on mobile.  no way to show author on desktop or tablet.
 
 * Find out from Fly how the editor he wants to use stores writings (HTML,UTF8-text?).  How about when copy/paste from Word doc?
 
-Write scripts for DB migration.  test import and scripts
-
-mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
+DONE Write scripts for DB migration.  test import and scripts
 
 finish all user & password behavior
     account page.  
@@ -162,6 +162,8 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE dump collection, fix model in 2.0. old data not needed.  mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
 
 DONE commpare list.haml.html & index.haml.html & tag.haml.html.  refactor?  can I make a column or flow list of books and authors?
 

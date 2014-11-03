@@ -56,7 +56,7 @@ class User
 
   index email: 1
   index cn: 1
-  index register_ip: 1
+  index ip: 1
 
   # not used
   # returns an authenticated user or nil

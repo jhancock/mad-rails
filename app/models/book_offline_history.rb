@@ -4,8 +4,9 @@ class BookOfflineHistory
   store_in collection: "books_offline_history"
  
   #TODO all old history from v1.0 are test data.  ok to delete and start off empty
-  field :book_id, type: String
+  field :book_id, type: BSON::ObjectId
   field :offline_at, type: Time
+  #TODO not sure I need both offline_reason and online_reason. reaosn should be enough
   field :offline_reason, type: String
   field :online_at, type: Time
   field :online_reason, type: String
