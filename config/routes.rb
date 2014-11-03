@@ -5,20 +5,22 @@ Rails.application.routes.draw do
   get 'login' => 'account_public#login', as: 'login'
   post 'login' => 'account_public#login_post'
   get 'logout' => 'account#logout', as: 'logout'
+  #TODO get login_help correct.
   get 'login_help' => 'account_public#login_help', as: 'login_help'
   get 'register' => 'account_public#register', as: 'register'
   post 'register' => 'account_public#register_post'
+  get 'account/send_register_email_verify' => 'account#send_register_email_verify', as: 'send_register_email_verify'
+  get 'account/register_email_verify/:code' => 'account#register_email_verify', as: 'register_email_verify'
 
-  #TODO add bookmark view, logout, and choose theme
   get 'account' => 'account#index', as: 'account_home'
-  #TODO change_password
   get 'account/change_password' => 'account#change_password', as: 'change_password'
   post 'account/change_password' => 'account#change_password_post'
   get 'account/change_email' => 'account#change_email', as: 'change_email'
   post 'account/change_email' => 'account#change_email_post'
-  get 'account/send_verification_email' => 'account#send_verification_email', as: 'send_verification_email'
+  get 'account/send_change_email_verify' => 'account#send_change_email_verify', as: 'send_change_email_verify'
+  # if change_email_verify happens before register_email_verify, need to give user register verify reward
+  get 'account/change_email_verify/:code' => 'account#change_email_verify', as: 'change_email_verify'
 
-  #TODO password_reset
   get 'password_reset_request' => 'account_public#password_reset_request', as: 'password_reset_request'
   post 'password_reset_request' => 'account_public#password_reset_request_post'  
   get 'password_reset/:code' => 'account_public#password_reset', as: 'password_reset'
@@ -27,6 +29,7 @@ Rails.application.routes.draw do
   get 'bookmarks' => 'bookmarks#index', as: 'bookmarks'
   get 'bookmarks/remove' => 'bookmarks#remove', as: 'remove_bookmark'
 
+  #TODO handle search with no query or no results
   get 'search(/:query)(/page/:page)' => 'search#search', as: 'search'
 
   get 'privacy_policy' => 'public#privacy_policy', as: 'privacy_policy'

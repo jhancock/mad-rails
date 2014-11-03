@@ -1,10 +1,22 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  require 'exceptions'
+  rescue_from Unauthenticated, with: :unauthenticated
+
   protect_from_forgery with: :exception
   before_action :http_auth
   before_action :set_country
   before_action :current_user
+
+  def unauthenticated(exception)
+    session.delete(:auth_success_path)
+    session.delete(:auth_success_message)
+    session[:auth_success_path] = exception.success_path if exception.success_path
+    session[:auth_success_message] = exception.success_message if exception.success_message
+    flash[:notice] = exception.message if exception.message
+    redirect_to exception.redirect_to || login_path
+  end
 
   def current_user
     if @_current_user then return @_current_user end

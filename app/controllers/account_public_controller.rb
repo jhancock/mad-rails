@@ -24,12 +24,7 @@ class AccountPublicController < ApplicationController
       flash.now[:form_error] = "Login error"
       render 'login' and return
     end
-    # we remove any referral cookies when a user successfully logs in.  May solve the internet cafe problem
-    # self.pop_captured_referral
     set_login(user)
-    #TODO return_to_or(url(:home), :message => {:notice => "login_success"})
-    flash[:notice] = "Login success"
-    redirect_to root_url
   end
 
   def register
@@ -44,8 +39,6 @@ class AccountPublicController < ApplicationController
     @page_keywords = "注册 电子书 在线阅读"
     unless email_valid?(params[:user][:email])
       #TODO SystemEvents.log(:invalid_email_format, {:email => params[:email]})
-      #TODO decide how to handle i18n and message by id
-      #message[:error] = "invalid_email_format"
       flash.now[:form_error] = "invalid_email_format"
       render 'register' and return
     end
@@ -58,18 +51,32 @@ class AccountPublicController < ApplicationController
       flash.now[:form_error] = "email_already_registered"
       render 'register' and return
     end
-    user = User.new({:email => params[:user][:email], :registered => Time.now})
-    #referral_code = self.pop_captured_referral
-    #@user[:referred_by] = referral_code if referral_code
+    user = User.new({:email => params[:user][:email], :registered_at => Time.now})
     user.set_password_hash(params[:user][:password])
-    user.register_ip = request.remote_ip
+    #user.register_ip = request.remote_ip
+
+    # TODO capture _r url param and store in session if exists.  do this in app controller before_action
+    #user.set_referral_code #TODO - use hashids to create code based on user.id
+    #referred_by = session.delete(:referred_by)
+
+    # need to save user so it gets an id
     user.save
+
+    #if referred_by
+    #  referrer = User.find_by_referral_code(referred_by)
+    #  if referrer
+        #TODO should :registered be renamed :registration ??
+    #    UserEvents.log(user.id, :registered, {referred_by: referrer.id})
+    #    UserEvents.log(referrer.id, :referral, {registered: user.id})
+    #    # give referrer their bonus and send email
+    #  end
+    #else
+    #    UserEvents.log(user.id, :registered)        
+    #end    
+
     UserEvents.log(user.id, :registered)
-    set_login(user)
     send_user_mail(user.id, :welcome)
-    #TODO return_to_or(url(:home), :message => {:notice => "registered_success"})
-    flash[:notice] = "Login success"
-    redirect_to root_url
+    set_login(user)
   end
 
   def login_help
@@ -83,8 +90,12 @@ class AccountPublicController < ApplicationController
     remote_ip = request.remote_ip
     user.set_geo(remote_ip)
     user.save
-    LoginEvents.log_success(user.id, request.remote_ip)
+    LoginEvents.log_success(user.id, remote_ip)
     session[:id] = user.id.to_s
+    # we remove any referral cookies when a user successfully logs in.  May solve the internet cafe problem
+    # pop_captured_referral
+    flash[:notice] = session.delete(:auth_success_message) if session[:auth_success_message]
+    redirect_to(session.delete(:auth_success_path) || root_path)
   end
 
   def ensure_no_user

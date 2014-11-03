@@ -5,7 +5,7 @@
 - unless current_user.email_verified?
   %div{:class => "notice"}
     You must verify your email address.  Click here to 
-    = link_to "resend verification email", send_verification_email_path
+    = link_to "resend verification email", send_register_email_verify_path
 %h3
   = "email - #{current_user.email}"
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

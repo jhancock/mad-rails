@@ -11,7 +11,6 @@ class AccountController < ApplicationController
 
   def logout
     reset_session
-    #session[:id] = nil
     @_current_user = nil
     redirect_to root_url, :notice => "logout_success"
   end
@@ -42,15 +41,26 @@ class AccountController < ApplicationController
     @page_keywords = "change email"
   end
 
-  def send_verification_email
+  def send_register_email_verify
+
+  end
+
+  def register_email_verify
+
+  end
+
+  def send_change_email_verify
     # send email and redirect to prior page with message"
+  end
+
+  def change_email_verify
+
   end
         
   private
   def ensure_user
-    unless current_user
-      flash[:notice] = "unauthorized!. back to root"
-      redirect_to root_path
-    end
+    #raise Unauthenticated.new(message: "You must be logged in to view your account", success_path: request.original_fullpath, success_message: "Thank you for loggin in.  Here's your account page ;)") unless current_user
+    raise Unauthenticated.new(message: "You must be logged in to view your account", success_path: request.original_fullpath) unless current_user
+
   end
 end

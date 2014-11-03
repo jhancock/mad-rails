@@ -19,20 +19,40 @@ _book.haml.html.  author span is only showing on mobile.  no way to show author 
 
 * Find out from Fly how the editor he wants to use stores writings (HTML,UTF8-text?).  How about when copy/paste from Word doc?
 
-ONE - finish all user & password behavior
-    account page.  logout link, recent bookmarks, manage bookmarks link, change_password link, change email link, set theme link
-    send_email_verification_path - make this a get so there is no form needed.
-      log event for email_sent
+Write scripts for DB migration.  test import and scripts
+
+mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
+
+finish all user & password behavior
+    account page.  
+      verify email
+      logout link 
+      recent bookmarks
+      manage bookmarks link
+      change_password link
+      change_email link
+      set theme link
+      premium to date
+      referral link if not used
+
+    send_email_verify link
+      log event for email sent - email handler should do this
       log event when verified
+        user.email_verified = Time.now
+    register_email_verify - need to give month free and give month free to referrer
+    email_change_verify
+
     on login failure, be sure to show user password-reset link
-    show premium to date
-    show referral link if not used
+
     bookmarks page - page through and remove bookmarks
        BooksController#read needs to set bookmark
     change_password page
-    password_reset_request page
+    password_reset_request
+    password_reset_request_post
     password_reset page
     change_email page
+    change_email_post
+    change_email_verify
     set theme page
     force_ssl on account/password_change, password_reset_reuqest and password_reset
     DONE test mods to user login, LoginLog, logout kills cookie, register stores ip, etc
@@ -68,10 +88,13 @@ http://www.nginxtips.com/how-to-install-and-configure-spdy-on-nginx/
 
 ensure session does not expire between opening and closing browser.
 
-ensure rails logrotate is working
+rails logrotate not working
+
+see about mongodb logrotate
 
 _mhd_session cookie shows in firefox for both dev.mihudie.com and mihudie.com at the same time.  
 
+put hashids in seperate file in lib, not as gem
 
 SEO - Baidu cares about changes on page titles
     add schema.org microdata
@@ -89,6 +112,7 @@ add PayPal Express
 
 add Alipay
 
+post-production or pre-DB-import: drop event_log, mail_log
 
 new model
 ---------- 
@@ -116,9 +140,6 @@ admin page v1.0
 sitemap.xml script
   EMAIL Should sitemap include old book links with objectId?
   EMAIL Should canonical url be the one with ID or author/title?
-
-Write script to fix this:
-mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
 
 review email template.  It may not be repsonsive for email readers.
    add my own unsubscribe link to email template.  the default one is too prominent.

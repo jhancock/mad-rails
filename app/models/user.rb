@@ -1,34 +1,53 @@
 class User
-  require 'geoip'
+  #TODO can I comment this out?  geoip should be availabel since its in Gemfiles
+  #require 'geoip'
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  # TODO add index on email and probably many others ;)
   field :email, type: String
-  field :email_verified, type: Time
-  # password_hash and password_salt are old hash method.
+  field :email_verified_at, type: Time
+
   field :password_hash, type: String
   field :password_salt, type: String
-  # TODO add field and upgrade method for getting password hashes in bcrypt
+  #TODO upgrade password hashing to bcrypt
   #field :password_bcrypt, type: String
 
   field :password_reset_at, type: Time
   field :password_reset_code, type: String  	
 
-  field :registered, type: Time
-  field :premium, type: Time
-  field :admin, type: Time
+  field :registered_at, type: Time
 
-  # TODO remove geo attribute.  cn, city and ip are all we need
-  field :geo, type: Array
+  # time email is sent for verification
+  field :registered_email_verify_at, type: Time
+  field :registered_email_verify_code, type: String
+
+  # time email change verify is sent for verification
+  field :change_email_verify_at, type: Time
+  field :change_email_verify_code, type: String
+
+  # if premium is set, the user has premium access.  No need to check premium_to.
+  #TODO change :premium to :premium_at
+  field :premium_at, type: Time
+  # if premium_to is set, user has premium access to that time.
+  field :premium_to, type: Time
+
+  # admin
+  #field :admin, type: Time
+  #TODO change :admin to :privileges, an array such as ["admin", "curator", "root"] 
+  field :privileges, type: Array
+
+  #TODO remove geo attribute.  cn, city and ip are all we need
+  #field :geo, type: Array
+  #TODO pull infor from old geo array and set cn and city when migrating db
   field :cn, type: String  # country name (two char code) from the geo array
   field :city, type: String
-  field :register_ip, type: String
+  field :ip, type: String
 
+  #TODO remove old :referral_code and :referred_by from old DB
   # only used twice in old system for testing
   field :referral_code, type: String
   # only used once on jhancock@shellshadow.com account
-  field :referred_by, type: String
+  field :referred_by, type: BSON::ObjectId
 
   # intended for arbitrary error info for debugging purposes 
   # and to ensure we don't try to send to bad addresses more than once
@@ -63,6 +82,7 @@ class User
   end
 
   def set_geo(ip)
+    self.ip = ip
     info = GeoIP.new(Rails.root.join(Rails.configuration.mihudie.geolitecity_path)).city(ip)
     #Rails.logger.info "IP >>> #{ip}  class: #{ip.class}"
     #Rails.logger.info "GEOIP >>> #{info}  class: #{info.class}"
@@ -74,7 +94,14 @@ class User
 
   private
   def create_password_salt
-    self.class.generate_code(16)
+    #self.class.generate_code(16)
+    hashids = Hashids.new(self.class.hashids_salt)
+    hashids.encode(Time.now.to_i)
+  end
+
+  def self.hashids_salt
+    # if this changes, no prior generated hashids can be decoded
+    '23885ea6ee5c8d01bfa4a04c9b34f36878fc2e647685dfcaff47ba24337b663ac46a3e4da0a2e00fab69462bc5cb5e7e1263639868cb432a7d0196b1a68d11c3'
   end
 
   def self.generate_code(length)
