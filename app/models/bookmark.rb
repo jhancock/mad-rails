@@ -1,8 +1,8 @@
 class Bookmark
   include Mongoid::Document
   include Mongoid::Timestamps
-  # There are 0..n bookmarks per user.  1 per book-user pair
-  #TODO should I delete bookmarks when delete a user?  
+  # There are 0..n bookmarks per user.  1 per book:user pair
+  #TODO delete bookmarks when delete a user?  
 
   field :user_id, type: BSON::ObjectId
   field :book_id, type: BSON::ObjectId

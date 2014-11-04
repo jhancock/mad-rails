@@ -19,7 +19,7 @@ class AccountPublicController < ApplicationController
       flash.now[:form_error] = "Login error"
       render 'login' and return
     end
-    unless User.verify_password?(params[:user][:password], user.password_hash, user.password_salt)
+    unless user.password?(params[:user][:password])
       LoginEvents.log_bad_password(user.id, request.remote_ip)
       flash.now[:form_error] = "Login error"
       render 'login' and return
@@ -38,44 +38,29 @@ class AccountPublicController < ApplicationController
     @page_description = "注册迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "注册 电子书 在线阅读"
     unless email_valid?(params[:user][:email])
-      #TODO SystemEvents.log(:invalid_email_format, {:email => params[:email]})
-      flash.now[:form_error] = "invalid_email_format"
+      flash.now[:form_error] = "invalid email format"
       render 'register' and return
     end
     unless params[:user][:password] == params[:user][:password_confirm]
-      flash.now[:form_error] = "passwords_do_not_match"
+      flash.now[:form_error] = "passwords do not match"
       render 'register' and return
     end
     if User.find_by(email: params[:user][:email])
-      #TODO dont tell user they are already registered?
-      flash.now[:form_error] = "email_already_registered"
+      flash.now[:form_error] = "Error.  If you already have an account, please #{view_context.link_to("login", login_path)}"
       render 'register' and return
     end
     user = User.new({:email => params[:user][:email], :registered_at => Time.now})
-    user.set_password_hash(params[:user][:password])
-    #user.register_ip = request.remote_ip
-
-    # TODO capture _r url param and store in session if exists.  do this in app controller before_action
-    #user.set_referral_code #TODO - use hashids to create code based on user.id
-    #referred_by = session.delete(:referred_by)
-
-    # need to save user so it gets an id
+    user.password(params[:user][:password])
+    # save user so it gets an id
     user.save
-
-    #if referred_by
-    #  referrer = User.find_by_referral_code(referred_by)
-    #  if referrer
-        #TODO should :registered be renamed :registration ??
-    #    UserEvents.log(user.id, :registered, {referred_by: referrer.id})
-    #    UserEvents.log(referrer.id, :referral, {registered: user.id})
-    #    # give referrer their bonus and send email
-    #  end
-    #else
-    #    UserEvents.log(user.id, :registered)        
-    #end    
-
-    UserEvents.log(user.id, :registered)
-    send_user_mail(user.id, :welcome)
+    referrer_public_id = session[:referrer]
+    referrer = User.find_by(public_id: referrer_public_id) if referrer_public_id
+    if referrer
+      UserEvents.log(user.id, :registered, {referrer: referrer.id})
+    else
+      UserEvents.log(user.id, :registered)
+    end
+    send_user_mail(user.id, :registered)
     set_login(user)
   end
 
@@ -92,16 +77,12 @@ class AccountPublicController < ApplicationController
     user.save
     LoginEvents.log_success(user.id, remote_ip)
     session[:id] = user.id.to_s
-    # we remove any referral cookies when a user successfully logs in.  May solve the internet cafe problem
-    # pop_captured_referral
+    session.delete(:referrer)
     flash[:notice] = session.delete(:auth_success_message) if session[:auth_success_message]
     redirect_to(session.delete(:auth_success_path) || root_path)
   end
 
   def ensure_no_user
-    if current_user
-      flash[:notice] = "already logged in. back to root"
-      redirect_to root_path
-    end
+    raise Unauthorized.new(message: "Not available to logged in user") if current_user
   end
 end

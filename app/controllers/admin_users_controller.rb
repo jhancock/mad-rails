@@ -36,5 +36,6 @@ class AdminUsersController < AdminController
     end
     @user.delete
     flash[:notice] = "User #{@user.email} - #{@user.id}"
-    redirect_to admin_users_search_url  end
+    redirect_to admin_users_search_url 
+  end
 end

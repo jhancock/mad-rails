@@ -2,9 +2,9 @@
 class UserMailer < ActionMailer::Base
   default from: "support@mihudie.com"
 
-  def welcome(user_id)
+  # welcome email
+  def registered(user_id)
     @user = User.find(user_id)
-
     #TODO figure out mandrill unsub link
     mail(:to => @user.email,
          :subject => "欢迎光临迷蝴蝶文学社区！",

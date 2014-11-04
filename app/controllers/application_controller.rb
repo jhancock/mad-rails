@@ -3,11 +3,13 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   require 'exceptions'
   rescue_from Unauthenticated, with: :unauthenticated
+  rescue_from Unauthorized, with: :unauthorized
 
   protect_from_forgery with: :exception
   before_action :http_auth
   before_action :set_country
   before_action :current_user
+  before_action :capture_referrer
 
   def unauthenticated(exception)
     session.delete(:auth_success_path)
@@ -18,30 +20,36 @@ class ApplicationController < ActionController::Base
     redirect_to exception.redirect_to || login_path
   end
 
+  def unauthorized(exception)
+    flash[:notice] = exception.message if exception.message
+    referer = request.env["HTTP_REFERER"]
+    if referer
+      redirect_to :back
+    else
+      redirect_to exception.redirect_to || root_path
+    end
+  end
+
   def current_user
     if @_current_user then return @_current_user end
     if session[:id]
       user = User.find(session[:id])
       if user
-        #logger.info "user with id #{session[:id]} FOUND"
         @_current_user = user
       else
-        #logger.info "user with id #{session[:id]} NOT FOUND. reseting session"
         reset_session
-        #cookies.delete Rails.configuration.mihudie.session_cookie_name
         @_current_user = nil
       end
     else
-      #logger.info "no user id in session"
       @_current_user = nil
     end
     @_current_user
   end
 
-  # set :cn in session cookie so we always know what country a user is from.  Even unregistered and not logged in users. 
+  # set :cn in session cookie so we always know what country a user is from.  Even unregistered or not logged in users. 
   def set_country
     unless session[:cn]
-      info = GeoIP.new(Rails.root.join(Rails.configuration.mihudie.geolitecity_path)).city(request.remote_ip)
+      info = GeoIP.new(Rails.configuration.mihudie.geolitecity_path).city(request.remote_ip)
       if info
         session[:cn] = info.country_code2
       else
@@ -52,6 +60,10 @@ class ApplicationController < ActionController::Base
 
   def china?
     session[:cn] == "CN"
+  end
+
+  def capture_referrer
+    session[:referrer] = params["_r"] if params["_r"] && !current_user
   end
 
   def render_404

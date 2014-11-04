@@ -4,7 +4,7 @@ fix BoD personal debit card.
 
 DONE fix Georgia corp registration for mihudie 
    and shellshadow.
-fix paypal mihudie account.  get mihudie EIN.  Call Mom
+   fix paypal mihudie account.  get mihudie EIN.  Call Mom
   EIN should be on old IRS returns.  May have copies in Chengdu.
 find solution for Alipay
 pay for scoutapp - Need working credit card
@@ -13,17 +13,13 @@ email TODOs...see below
 
 Next
 -----
-WIP - need HSBC from Andrea - send Dave/Geoff invoice for $2000
-
-Need to find out how to set nginx/passenger in maintainance mode while I'm upgrading
-
 _book.haml.html.  author span is only showing on mobile.  no way to show author on desktop or tablet.
 
 * Find out from Fly how the editor he wants to use stores writings (HTML,UTF8-text?).  How about when copy/paste from Word doc?
 
-DONE Write scripts for DB migration.  test import and scripts
-
 finish all user & password behavior
+   registered email
+   send_email_verify (for register)
     account page.  
       verify email
       logout link 
@@ -86,6 +82,9 @@ http://www.nginxtips.com/what-is-spdy/
 http://www.nginxtips.com/how-to-install-and-configure-spdy-on-nginx/
 -------
 
+set nginx/passenger in maintainance mode while I'm upgrading
+http://tom.meinlschmidt.org/2013/10/15/rails-passenger-nginx-maintenance-mode/
+
 ensure session does not expire between opening and closing browser.
 
 rails logrotate not working
@@ -106,13 +105,18 @@ lazy save pre-rendered book li, genre_tags_pp and summary_html if doesn't exist
 
 script to ensure all books have li, genre_tags_pp and summary_html
 
-test on iPad and Android phones.  Test on popular Chinese browsers.
+Andrea - test on iPad and Android phones.  Test on popular Chinese browsers.
 
 add PayPal Express
+https://github.com/paypal/PayPal-Ruby-SDK
+https://devtools-paypal.com/integrationwizard/
+https://github.com/paypal/PayPal-Ruby-SDK/blob/master/samples/payment/create_with_paypal.rb
+https://support.braintreepayments.com/customer/portal/articles/1593802-paypal-setup-guide
+https://developers.braintreepayments.com/javascript+ruby/guides/paypal
+http://stackoverflow.com/questions/14316426/is-there-a-paypal-ipn-code-sample-for-ruby-on-rails
 
 add Alipay
 
-post-production or pre-DB-import: drop event_log, mail_log
 
 new model
 ---------- 
@@ -168,6 +172,10 @@ DONE dump collection, fix model in 2.0. old data not needed.  mongo collection b
 DONE commpare list.haml.html & index.haml.html & tag.haml.html.  refactor?  can I make a column or flow list of books and authors?
 
 DONE for next/prev page on lists, try using javascript technique used for book theme and top buttons.
+
+DONE post-production or pre-DB-import: drop event_log, mail_log
+
+DONE Write scripts for DB migration.  test import and scripts
 
 DONE - PAY DREAMHOST
 

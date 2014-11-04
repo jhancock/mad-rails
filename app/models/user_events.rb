@@ -10,6 +10,7 @@ class UserEvents
 
   index user_id: 1
   index event: 1
+  index referrer: 1
 
   def self.log(user_id, event, hash = {})
     # hash are the event attributes

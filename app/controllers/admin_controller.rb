@@ -8,10 +8,7 @@ class AdminController < ApplicationController
   end
   
   def ensure_admin
-    unless current_user && current_user.admin
-      flash[:error] = "Unauthorized!"
-      redirect_to :root
-    end
+    raise Unauthorized.new() unless current_user && current_user.admin?
   end
 
   def index
