@@ -61,9 +61,17 @@ Cookies.getCookieVal = function(offset){
 $(function(){
     var defaultTheme = Cookies.get("mhd_theme");
     if(defaultTheme){
-        $(".reading-page-md").addClass(defaultTheme);
+        // reset
+        Cookies.set("mhd_theme", defaultTheme,"30");
+        $(".content-read").addClass(defaultTheme);
         var $themeSelected = $(".book-theme").find("."+defaultTheme);
         $themeSelected.addClass("theme-selected").siblings().removeClass("theme-selected");
+        $(".theme-list").find("."+defaultTheme).find("span").addClass("selected").parents().siblings().removeClass("selected");
+    }else{
+        $(".content-read").addClass("theme-lite-medium");
+        $(".book-theme").find(".theme-lite-medium").addClass("theme-selected").siblings().removeClass("theme-selected");
+        $(".theme-list").find(".theme-lite-medium").find("span").addClass("selected").parents().siblings().removeClass("selected");
+        Cookies.set("mhd_theme", "theme-lite-medium","30");
     }
     function isMobile(){
         var sUserAgent = navigator.userAgent.toLowerCase();
@@ -79,7 +87,6 @@ $(function(){
     }
 
     var body_h = window.innerHeight,body_w = window.innerWidth;
-
     $(".flash-removable").on("click",function(){
         $(this).slideUp(300,function(){
             $(this).remove();
@@ -115,6 +122,12 @@ $(function(){
     },function(){
         $(this).removeClass("active").find("ul").hide();
     });
+    if(isMobile()){
+        $(".nav-left>li").unbind("mouseenter").unbind("mouseleave").on("click",function(){
+            $(this).toggleClass("active").siblings().removeClass("active").find("ul").hide();
+            $(this).find("ul").toggle();
+        })
+    }
 //    $(".nav-left>li>a").on("click",function(e){
 //        var $subMenu = $(this).next("ul");
 //        if($subMenu){
@@ -128,75 +141,110 @@ $(function(){
         if(!_con.is(e.target) && _con.has(e.target).length === 0){
             $(".nav-left>li").removeClass("active").find("ul").hide();
             if(isMobile()){
-                $(".nav-left").hide();
+                //$(".nav-left").hide();
                 $(".search-bar").removeClass("hover");
             }
         }
+        $(".theme-list").removeClass("active");
     });
 
-    var $book_list = $(".details"),$book_list_item = $book_list.find("li");
-    var show_action = $book_list.data("action");
+    $(".details").each(function(){
+        var $book_list = $(this),$book_list_item = $book_list.find("li>a");
+        var show_action = $book_list.data("action");
 
-    $book_list_item.find(".detail-span-action").on("click",function(e){
-        e.stopPropagation();
+        $book_list_item.parents("li").find(".detail-span-action").on("click",function(e){
+            e.stopPropagation();
+        });
+
+        if(show_action=="click"){
+            $book_list_item.unbind("mouseenter").unbind("mouseleave").on("click",function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                var $li = $(this).parents("li");
+                var H = $("body").height();
+                var pos = $li.offset();
+                $li.toggleClass("hover");
+                $li.siblings().removeClass("hover");
+                var detail = $li.find(".detail-span");
+                var mh = detail.innerHeight();
+                if(H < pos.top+mh){
+                    detail.css("top",-mh+"px");
+                }
+                if(pos.left+detail[0].offsetWidth > body_w-20){
+                    detail.css({
+                        left:"inherit",
+                        right:"0"
+                    });
+                }
+            });
+            $(document).on("click",function(e){
+                var _con = $book_list_item.parents("li");
+                if(!_con.is(e.target) && _con.has(e.target).length === 0){
+                    _con.removeClass("hover");
+
+                }
+            });
+        }else{
+            $book_list_item.unbind("click").hover(function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                var $li = $(this).parents("li");
+                $li.addClass("hover");
+                var detail = $li.find(".detail-span");
+                var H = $(window).height();
+                var pos = $li.offset();
+                var mh = detail.innerHeight();
+                if(H < pos.top+mh){
+                    detail.css("top",-mh+"px");
+                }
+                if(pos.left+detail[0].offsetWidth > body_w-20){
+                    detail.css({
+                        left:"inherit",
+                        right:"0"
+                    });
+                }
+
+            });
+            $book_list_item.parents("li").on("mouseleave",function(){
+                $(this).removeClass("hover");
+            })
+        }
+        if(isMobile()){
+            $book_list_item.unbind("mouseenter").unbind("mouseleave").unbind("click").parents("li").on("click",function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                var $li = $(this);
+                var H = $("body").height();
+                var pos = $li.offset();
+                $li.toggleClass("hover");
+                $li.siblings().removeClass("hover");
+                var detail = $li.find(".detail-span");
+                var mh = detail.innerHeight();
+                if(H < pos.top+mh){
+                    detail.css("top",-mh+"px");
+                }
+                if(pos.left+detail[0].offsetWidth > body_w-20){
+                    detail.css({
+                        left:"inherit",
+                        right:"0"
+                    });
+                }
+                //$(this).toggleClass("hover").siblings().removeClass("hover");
+                $("body").scrollTop($(this).offset().top-33)
+            });
+        }
     });
-    if(show_action=="click"){
-        $book_list_item.unbind("mouseenter").unbind("mouseleave").on("click",function(e){
-            e.stopPropagation();
-            var H = $("body").height();
-            var pos = $(this).offset();
-            $(this).toggleClass("hover");
-            $(this).siblings().removeClass("hover");
-            var detail = $(this).find(".detail-span");
-            var mh = detail.innerHeight();
-            if(H < pos.top+mh){
-                detail.css("top",-mh+"px");
-            }
-            if(pos.left+detail[0].offsetWidth > body_w-20){
-                detail.css({
-                    left:"inherit",
-                    right:"0"
-                });
-            }
-        })
-    }else{
-        $book_list_item.unbind("click").hover(function(e){
-            e.stopPropagation();
-            $(this).addClass("hover");
-            var detail = $(this).find(".detail-span");
-            var H = $(window).height();
-            var pos = $(this).offset();
-            var mh = detail.innerHeight();
-            if(H < pos.top+mh){
-                detail.css("top",-mh+"px");
-            }
-            if(pos.left+detail[0].offsetWidth > body_w-20){
-                detail.css({
-                    left:"inherit",
-                    right:"0"
-                });
-            }
 
-        },function(){
-            $(this).removeClass("hover");
-        });
-    }
-    if(isMobile()){
-        $book_list_item.unbind("mouseenter").unbind("mouseleave").unbind("click").on("click",function(){
-            $(this).toggleClass("hover").siblings().removeClass("hover");
-            $("body").scrollTop($(this).offset().top-33)
-        });
-        $(".details>li>a").on("click",function(e){
-            e.preventDefault();
-        });
-    }
+
 
 
     $(".theme-list>a,.theme-list li").on("click",function(e){
+        e.stopPropagation();
         if($(this)[0].tagName == "LI"){
             var theme = $(this)[0].className;
+            $(this).find("span").addClass("selected").parents().siblings().find("span").removeClass("selected");
             var reg = /\s*theme-\w*-\w*\s*/g;
-            var $reading = $(".reading-page-md");
+            var $reading = $(".content-read");
             var classes = $reading.attr("class").replace(reg,"");
             $reading.attr("class",classes);
             $reading.addClass(theme);
