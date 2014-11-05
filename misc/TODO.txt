@@ -5,9 +5,10 @@ fix BoD personal debit card.
 DONE fix Georgia corp registration for mihudie 
    and shellshadow.
    fix paypal mihudie account.  get mihudie EIN.  Call Mom
-  EIN should be on old IRS returns.  May have copies in Chengdu.
-find solution for Alipay
+sign up for Alipay - Mihudie LLC
 pay for scoutapp - Need working credit card
+
+sign up for braintree.  need tax id and business start date (1/19/2010).  need phone number - will appear on customer statements.
 
 email TODOs...see below
 
@@ -15,7 +16,13 @@ Next
 -----
 _book.haml.html.  author span is only showing on mobile.  no way to show author on desktop or tablet.
 
-* Find out from Fly how the editor he wants to use stores writings (HTML,UTF8-text?).  How about when copy/paste from Word doc?
+do I need to trim blank on fields such as email and password?
+
+write scripts to migrate data for duplicate books, users, bookmarks
+
+change Book finder to use scoping http://mongoid.org/en/mongoid/docs/querying.html#scoping
+
+book_controller#read needs permission checks and redirects to register/purchase
 
 finish all user & password behavior
    registered email

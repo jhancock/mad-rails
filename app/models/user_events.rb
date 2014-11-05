@@ -8,9 +8,12 @@ class UserEvents
   field :user_id, type: BSON::ObjectId
   field :event, type: String
 
-  index user_id: 1
-  index event: 1
-  index referrer: 1
+  index({user_id: 1}, {unique: false})
+  index({event: 1}, {unique: false})
+  index({ user_id: 1, event: 1 }, { unique: false })
+  # should be unique.  setting to not unique to catch odd errors
+  index({ user_id: 1, event: 1, created_at: -1 }, { unique: false })
+  index({referrer: 1}, {unique: false})
 
   def self.log(user_id, event, hash = {})
     # hash are the event attributes

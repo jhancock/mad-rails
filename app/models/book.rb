@@ -23,12 +23,14 @@ class Book
   field :offline_at, type: Time
   field :offline_reason, type: String
 
+  index({title: 1}, {unique: false})
+  index({author: 1}, {unique: false})
   index({ title: 1, author: 1, offline_at: 1 }, { unique: false })
-  index title: 1
-  index author: 1
-  index offline_at: 1
-  index updated_at: -1
-  index read_count: -1
+  index({ title: 1, author: 1, offline_at: 1, tags: 1 }, { unique: false })
+  index({tags: 1}, {unique: false})
+  index({offline_at: -1}, {unique: false})
+  index({updated_at: -1}, {unique: false})
+  index({read_count: -1}, {unique: false})
 
   #after_create :index_document
   #TODO do not want to do this when only read_count is updated

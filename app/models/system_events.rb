@@ -7,7 +7,8 @@ class SystemEvents
   
   field :event, type: String
 
-  index event: 1
+  index({event: 1}, {unique: false})
+  index({ event: 1, created_at: -1 }, { unique: false })
 
   def self.log(event, hash = {})
     # hash are the event attributes to be stored.

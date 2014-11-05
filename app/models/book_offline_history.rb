@@ -3,22 +3,16 @@ class BookOfflineHistory
   include Mongoid::Timestamps
   store_in collection: "books_offline_history"
  
-  #TODO all old history from v1.0 are test data.  ok to delete and start off empty
   field :book_id, type: BSON::ObjectId
-  field :offline_at, type: Time
-  #TODO not sure I need both offline_reason and online_reason. reaosn should be enough
-  field :offline_reason, type: String
-  field :online_at, type: Time
-  field :online_reason, type: String
+  # state should be "off" or "on"
+  field :state, type: String
+  field :notes, type: String
 
-  #def self.collection_name; 'books_offline_history'; end
+  index({book_id: 1}, {unique: false})
+  index({state: 1}, {unique: false})
 
-  #TODO offline history model not tested
-  def self.history?(id)
-    self.find({:book_id => id.to_s}).count > 0 ? true : false
+  def self.history?(book_id)
+    self.find_by({:book_id => id}).count > 0 ? true : false
   end
   
-  def self.for_book_id(id)
-    self.find({:book_id => id.to_s}).to_a
-  end
 end

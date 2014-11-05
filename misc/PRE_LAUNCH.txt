@@ -6,6 +6,12 @@ rails r lib/scripts/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/m
 # create indexes
 rake db:mongoid:create_indexes
 
+# script to remove duplicate bookmarks, users.  run script.  change bookmarks, users index def.  drop index.  create indexes.
+
+# set mongodb profiling level
+use mhd_development || use mhd_production
+db.setProfilingLevel(2)
+
 index elastic search.  create script
 
 create sitemap.xml.  create script

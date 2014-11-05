@@ -38,11 +38,15 @@ class User
   # TODO can I get rid of :email_error attribute?
   field :email_error, type: String
 
-  index email: 1
-  index public_id: 1
-  index cn: 1
-  #TODO why do I have an index on ip?
-  index ip: 1
+  #TODO duplicate docs with same email.  fix and change index after migration.
+  index({email: 1}, {unique: false})
+  index({public_id: 1}, {unique: true, sparse: true})
+  index({cn: 1}, {unique: false})
+  #TODO why do I have an index on ip?.  Is it so I can ref a new user against existing users to see if a user is using a second email account to get fake referral?
+  index({ip: 1}, {unique: false})
+  index({privileges: 1}, {unique: false})
+  index({premium_at: 1}, {unique: false})
+  index({premium_to: 1}, {unique: false})
 
   def public_id
     unless self[:public_id]
@@ -56,7 +60,7 @@ class User
   end
 
   def premium?
-    self.premium_at || self.premium_to > Time.now
+    self.premium_at || self.premium_to > Time.now || self.admin?
   end
 
   # duration is a Fixnum such as 1.month

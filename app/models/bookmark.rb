@@ -3,11 +3,19 @@ class Bookmark
   include Mongoid::Timestamps
   # There are 0..n bookmarks per user.  1 per book:user pair
   #TODO delete bookmarks when delete a user?  
+  #TODO rewrite bookmark methos/mongodb queries
 
   field :user_id, type: BSON::ObjectId
   field :book_id, type: BSON::ObjectId
   field :chunk, type: Integer
- 
+
+  index({user_id: 1}, {unique: false})
+  index({book_id: 1}, {unique: false})
+  index({ user_id: 1, book_id: 1 }, { unique: false })
+  index({ user_id: 1, book_id: 1, updated_at: -1 }, { unique: false })
+  #index({ user_id: 1, book_id: 1 }, { unique: true, drop_dups: true })
+  #index({ user_id: 1, book_id: 1, updated_at: -1 }, { unique: true, drop_dups: true })
+
   def book
     @book ||= Book.find(self[:book_id])
   end
