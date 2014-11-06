@@ -1,8 +1,8 @@
 %div{:class => "main-text"}
-  %h2
-    = "#{@sort} books - page #{@page} - "
-    - opposite_sort = @sort =='recent' ? 'popular' : 'recent'
-    = link_to "sort by #{opposite_sort}", list_books_path(sort: opposite_sort)
+  %h1
+    = "#{@sort} books - page #{@page}"
+    -#- opposite_sort = @sort =='recent' ? 'popular' : 'recent'
+    -#= link_to "sort by #{opposite_sort}", list_books_path(sort: opposite_sort)
 
-= render partial: 'shared/my_collection', locals: {collection: @books, url_params: {controller: 'books', action: 'list', sort: @sort}, name: "书库", current_page: @page}
+= render partial: 'shared/my_collection', locals: {collection: @books, url_params: {controller: 'books', action: 'list', sort: @sort}, sort: @sort, name: nil, current_page: @page}
 

@@ -66,6 +66,11 @@ class ApplicationController < ActionController::Base
     session[:referrer] = params["_r"] if params["_r"] && !current_user
   end
 
+  # sort is "popular" or "recent".  return the Chinese for it.
+  def sort_cn(sort)
+    sort == "popular" ? "popular" : "recent"
+  end
+
   def render_404
     render :file => "/public/404.html", :layout => false, :status => 404
   end

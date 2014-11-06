@@ -48,9 +48,9 @@ class BooksController < ApplicationController
     criteria = Book.online_popular_by_tag(@tag) if @sort == "popular"
     criteria = Book.online_recent_by_tag(@tag) if @sort == "recent"
     @books = criteria.page(@page)
-    page_title = "#{@tag.cn} 电子书在线阅读"
-    page_description = "#{@tag.cn} 的言情小说在此应有尽有，最热门，最受关注的全本原创作品均在此陈列。喜欢此类故事的朋友一定能在此找到自己喜爱的书籍"
-    page_keywords = "#{@tag.cn}  言情小说  电子书  在线阅读"
+    @page_title = "#{@tag.cn} #{sort_cn(@sort)} page #{@page}"
+    @page_description = "#{@tag.cn} 的言情小说在此应有尽有，最热门，最受关注的全本原创作品均在此陈列。喜欢此类故事的朋友一定能在此找到自己喜爱的书籍"
+    @page_keywords = "#{@tag.cn}  言情小说  电子书  在线阅读"
   end
 
 end

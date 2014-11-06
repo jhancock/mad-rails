@@ -1,12 +1,13 @@
-%h1
-  Account Home &nbsp;&nbsp;  -
-  &nbsp;&nbsp;&nbsp;
-  = link_to "退出", logout_path
-- unless current_user.email_verified?
-  %div{:class => "notice"}
-    You must verify your email address.  Click here to 
-    = link_to "resend verification email", send_register_email_verify_path
-%h3
+%div{:class => "main-text"}
+  %h1
+    Account Home &nbsp;&nbsp;  -
+    &nbsp;&nbsp;&nbsp;
+    = link_to "退出", logout_path
+  - unless current_user.email_verified?
+    %div{:class => "notice"}
+      Verify your email to receive one month free.
+      = link_to "resend verification email", send_register_email_verify_path
+%h2
   = "email - #{current_user.email}"
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   = link_to "修改密码", change_password_path

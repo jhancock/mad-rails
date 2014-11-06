@@ -5,9 +5,15 @@
 -#    total_pages:   total number of pages
 -#    per_page:      number of items to fetch per page
 -#    remote:        data-remote
-%span.prev
-  = link_to_unless current_page.first?, t('views.pagination.previous').html_safe, url, :rel => 'prev', :remote => remote
+-#%span.prev
+  = link_to_unless current_page.first?, "« 前一页", url, :rel => 'prev', :remote => remote
 
+- if current_page.first?
+  %span{:class => "disabled previous_page"}
+    « 前一页
+- else
+  = link_to "« 前一页", url, :rel => 'prev', :remote => remote
+  
 - content_for :side_menu_page_prev do
   %li
-    = link_to_unless current_page.first?, t('views.pagination.previous').html_safe, url, :rel => 'prev', :remote => remote
+    = link_to_unless current_page.first?, "«", url, :rel => 'prev', :remote => remote

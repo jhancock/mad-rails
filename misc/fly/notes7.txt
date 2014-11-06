@@ -1,0 +1,28 @@
+side-menu
+----------
+theme menu is broken.  does not change theme.  menu does not close when theme selected.
+
+reading menu "back to top" button used to scroll to top.  Now it jumps to it.  The scroll behavior was more attractive.
+
+side-menu pagination.  I can't use "下一页 »".  Too long.  If I use "»", its unreadable.  We need a large enough icon or much larger font for these two li's.
+
+detail-span-action.  I was wrong.  Putting the primary button to the right looks terrible.  Please move it back to the left ;)
+
+detail-span.  There are some bugs in the hover behavior.  If you play with the home page a bit you can easily get the popups to behave wrong.
+
+detail-span author span color is too light.  The css effect you use to change the title font to blue is nice.  Please use the same behvaior to change the autho span font to darker. 
+
+pagination.  prev and next page disabled spans not displaying.
+
+main-text div's h1 needs class "hide-mobile".
+
+div class page-title cuts off too short.
+
+Why does an h1 and anchors have to be in main-text?  
+
+If I have list-container under main-text it changes the button style.  Why should it matter if list-container is under main-text or not?
+
+need "action link" for account page.  Should not have to be under main-text.  Lets try making it look like the next page link used in pagination.
+
+
+

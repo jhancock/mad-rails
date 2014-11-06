@@ -1,9 +1,13 @@
 = page_entries_info collection
-= paginate collection, :params => url_params
+- opposite_sort = sort =='recent' ? 'popular' : 'recent'
+= link_to "sort by #{opposite_sort}", list_books_path(sort: opposite_sort)
+
 %hr
+= paginate collection, :params => url_params
 
 %div{:class => "list-container"}
-  %h3
-    = name
+  - if name
+    %h3
+      = name
   %ul{:class => "list-column details"}
     = render collection

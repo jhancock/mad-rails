@@ -4,7 +4,7 @@
   
 -# = paginate @books, :params => {:controller => 'search', :action => 'search', :query => @query}
 
-%ul{:class => "search-list""}
+%ul{:class => "search-list"}
   - @books.each do |book|
     %li
       %h4
