@@ -13,8 +13,8 @@
     « 前一页
 - else
   = link_to "« 前一页", url, :rel => 'prev', :remote => remote
-  
-- content_for :side_menu_page_prev do
-  %li
-    = link_to_unless current_page.first?, "", url, :rel => 'prev', :remote => remote
-      %span{:class => "icon-prev"}
+
+- unless current_page.first?
+  - content_for :side_menu_page_prev do
+    = "<li><a href=#{url} rel='prev'><span class='icon-prev'></span></a></li>".html_safe
+

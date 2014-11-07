@@ -13,9 +13,8 @@
     下一页 »
 - else
   = link_to "下一页 »", url, :rel => 'next', :remote => remote
-    
-- content_for :side_menu_page_next do
-  %li
-    = link_to_unless current_page.last?, "", url, :rel => 'next', :remote => remote
-      %span{:class => "icon-next"}
+
+- unless current_page.last?  
+  - content_for :side_menu_page_next do
+    = "<li><a href=#{url} rel='next'><span class='icon-next'></span></a></li>".html_safe
 
