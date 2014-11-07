@@ -3,8 +3,7 @@
     #{@user.email}
     
 %div
-  :plain
-    #{doc_pp @user}
+  = "#{doc_pp @user}".html_safe
 
 %p ----------------------------
 

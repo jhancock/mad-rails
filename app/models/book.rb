@@ -8,10 +8,13 @@ class Book
   field :title, type: String
   field :author, type: String
   field :summary, type: String
+  # need to store this as html_safe
   field :summary_html, type: String
   field :tags, type: Array, default: []
   field :tag_names, type: Array, default: []
   field :tag_names_pp, type: String
+  # pre-rendered li of the book for detail-span
+  field :detail_li, type: String
 
   field :origin, type: String
   field :type, type: String

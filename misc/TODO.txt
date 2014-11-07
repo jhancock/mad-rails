@@ -8,13 +8,14 @@ DONE fix Georgia corp registration for mihudie
 sign up for Alipay - Mihudie LLC
 pay for scoutapp - Need working credit card
 
-sign up for braintree.  need tax id and business start date (1/19/2010).  need phone number - will appear on customer statements.
+braintree doesn't have Chinese UI.  See if my PayPal account handles UnionPay
 
 email TODOs...see below
 
 Next
 -----
-_book.haml.html.  author span is only showing on mobile.  no way to show author on desktop or tablet.
+
+update rails to 4.1.7
 
 do I need to trim blank on fields such as email and password?
 
@@ -174,7 +175,9 @@ email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
 
-DONE dump collection, fix model in 2.0. old data not needed.  mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
+DONE _book.haml.html.  author span is only showing on mobile.  no way to show author on desktop or tablet.
+
+DONE  books_offline_history collection, fix model in 2.0. old data not needed.  mongo collection books_offline_history is storing the book_id attribute as a String.  This is inconsistent with how Bookmarks store book_id as ObjectId.  Since there are only 8 of these docs, we can hand migrate to an ObjectId pre-launch.
 
 DONE commpare list.haml.html & index.haml.html & tag.haml.html.  refactor?  can I make a column or flow list of books and authors?
 
