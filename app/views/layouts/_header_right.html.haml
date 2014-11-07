@@ -1,4 +1,4 @@
-%div{:class => "nav-right clearfix"}
+%div{:class => (current_user ? "nav-right long clearfix" : "nav-right clearfix")}
   %div{:class => "l nav-icon"}
     %a{:href => "javascript:;", :class => "menu-link"}
       %span

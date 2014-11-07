@@ -149,7 +149,7 @@ $(function(){
     });
 
     $(".details").each(function(){
-        var $book_list = $(this),$book_list_item = $book_list.find("li>a");
+        var $book_list = $(this),$book_list_item = $book_list.find("li").children("a");
         var show_action = $book_list.data("action");
 
         $book_list_item.parents("li").find(".detail-span-action").on("click",function(e){
@@ -178,7 +178,7 @@ $(function(){
                 }
             });
             $(document).on("click",function(e){
-                var _con = $book_list_item.parents("li");
+                var _con = $book_list_item.parents("li") || $book_list_item;
                 if(!_con.is(e.target) && _con.has(e.target).length === 0){
                     _con.removeClass("hover");
 
@@ -189,7 +189,7 @@ $(function(){
                 e.preventDefault();
                 e.stopPropagation();
                 var $li = $(this).parents("li");
-                $li.addClass("hover");
+                $li.addClass("hover").siblings().removeClass("hover");
                 var detail = $li.find(".detail-span");
                 var H = $(window).height();
                 var pos = $li.offset();
@@ -206,7 +206,7 @@ $(function(){
 
             });
             $book_list_item.parents("li").on("mouseleave",function(){
-                $(this).removeClass("hover");
+                $(this).removeClass("hover").siblings().removeClass("hover");
             })
         }
         if(isMobile()){
@@ -232,6 +232,12 @@ $(function(){
                 //$(this).toggleClass("hover").siblings().removeClass("hover");
                 $("body").scrollTop($(this).offset().top-33)
             });
+            $book_list_item.on("click",function(e){
+                e.preventDefault();
+            });
+            $book_list_item.siblings().find("a").on("click",function(e){
+                e.stopPropagation();
+            })
         }
     });
 
