@@ -1,0 +1,5 @@
+if notice or error div is in form-model and not in form, links are styled different.  They should be the same.  See /register, type in an existing registered email with two matching passwords and you can see an error message with a link that is different from the link for the notice message inside the form div.
+
+
+
+

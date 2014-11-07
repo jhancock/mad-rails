@@ -46,7 +46,7 @@ class AccountPublicController < ApplicationController
       render 'register' and return
     end
     if User.find_by(email: params[:user][:email])
-      flash.now[:form_error] = "Error.  If you already have an account, please #{view_context.link_to("login", login_path)}"
+      flash.now[:form_error] = "Error.  If you already have an account, please #{view_context.link_to("login", login_path)}".html_safe
       render 'register' and return
     end
     user = User.new({:email => params[:user][:email], :registered_at => Time.now})
