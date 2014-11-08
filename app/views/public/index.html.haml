@@ -7,10 +7,6 @@
     - if @china
       WELCOME CHINA USER
 
-- alternate_sort = @sort =='recent' ? 'popular' : 'recent'
-- alternate_sort_path = list_books_path(sort: alternate_sort)
-
-= render partial: 'shared/my_collection', locals: {collection: @books, url_params: {controller: 'books', action: 'list', sort: @sort}, alternate_sort: alternate_sort, alternate_sort_path: alternate_sort_path, name: nil, current_page: @page}
+= render partial: 'shared/my_collection', locals: {collection: @books, url_params: {controller: 'books', action: 'list', sort: @sort}, name: nil}
 
 -#  name: "书库"  -- this is an optional local arg to my_collection
-

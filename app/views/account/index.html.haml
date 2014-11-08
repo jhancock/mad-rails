@@ -1,16 +1,15 @@
 %div{:class => "main-text"}
-  %h1
-    Account Home &nbsp;&nbsp;  -
-    &nbsp;&nbsp;&nbsp;
-    = link_to "退出", logout_path
+  %h1{:class => "hide-mobile"}
+    Account Home
   - unless current_user.email_verified?
     %div{:class => "notice"}
       Verify your email to receive one month free.
       = link_to "resend verification email", send_register_email_verify_path
-%h2
-  = "email - #{current_user.email}"
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  = link_to "修改密码", change_password_path, class: "action"
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  = link_to "change_email", change_email_path, class: "action"
-%br
+%h3
+  = "#{current_user.email}"
+  &nbsp;
+  = link_to "退出", logout_path, class: "action"
+
+= link_to "修改密码", change_password_path, class: "action"
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= link_to "change_email", change_email_path, class: "action"

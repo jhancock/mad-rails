@@ -14,7 +14,7 @@ email TODOs...see below
 
 Next
 -----
-update rails to 4.1.7
+reissue namecheap SSL cert.  update nginx conf: remove SSLv3
 
 do I need to trim blank on fields such as email and password?
 
@@ -62,8 +62,6 @@ finish all user & password behavior
     logout link in menu bar if not mobile.  only on account page for mobile
     add shortcuts to account behavior on account nav list
     add bookmarks to bookmarks tracks list
-
-need an Action Link.  This is an anchor styled so the user knows its an action.  Bigger and bold but not a button.  Need this for account page links like password_change, manage bookmarks, etc.
 
 v1.0 - tracks and bookmarks in one integrated menu item.  Need a name for it.  User can get to pure bookmarks view from account menu.  This leaves room for author menu at end (in future version).  author can have quick access to their book stats ;) and maybe post messages on mobile.  A controller#action knows its tracks: an array of k,v pairs.  key is URL.  value is list item name.
 
@@ -173,6 +171,10 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE need an Action Link.  This is an anchor styled so the user knows its an action.  Bigger and bold but not a button.  Need this for account page links like password_change, manage bookmarks, etc.
+
+DONE update rails to 4.1.7
 
 DONE _book.haml.html.  author span is only showing on mobile.  no way to show author on desktop or tablet.
 
