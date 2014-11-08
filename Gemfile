@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
 ruby '2.1.2'
 
-gem 'rails', '4.1.6'
+gem 'rails', '4.1.7'
 gem 'haml-rails'
 gem 'bcrypt', '~> 3.1.7'
-gem 'mongoid', '~> 4.0.0', github: 'mongoid/mongoid'
+#gem 'mongoid', '~> 4.0.0', github: 'mongoid/mongoid'
+gem 'mongoid', '~> 4.0.0'
+
 gem 'bson_ext'
 # after bundle mongoid and bson_ext run rails mongoid config script
 
