@@ -8,11 +8,13 @@ class BookmarksController < ApplicationController
     @page_description = "按近期被点击次数排行的电子书，在线阅读最吸引人的中文电子书"
     @page_keywords = "关注 流行 中文电子书 在线阅读"
     @page = params[:page].to_i > 0 ? params[:page].to_i : 1
-    @bookmarks = Bookmark.where(user_id: current_user.id).desc(:updated_at)
-    if (@bookmarks.count - ((@page - 1) * 50)) < 1
-      redirect_to bookmarks_path
+    @bookmarks = Bookmark.where(user_id: current_user.id).desc(:updated_at).page(@page)
+    if (@bookmarks.count == 0) && (@page == 1)
+      render and return
     end
-    @bookmarks = @bookmarks.page(@page)
+    if ((@bookmarks.count == 0) && (@page != 1)) || ((@bookmarks.count - ((@page - 1) * 50)) < 1) 
+      redirect_to bookmarks_path and return
+    end
   end
 
   #TODO if I delete bookmark #51, the redirect goes to page/2 which is not valid anymore.
