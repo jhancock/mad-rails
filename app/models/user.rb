@@ -105,7 +105,7 @@ class User
   end
 
   def bookmarks
-    @bookmarks ||= Bookmark.get_all(self)
+    @bookmarks ||= Bookmark.where(user_id: self.id)
   end
 
   private
