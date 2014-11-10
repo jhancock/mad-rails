@@ -21,6 +21,7 @@ class Book
   field :chars, type: Integer
   field :chunks, type: Integer
   field :read_count, type: Integer, default: 0
+  field :unique_read_count, type: Integer, default: 0
 
   # should default to nil?  or change this to a state field?
   field :offline_at, type: Time
@@ -34,7 +35,8 @@ class Book
   index({offline_at: -1}, {unique: false})
   index({updated_at: -1}, {unique: false})
   index({read_count: -1}, {unique: false})
-
+  index({unique_read_count: -1}, {unique: false})
+  
   #after_create :index_document
   #TODO do not want to do this when only read_count is updated
   #after_update :update_document
@@ -108,6 +110,14 @@ class Book
   #TODO no concept of chapters.  New model needed.
   def chapter_title(page)
     "第#{page}页"
+  end
+
+  def increment_read_count
+    self.inc(read_count: 1)
+  end
+
+  def increment_unique_read_count
+    self.inc(unique_read_count: 1)
   end
 
   def self.online_recent

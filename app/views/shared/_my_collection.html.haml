@@ -1,12 +1,13 @@
-- alternate_sort = url_params[:sort] == "recent" ? "popular" : "recent"
-- alternate_sort_cn = alternate_sort == "recent" ? "recent" :  "热力关注"
+- sort = url_params[:sort]
+- if sort
+  - alternate_sort = url_params[:sort] == "recent" ? "popular" : "recent"
+  - alternate_sort_cn = alternate_sort == "recent" ? "recent" :  "热力关注"
+  - alternate_sort_path = url_for(url_params.merge({sort: alternate_sort}))
 
 = page_entries_info collection
 &nbsp;
-- alternate_sort_path = url_for(url_params.merge({sort: alternate_sort}))
 -#- page = collection.options[:limit] *  collection.options[:skip] + 1
-
-= link_to "#{alternate_sort_cn}排行", alternate_sort_path, class: "action"
+= link_to "#{alternate_sort_cn}排行", alternate_sort_path, class: "action" if sort
 
 %hr
 = paginate collection, :params => url_params

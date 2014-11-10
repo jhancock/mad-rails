@@ -87,6 +87,11 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def ensure_user
+    raise Unauthenticated.new(message: "You must be logged in to view this page", success_path: request.original_fullpath) unless current_user
+  end
+
+
   protected
 
   def http_auth

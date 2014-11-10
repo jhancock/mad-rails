@@ -8,6 +8,8 @@ rake db:mongoid:create_indexes
 
 # script to remove duplicate bookmarks, users.  run script.  change bookmarks, users index def.  drop index.  create indexes.
 
+# script to unset Book.offline_at if it is nil
+
 # set mongodb profiling level
 use mhd_development || use mhd_production
 db.setProfilingLevel(2)

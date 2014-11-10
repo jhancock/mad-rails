@@ -1,6 +1,16 @@
 
 v1.1
 -----
+add PayPal Express
+https://github.com/paypal/PayPal-Ruby-SDK
+https://devtools-paypal.com/integrationwizard/
+https://github.com/paypal/PayPal-Ruby-SDK/blob/master/samples/payment/create_with_paypal.rb
+https://support.braintreepayments.com/customer/portal/articles/1593802-paypal-setup-guide
+https://developers.braintreepayments.com/javascript+ruby/guides/paypal
+http://stackoverflow.com/questions/14316426/is-there-a-paypal-ipn-code-sample-for-ruby-on-rails
+
+add Alipay
+
   When books available, money gets added to their account in minimum 30rmb for alipay and $10 USD for PayPal.  Books typical cost 3 to 5 points per 1000 characters (no white space).  A book is charged per chapter with points calculated by the per 1000 character rate.
   1 RMB = 100 points.  $10 USD = 6000 points.  As a user spends points/coins, for each 1000, they get a free premium month added.  Do some calcs to ensure the coin to pay-in-anvace numbers are balanced.  Notify a user when they get a free month ;).
 

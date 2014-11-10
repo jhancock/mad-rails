@@ -8,13 +8,17 @@ class BooksController < ApplicationController
     redirect_to read_book_url(author: book.author, title: book.title, page: params[:page]), status: 301
   end
 
-  def read()
+  def read
     author = params[:author]
     title = params[:title]
-    #TODO verify that if offline_at exists but is nil this behaves as expected.
+    #TODO see if I need to use $exists or can query offline_at: nil
     @book = Book.find_by(author: author, title: title, offline_at: {'$exists' => false})
+    #TODO change to redirect_to :root, 301?  302? :notice => "book not found"
     render_404 and return unless @book
-    @page = params[:page] ? params[:page].to_i : 1
+
+    @bookmark = current_user ? Bookmark.find_by({user_id: current_user.id, book_id: @book.id}) : nil
+    @page = params[:page] ? params[:page].to_i : @bookmark ? @bookmark.chunk : 1
+
     begin
       path = @book.chunk_path(@page)
       logger.info "PATH: #{path}"
@@ -27,10 +31,14 @@ class BooksController < ApplicationController
     @page_title = "#{@chapter_title} #{@book.title} - #{@book.author}"
     @page_description = "按近期被点击次数排行的电子书，在线阅读最吸引人的中文电子书"
     @page_keywords = "关注 流行 中文电子书 在线阅读"
+
+    @book.increment_read_count if !current_user || !current_user.admin?
+    @book.increment_unique_read_count if current_user && !@bookmark
+    Bookmark.set(current_user, @book, @page) if current_user
     render layout: "reading"
   end
 
-  def list()
+  def list
     @page = params[:page].to_i > 0 ? params[:page].to_i : 1
     @sort = params[:sort] || 'popular'
     criteria = Book.online_popular if @sort == "popular"
@@ -41,7 +49,7 @@ class BooksController < ApplicationController
     @page_keywords = "关注 流行 中文电子书 在线阅读"
   end
 
-  def tag()
+  def tag
     @page = params[:page].to_i > 0 ? params[:page].to_i : 1
     @tag = GenreTag.by_name(params[:tag])
     redirect_to(root_path, status: 301, notice: "tag #{@tag} does not exist") and return unless @tag

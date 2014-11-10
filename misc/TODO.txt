@@ -25,43 +25,37 @@ change Book finder to use scoping http://mongoid.org/en/mongoid/docs/querying.ht
 book_controller#read needs permission checks and redirects to register/purchase
 
 finish all user & password behavior
-   registered email
-   send_email_verify (for register)
-    account page.  
-      verify email
-      logout link 
-      recent bookmarks
-      manage bookmarks link
-      change_password link
-      change_email link
-      set theme link
-      premium to date
+   D registered email
+   D send_email_verify (for register)
+   password_reset_request, password_reset_request_post, password_reset, password_reset_post 
+   on login failure, show password-reset link
+   account 
+      T verify email
+      D logout link 
+      D manage bookmarks link
+      D change_password
+      change_email
+      set theme
+      D show premium to date
       referral link if not used
 
-    send_email_verify link
-      log event for email sent - email handler should do this
-      log event when verified
-        user.email_verified = Time.now
-    register_email_verify - need to give month free and give month free to referrer
-    email_change_verify
+    D send_email_verify link
+      D log event for email sent - email handler should do this
+      D log event when verified
+    T register_email_verify - need to give month free and give month free to referrer
 
-    on login failure, be sure to show user password-reset link
+    D bookmarks page - page through and remove bookmarks
+      D BooksController#read needs to set bookmark
+    D change_password page
 
-    bookmarks page - page through and remove bookmarks
-       BooksController#read needs to set bookmark
-    change_password page
-    password_reset_request
-    password_reset_request_post
-    password_reset page
-    change_email page
-    change_email_post
-    change_email_verify
-    set theme page
     force_ssl on account/password_change, password_reset_reuqest and password_reset
     DONE test mods to user login, LoginLog, logout kills cookie, register stores ip, etc
-    logout link in menu bar if not mobile.  only on account page for mobile
+    D logout link in menu bar if not mobile.  only on account page for mobile
+
     add shortcuts to account behavior on account nav list
-    add bookmarks to bookmarks tracks list
+    add recent bookmarks to bookmarks tracks list
+
+    emphasis on verify password in account menu
 
 v1.0 - tracks and bookmarks in one integrated menu item.  Need a name for it.  User can get to pure bookmarks view from account menu.  This leaves room for author menu at end (in future version).  author can have quick access to their book stats ;) and maybe post messages on mobile.  A controller#action knows its tracks: an array of k,v pairs.  key is URL.  value is list item name.
 
@@ -111,16 +105,6 @@ lazy save pre-rendered book li, genre_tags_pp and summary_html if doesn't exist
 script to ensure all books have li, genre_tags_pp and summary_html
 
 Andrea - test on iPad and Android phones.  Test on popular Chinese browsers.
-
-add PayPal Express
-https://github.com/paypal/PayPal-Ruby-SDK
-https://devtools-paypal.com/integrationwizard/
-https://github.com/paypal/PayPal-Ruby-SDK/blob/master/samples/payment/create_with_paypal.rb
-https://support.braintreepayments.com/customer/portal/articles/1593802-paypal-setup-guide
-https://developers.braintreepayments.com/javascript+ruby/guides/paypal
-http://stackoverflow.com/questions/14316426/is-there-a-paypal-ipn-code-sample-for-ruby-on-rails
-
-add Alipay
 
 
 new model

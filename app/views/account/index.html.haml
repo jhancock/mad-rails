@@ -1,15 +1,30 @@
-%div{:class => "main-text"}
-  %h1{:class => "hide-mobile"}
-    Account Home
-  - unless current_user.email_verified?
-    %div{:class => "notice"}
-      Verify your email to receive one month free.
-      = link_to "resend verification email", send_register_email_verify_path
+%div{:class => "main-text hide-mobile"}
+  %h1
+    = @page_title
+
+- unless current_user.email_verified?
+  %div{:class => "notice"}
+    Verify your email to receive one month free.
+    = link_to "resend verification email", send_registered_email_verify_path
+    
 %h3
   = "#{current_user.email}"
   &nbsp;
   = link_to "退出", logout_path, class: "action"
 
+- if current_user.premium_to || current_user.premium_at
+  - if current_user.premium_at
+    = "You have backyard access"
+  - else
+    = "You have backyard access to #{current_user.premium_to.to_s(:yyyy_mm_dd)}"
+-# TODO add notice for referral here.
+%hr
+- if current_user.bookmarks
+  = "#{current_user.bookmarks.count} bookmarks"
+  &nbsp;
+  = link_to "manage bookmarks", bookmarks_path, class: "action" 
+%br
+%br
 = link_to "修改密码", change_password_path, class: "action"
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 = link_to "change_email", change_email_path, class: "action"

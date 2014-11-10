@@ -1,2 +1,6 @@
-%h1 Bookmarks#index
-%p Find me in app/views/bookmarks/index.html.haml
+%div{:class => "main-text hide-mobile"}
+  %h1
+    = @page_title
+
+= render partial: 'shared/my_collection', locals: {collection: @bookmarks, url_params: {controller: 'bookmarks', action: 'index'}, name: nil}
+

@@ -1,0 +1,24 @@
+- book = bookmark.book
+%li
+  %span
+    #{book.author}
+  %a{:href => read_book_path(author: book.author, title: book.title)}
+    = "#{book.title} #{book.chapter_title(bookmark.chunk)}"
+  %div{:class => "detail-span"}
+    = "#{book.summary_html}".html_safe
+    %br
+      %strong
+        -#- if book.tag_names_pp and book.tag_names_pp.length > 0
+        - if book.tags.class == Array
+          - book.tags.each do | tag_id |
+            = link_to GenreTag.by_id(tag_id).cn, books_by_tag_path(tag: GenreTag.by_id(tag_id).name)
+            = ", "
+          = " - #{book.chars} 字数"
+          -##{book.tag_names_pp} - #{book.chars} 字数
+        - else
+          #{book.chars} 字数
+    %div{:class => "detail-span-action"}
+      %a{:class => "button-primary", :href => read_book_path(author: book.author, title: book.title)}
+        阅读
+      %a{:class => "button-orange", :href => delete_bookmark_path(bookmark_id: bookmark.id)}
+        delete bookmark

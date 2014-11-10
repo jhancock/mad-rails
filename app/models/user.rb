@@ -104,6 +104,10 @@ class User
     end
   end
 
+  def bookmarks
+    @bookmarks ||= Bookmark.get_all(self)
+  end
+
   private
   def create_password_salt
     hashids = Hashids.new(self.class.hashids_salt)
