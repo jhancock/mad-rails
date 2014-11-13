@@ -1,23 +1,27 @@
 # -*- coding: utf-8 -*-
 class BooksController < ApplicationController
-  # read by monogo id for backward compatibility and completeness
+  # read by monogo id for backward compatibility
   def read_id
     id = params[:id]
     book = Book.find(id)
-    render_404 and return unless book
-    redirect_to read_book_url(author: book.author, title: book.title, page: params[:page]), status: 301
+    read_private(book, params[:page])
+    #redirect_to read_book_url(author: book.author, title: book.title, page: params[:page]), status: 301
   end
 
   def read
     author = params[:author]
     title = params[:title]
     #TODO see if I need to use $exists or can query offline_at: nil
-    @book = Book.find_by(author: author, title: title, offline_at: {'$exists' => false})
+    book = Book.find_by(author: author, title: title, offline_at: {'$exists' => false})
     #TODO change to redirect_to :root, 301?  302? :notice => "book not found"
-    render_404 and return unless @book
+    read_private(book, params[:page])
+  end
 
+  def read_private(book, page)
+    render_404 and return unless book
+    @book = book
     @bookmark = current_user ? Bookmark.find_by({user_id: current_user.id, book_id: @book.id}) : nil
-    @page = params[:page] ? params[:page].to_i : @bookmark ? @bookmark.chunk : 1
+    @page = page ? page.to_i : @bookmark ? @bookmark.chunk : 1
 
     begin
       path = @book.chunk_path(@page)
@@ -35,7 +39,7 @@ class BooksController < ApplicationController
     @book.increment_read_count if !current_user || !current_user.admin?
     @book.increment_unique_read_count if current_user && !@bookmark
     Bookmark.set(current_user, @book, @page) if current_user
-    render layout: "reading"
+    render "read", layout: "reading"
   end
 
   def list

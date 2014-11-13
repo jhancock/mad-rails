@@ -48,7 +48,9 @@ Rails.application.routes.draw do
   get 'tags/:tag(/:sort)(/page/:page)' => 'books#tag', as: 'books_by_tag', constraints: { sort: /recent|popular/ }
   get 'books(/:sort)(/page/:page)' => 'books#list', as: 'list_books', constraints: { sort: /recent|popular/ }
   get 'books/:author/:title/read(/:page)' => 'books#read', as: 'read_book'
+  # legacy URL
   get 'books/:id/read(/:page)' => 'books#read_id', as: 'read_id_book', constraints: { id: /[a-f0-9]{24}/ }
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

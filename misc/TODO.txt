@@ -14,6 +14,8 @@ email TODOs...see below
 
 Next
 -----
+all pages need cannonical https url.  old book/:id pages need to render properly wih new cannonical ref.
+
 reissue namecheap SSL cert.  update nginx conf: remove SSLv3
 
 do I need to trim blank on fields such as email and password?
@@ -80,6 +82,7 @@ see about adding spdy to nginx ssl
 http://www.nginxtips.com/what-is-spdy/
 http://www.nginxtips.com/how-to-install-and-configure-spdy-on-nginx/
 -------
+cannonical URLS - maybe the old URL should not redirect but just provide the new cannonical?
 
 set nginx/passenger in maintainance mode while I'm upgrading
 http://tom.meinlschmidt.org/2013/10/15/rails-passenger-nginx-maintenance-mode/
