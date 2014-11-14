@@ -106,6 +106,7 @@ hr{border: none; border-bottom: 1px solid $main-text-color-hover*2;}
   background:$main-text-color-hover*2.4; font-size: 18px;
   border: 1px solid $main-text-color-hover*2.2;padding: 15px;margin: 0 0 10px;
   border-radius: 5px;
+  a{ color:$main-color; }
 }
 .error{@extend .notice; border-width:0 0 0 4px;border-color:$color-red; border-radius: 0;}
 
@@ -275,7 +276,14 @@ ul.details{
         display: block;
         .detail-span-action{
           padding-top: 20px;
+          letter-spacing: -0.31em;
+          *letter-spacing: normal;
           text-align: left; padding-right: 60px; padding-left: 60px;
+          *{
+            letter-spacing: normal;
+            display: inline-block;
+            zoom: 1; *display: inline;
+          }
           a{
             margin-right: 10px;width: 150px;
             &:last-child{margin-right: 0;}
@@ -428,7 +436,7 @@ ul.details{
 .form-model{
   width: 450px;margin: 0 auto;padding:0 0 20px 0; clear: both;font-size: 16px;
   &.form-model-wide{width: 600px;}
-  h2{font-size: 36px;font-weight:normal;color: #261d0d;text-align: center;padding: 0 30px;margin-bottom: 50px;}
+  h2{font-size: 36px;font-weight:normal;color: #261d0d;text-align: center;padding: 0 30px;margin-bottom: 50px; line-height: 180%;}
   .input-text{line-height: 200%; display: block; width: 100%;}
 }
 .form-action{
