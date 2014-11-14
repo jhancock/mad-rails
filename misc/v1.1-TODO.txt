@@ -11,6 +11,14 @@ http://stackoverflow.com/questions/14316426/is-there-a-paypal-ipn-code-sample-fo
 
 add Alipay
 
+set nginx/passenger in maintainance mode while I'm upgrading
+http://tom.meinlschmidt.org/2013/10/15/rails-passenger-nginx-maintenance-mode/
+
+put hashids in seperate file in lib, not as gem
+
+fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
+see: https://github.com/perusio/piwik-nginx/blob/master/sites-available/000-default
+
   When books available, money gets added to their account in minimum 30rmb for alipay and $10 USD for PayPal.  Books typical cost 3 to 5 points per 1000 characters (no white space).  A book is charged per chapter with points calculated by the per 1000 character rate.
   1 RMB = 100 points.  $10 USD = 6000 points.  As a user spends points/coins, for each 1000, they get a free premium month added.  Do some calcs to ensure the coin to pay-in-anvace numbers are balanced.  Notify a user when they get a free month ;).
 

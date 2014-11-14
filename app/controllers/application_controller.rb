@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  attr_accessor :canonical_path
+
   require 'exceptions'
   rescue_from Unauthenticated, with: :unauthenticated
   rescue_from Unauthorized, with: :unauthorized

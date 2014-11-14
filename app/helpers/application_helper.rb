@@ -5,6 +5,15 @@ module ApplicationHelper
     controller.current_user
   end
 
+  def canonical_link_tag
+    if controller.canonical_path
+      href = "#{request.host+controller.canonical_path}"
+    else
+      href = "#{request.host+request.fullpath}"
+    end
+    "<link rel='canonical' href='https://#{href}' />".html_safe
+  end
+
   @@tags_list = nil
   def tags_list
     return @@tags_list if @@tags_list

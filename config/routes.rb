@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   post 'password_reset/:code' => 'account_public#password_reset_post'
 
   get 'bookmarks(/page/:page)' => 'bookmarks#index', as: 'bookmarks'
-  get 'bookmarks/delete/:bookmark_id' => 'bookmarks#delete', as: 'delete_bookmark'
+  get 'bookmarks/:bookmark_id/delete' => 'bookmarks#delete', as: 'delete_bookmark'
 
   #TODO handle search with no query or no results
   get 'search(/:query)(/page/:page)' => 'search#search', as: 'search'

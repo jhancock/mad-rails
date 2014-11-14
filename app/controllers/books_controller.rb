@@ -4,6 +4,7 @@ class BooksController < ApplicationController
   def read_id
     id = params[:id]
     book = Book.find(id)
+    @canonical_path = read_book_path(author: book.author, title: book.title) if book
     read_private(book, params[:page])
     #redirect_to read_book_url(author: book.author, title: book.title, page: params[:page]), status: 301
   end
