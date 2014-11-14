@@ -1,10 +1,10 @@
 turn on mihudie BankOfDudley card
-fix PayPal mihudie 
+fix PayPal mihudie - add EIN
   and shellshadow accounts. 
 fix BoD personal debit card.
 
 fix Georgia corp registration for shellshadow.
-   fix paypal mihudie account.  get mihudie EIN.  Call Mom
+
 sign up for Alipay - Mihudie LLC
 
 See if my PayPal account handles UnionPay
