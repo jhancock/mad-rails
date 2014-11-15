@@ -9,12 +9,17 @@ rake db:mongoid:create_indexes
 # script to remove duplicate bookmarks, users.  run script.  change bookmarks, users index def.  drop index.  create indexes.
 
 # script to unset Book.offline_at if it is nil
+# script to set_puiblic_id for any user without one
+
+# change some index defs to unique.
+
+# remove indexes.  create indexes.
 
 # set mongodb profiling level
 use mhd_development || use mhd_production
 db.setProfilingLevel(2)
 
-index elastic search.  create script
+index elastic search.  delete_and_reindex_book_search.rb
 
 create sitemap.xml.  create script
 
@@ -42,16 +47,16 @@ scoutapp
 nginx sites-available mihudie.com
 	remove server_name vr1.mihudie.com;
 
-nginx mihudie.com config location for static files needs to have expires max working.  It may be commeted out pre-production.
+DONE nginx mihudie.com config location for static files needs to have expires max working.  It may be commeted out pre-production.
 
 nginx gzip js and css files
       gzip -1 -c mihudie.css > mihudie.css.gz
       gzip -1 -c mihudie.js > mihudie.js.gz
 
-ensure www.mihudie.com redirects to mihudie.com
+DONE ensure www.mihudie.com redirects to mihudie.com
 	see shellshadow.com for example
 
-ensure nginx request without domain is default server and returns nothing
+v1.1 ensure nginx request without domain is default server and returns nothing
 
 
 

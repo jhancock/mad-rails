@@ -18,7 +18,7 @@
         - else
           #{book.chars} 字数
     %div{:class => "detail-span-action"}
-      %a{:class => "button-primary", :href => read_book_path(author: book.author, title: book.title)}
+      %a{:class => "button-primary", :href => read_book_path(author: book.author, title: book.title), :rel => "nofollow"}
         阅读
-      %a{:class => "button-orange", :href => delete_bookmark_path(bookmark_id: bookmark.id)}
-        delete bookmark
+      %a{:class => "button-orange", :href => delete_bookmark_path(bookmark_id: bookmark.id), :rel => "nofollow"}
+        delete mark

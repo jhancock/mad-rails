@@ -17,5 +17,5 @@
         - else
           #{book.chars} 字数
     %div{:class => "detail-span-action"}
-      %a{:class => "button-primary", :href => read_book_path(author: book.author, title: book.title)}
+      %a{:class => "button-primary", :href => read_book_path(author: book.author, title: book.title), :rel => "nofollow"}
         阅读

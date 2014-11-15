@@ -51,6 +51,10 @@ find out how HTTP_STRICT deals with search engine spiders.
 
 set Mandrill call back to capture bounced email events.
 
+handle error in search if nothing found, such as empty search.
+
+when I delete a bookmark, the flash message shows the book.  change this to a link in casde the user wants to go back to it after they deleted the mark.
+
 v1.2
 ------
 send to kindle behavior

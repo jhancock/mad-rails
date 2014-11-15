@@ -5,6 +5,9 @@
   %body
     = render 'layouts/header'
     %div{:class => "content content-read clearfix"}
+      - flash.each do |name, msg|
+        - if name == "notice" || name == "error"
+          = content_tag :div, msg, class: "#{name} flash-removable"
       = yield
     = render 'layouts/footer'
     = content_for :side_menu

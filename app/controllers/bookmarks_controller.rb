@@ -25,11 +25,12 @@ class BookmarksController < ApplicationController
     end
     bookmark.delete if bookmark
     flash[:notice] = "bookmark deleted for #{bookmark.book.title}"
-    referer = request.env["HTTP_REFERER"]
-    if referer
-      redirect_to :back
-    else
-      redirect_to bookmarks_path
-    end
+    redirect_back_or bookmarks_path
+    #referer = request.env["HTTP_REFERER"]
+    #if referer
+    #  redirect_to :back
+    #else
+    #  redirect_to bookmarks_path
+    #end
   end
 end

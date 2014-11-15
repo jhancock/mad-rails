@@ -24,6 +24,14 @@ class BooksController < ApplicationController
     @bookmark = current_user ? Bookmark.find_by({user_id: current_user.id, book_id: @book.id}) : nil
     @page = page ? page.to_i : @bookmark ? @bookmark.chunk : 1
 
+    raise Unauthenticated.new(message: "Please register to continue reading.  Registration is free!", redirect_to: register_path, success_message: "Please check your email!  When you verify your email you receive one month of mihudie.com Free!", success_path: request.original_fullpath) if @page > 1 && !current_user
+
+    #TODO This check works until I have an option to let them pay.  For the first month, all verified users will be premium.
+    raise Unauthorized.new(message: "Verify email to continue reading.", redirect_to: account_registered_email_verify_notice_path, success_message: "Please check your email!  When you verify your email you receive one month of mihudie.com Free!", success_path: request.original_fullpath) if @page > 2 && !current_user.premium?
+
+    #If user email not verified (they are on page 1 or 2). Show flash message directing them to verify email.  Can't get to page 3 without doing so.
+    flash.now[:notice] = "#{view_context.link_to("Verify your email", account_registered_email_verify_notice_path)} for full access to all mihudie.com backyard books".html_safe if @page > 1 && !current_user.email_verified?
+
     begin
       path = @book.chunk_path(@page)
       logger.info "PATH: #{path}"

@@ -55,12 +55,16 @@ class AccountController < ApplicationController
     @page_keywords = "change email"
   end
 
-  def send_registered_email_verify
-    send_user_mail(current_user.id, :registered_email_verify)
-    redirect_to account_home_path, notice: "verify email sent.  please check your spam folder!"
+  def registered_email_verify_notice
+    @page_title = "Verify your email"
   end
 
-  def register_email_verify
+  def send_registered_email_verify
+    send_user_mail(current_user.id, :registered_email_verify)
+    redirect_to account_home_path, notice: "Verification email sent.  Please check your spam folder and ensure future emails from mihudie.com will get to you!"
+  end
+
+  def registered_email_verify
     public_id = params[:code]
     user = User.find_by(public_id: public_id) if public_id
     unless user && (user.id == current_user.id)
@@ -75,7 +79,7 @@ class AccountController < ApplicationController
     user.extend_premium(1.month)
     user.save
 
-    # TODO verify registered event not logged more than once.
+    # TODO ensure registered event not logged more than once.  
     registered_event = UserEvents.find_by(id: user.id, event: "registered")
     referrer_id = registered_event[:referrer] if registered_event
     if referrer_id
@@ -91,7 +95,7 @@ class AccountController < ApplicationController
         end
       end
     end
-    redirect_to root_path, :notice => "Congradulations!  You have full access to mihudie's #{Book.online_criteria.count} backyard books until #{user.premium_to.to_s(:yyyy_mm_dd)}."
+    redirect_to root_path, :notice => "Congradulations!  You have full access to mihudie's backyard books until #{user.premium_to.to_s(:yyyy_mm_dd)}."
   end
 
   def send_change_email_verify
@@ -105,9 +109,9 @@ class AccountController < ApplicationController
     # redirect to account_root with message
   end
         
-#  private
-#  def ensure_user
-#    raise Unauthenticated.new(message: "You must be logged in to view your account", success_path: request.original_fullpath) unless current_user
-#  end
+  private
+  def ensure_user
+    raise Unauthenticated.new(message: "You must be logged in to view your account", success_path: request.original_fullpath) unless current_user
+  end
 
 end

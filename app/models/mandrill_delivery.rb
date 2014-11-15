@@ -15,7 +15,6 @@ class MandrillDelivery
 #Message stuff
 
   def build_meta_mandrill(mail)
-
     #build Mandrill message hash
     @message = {
       :from_name=> "迷蝴蝶 - mihudie",
@@ -33,7 +32,8 @@ class MandrillDelivery
                                :name => "LISTCOMPANY",
                                :content => "Mihudie LLC"
                              }
-                            ]
+                            ],
+      :tags => ["#{mail['mandrill_tag']}"]
     }
 
     true
@@ -42,7 +42,6 @@ class MandrillDelivery
   #sends email via Mandrill
   def send_mandrill(mail)
     m = Mandrill::API.new(Rails.application.secrets.mandrill_api_key)
-
     sending = m.messages.send_template('mhd-original',
                                        [
                                         {
@@ -55,7 +54,6 @@ class MandrillDelivery
                                         }
                                        ],
                                        message = @message)
-    Rails.logger.info "UserMailer sent to #{mail.to}"
   end
 
 end

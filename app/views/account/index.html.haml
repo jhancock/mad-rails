@@ -5,7 +5,7 @@
 - unless current_user.email_verified?
   %div{:class => "notice"}
     Verify your email to receive one month free.
-    = link_to "resend verification email", send_registered_email_verify_path
+    = link_to "resend verification email", account_send_registered_email_verify_path
     
 %h3
   = "#{current_user.email}"

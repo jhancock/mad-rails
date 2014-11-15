@@ -48,11 +48,9 @@ class User
   index({premium_at: 1}, {unique: false})
   index({premium_to: 1}, {unique: false})
 
-  def public_id
-    unless self[:public_id]
-      self.set(public_id: create_public_id)
-    end
-    self[:public_id]
+  def create_public_id
+    hashids = Hashids.new(self.class.hashids_salt)
+    self.public_id = hashids.encode_hex(self.id.to_s)
   end
 
   def email_verified?
@@ -112,11 +110,6 @@ class User
   def create_password_salt
     hashids = Hashids.new(self.class.hashids_salt)
     hashids.encode(Time.now.to_i)
-  end
-
-  def create_public_id
-    hashids = Hashids.new(self.class.hashids_salt)
-    hashids.encode_hex(self.id.to_s)
   end
 
   def self.hashids_salt

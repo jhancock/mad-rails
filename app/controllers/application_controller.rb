@@ -73,6 +73,15 @@ class ApplicationController < ActionController::Base
     sort == "popular" ? "popular" : "recent"
   end
 
+  def redirect_back_or(path)
+    referer = request.env["HTTP_REFERER"]
+    if referer && referer.host == request.host
+      redirect_to :back
+    else
+      redirect_to path
+    end
+  end
+
   def render_404
     render :file => "/public/404.html", :layout => false, :status => 404
   end
@@ -92,7 +101,6 @@ class ApplicationController < ActionController::Base
   def ensure_user
     raise Unauthenticated.new(message: "You must be logged in to view this page", success_path: request.original_fullpath) unless current_user
   end
-
 
   protected
 

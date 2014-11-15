@@ -51,6 +51,7 @@ class AccountPublicController < ApplicationController
     end
     user = User.new({:email => params[:user][:email], :registered_at => Time.now})
     user.password(params[:user][:password])
+    user.create_public_id
     # save user so it gets an id
     user.save
     referrer_public_id = session[:referrer]
