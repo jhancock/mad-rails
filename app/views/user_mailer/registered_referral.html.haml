@@ -1,6 +1,3 @@
-%div You received another free month of mihudie!
+= email_header "You received another free month of mihudie!"
 
-%p Thanks for referring a new user!  
-
-%h2{:class => "subTitle" , :style => "font-size: 14px;font-weight: bold;color: #000000;font-style: normal;"}
-  = "We have extended your mihudie backyard access to #{@user.premium_to.to_s(:yyyy_mm_dd)}"
+= email_paragraph "Thanks for referring a new user!  As your reward, we have extended your backyard access to #{@user.premium_to.to_s(:yyyy_mm_dd)}"

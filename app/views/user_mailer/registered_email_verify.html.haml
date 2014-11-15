@@ -1,7 +1,5 @@
-%div verify your email and get one month free
+= email_header "Verify your email"
 
-%h2{:class => "subTitle" , :style => "font-size: 14px;font-weight: bold;color: #000000;font-style: normal;"}
-  If this email was in your spam folder, please mark it as not spam so you will not miss more great offers from mihudie. 
+= email_paragraph "Confirm your email and enjoy all our backyard books."
 
-%a{:href => registered_email_verify_url(@user.public_id) , :style => "color: #294B73;text-decoration: underline;font-weight: normal;"}
-  Click here to confirm your email and get your free month
+= email_button "Confirm email", registered_email_verify_url(@user.public_id)

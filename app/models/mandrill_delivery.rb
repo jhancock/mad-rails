@@ -42,7 +42,7 @@ class MandrillDelivery
   #sends email via Mandrill
   def send_mandrill(mail)
     m = Mandrill::API.new(Rails.application.secrets.mandrill_api_key)
-    sending = m.messages.send_template('mhd-original',
+    sending = m.messages.send_template('mhd-mc',
                                        [
                                         {
                                           :name => 'main',
