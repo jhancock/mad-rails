@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -13,25 +14,6 @@ class ApplicationController < ActionController::Base
   before_action :current_user
   before_action :capture_referrer
 
-  def unauthenticated(exception)
-    session.delete(:auth_success_path)
-    session.delete(:auth_success_message)
-    session[:auth_success_path] = exception.success_path if exception.success_path
-    session[:auth_success_message] = exception.success_message if exception.success_message
-    flash[:notice] = exception.message if exception.message
-    redirect_to exception.redirect_to || login_path
-  end
-
-  def unauthorized(exception)
-    flash[:notice] = exception.message if exception.message
-    referer = request.env["HTTP_REFERER"]
-    if referer
-      redirect_to :back
-    else
-      redirect_to exception.redirect_to || root_path
-    end
-  end
-
   def current_user
     if @_current_user then return @_current_user end
     if session[:id]
@@ -46,6 +28,31 @@ class ApplicationController < ActionController::Base
       @_current_user = nil
     end
     @_current_user
+  end
+
+  def unauthenticated(exception)
+    session.delete(:auth_success_path)
+    session.delete(:auth_success_message)
+    session[:auth_success_path] = exception.success_path if exception.success_path
+    session[:auth_success_message] = exception.success_message if exception.success_message
+    flash[:notice] = exception.message if exception.message
+    redirect_to exception.redirect_to || login_path
+  end
+
+  def unauthorized(exception)
+    flash[:notice] = exception.message if exception.message
+    redirect_to exception.redirect_to || root_path
+  end
+
+  def redirect_back_or(path, options = {})
+    flash[:notice] = options[:notice] if options.key?(:notice)
+    flash[:error] = options[:error] if options.key?(:error)
+    referer = request.env["HTTP_REFERER"]
+    if referer
+      redirect_to :back
+    else
+      redirect_to path
+    end
   end
 
   # set :cn in session cookie so we always know what country a user is from.  Even unregistered or not logged in users. 
@@ -70,16 +77,7 @@ class ApplicationController < ActionController::Base
 
   # sort is "popular" or "recent".  return the Chinese for it.
   def sort_cn(sort)
-    sort == "popular" ? "popular" : "recent"
-  end
-
-  def redirect_back_or(path)
-    referer = request.env["HTTP_REFERER"]
-    if referer && referer.host == request.host
-      redirect_to :back
-    else
-      redirect_to path
-    end
+    sort == "popular" ? "热力关注" : "recent"
   end
 
   def render_404

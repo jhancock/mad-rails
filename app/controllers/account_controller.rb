@@ -61,7 +61,7 @@ class AccountController < ApplicationController
 
   def send_registered_email_verify
     send_user_mail(current_user.id, :registered_email_verify)
-    redirect_to account_home_path, notice: "Verification email sent.  Please check your spam folder and ensure future emails from mihudie.com will get to you!"
+    redirect_to account_home_path, {notice: "Verification email sent.  Please check your spam folder and ensure you can receive emails from mihudie.com"}
   end
 
   def registered_email_verify

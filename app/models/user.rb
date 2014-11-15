@@ -58,7 +58,8 @@ class User
   end
 
   def premium?
-    self.premium_at || self.premium_to > Time.now || self.admin?
+    bool = self.premium_at || (self.premium_to && self.premium_to > Time.now) || self.admin?
+    bool == true
   end
 
   # duration is a Fixnum such as 1.month

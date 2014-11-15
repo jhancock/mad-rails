@@ -17,20 +17,13 @@ class BookmarksController < ApplicationController
     end
   end
 
-  #TODO if I delete bookmark #51, the redirect goes to page/2 which is not valid anymore.
   def delete
     bookmark = Bookmark.find(params[:bookmark_id])
     unless bookmark
       redirect_to root_path, :notice => "bookmark not found" and return
     end
     bookmark.delete if bookmark
-    flash[:notice] = "bookmark deleted for #{bookmark.book.title}"
+    flash[:notice] = "#{bookmark.book.title} bookmark deleted"
     redirect_back_or bookmarks_path
-    #referer = request.env["HTTP_REFERER"]
-    #if referer
-    #  redirect_to :back
-    #else
-    #  redirect_to bookmarks_path
-    #end
   end
 end

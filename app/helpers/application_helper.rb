@@ -26,6 +26,10 @@ module ApplicationHelper
     @@tags_list = (tags_list << "</ul>").html_safe
   end
 
+  def sort_cn(sort)
+    controller.sort_cn(sort)
+  end
+
   # pretty print a Mongoid document
   def doc_pp(document)
     html = ""

@@ -13,9 +13,7 @@ email TODOs...see below
 
 Next
 -----
-DONE create mandrill email tags.  should be able to auto-tage based on mailer method name.
-
-book_controller#read needs permission checks and redirects to register/purchase
+update ruby 2.1.2 to ruby 2.1.5
 
 upgrade password_hash to bcrypt
 
@@ -151,6 +149,9 @@ send cv to trademe saved jobs
 DONE fix Georgia corp registration for mihudie 
 
 DONE pay for scoutapp - Need working credit card
+DONE create mandrill email tags.  should be able to auto-tage based on mailer method name.
+
+DONE book_controller#read needs permission checks and redirects to register/verify
 
 DONE remove SSLv3.  requires reconfiginzing old browsers and serving a page from nginx that recommends the use to install Firefox.
 

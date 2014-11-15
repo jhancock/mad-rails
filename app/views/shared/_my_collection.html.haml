@@ -1,7 +1,7 @@
 - sort = url_params[:sort]
 - if sort
   - alternate_sort = url_params[:sort] == "recent" ? "popular" : "recent"
-  - alternate_sort_cn = alternate_sort == "recent" ? "recent" :  "热力关注"
+  - alternate_sort_cn = sort_cn(alternate_sort)
   - alternate_sort_path = url_for(url_params.merge({sort: alternate_sort}))
 
 = page_entries_info collection
