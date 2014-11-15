@@ -16,6 +16,8 @@ http://tom.meinlschmidt.org/2013/10/15/rails-passenger-nginx-maintenance-mode/
 
 put hashids in seperate file in lib, not as gem
 
+if book is offline, gracefully return user to home or prior page with error message.
+
 fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
 see: https://github.com/perusio/piwik-nginx/blob/master/sites-available/000-default
 

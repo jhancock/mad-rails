@@ -1,25 +1,20 @@
 turn on mihudie BankOfDudley card
-fix PayPal mihudie - add EIN
-  and shellshadow accounts. 
 fix BoD personal debit card.
-
 fix Georgia corp registration for shellshadow.
 
 sign up for Alipay - Mihudie LLC
-
 See if my PayPal account handles UnionPay
-
 email TODOs...see below
 
 Next
 -----
+try new email template
+
 update ruby 2.1.2 to ruby 2.1.5
 
 upgrade password_hash to bcrypt
 
 ensure session does not expire between opening and closing browser.
-
-if book is offline, gracefully return user to home or prior page with error message.
 
 setup exception_notificaion and test. 
   see if we can write exceptions to file and have scout pick them up.  
@@ -27,7 +22,6 @@ setup exception_notificaion and test.
 scripts to migrate data for duplicate books, users, bookmarks
 script to unset Book.offline_at if it is nil
 script to set_puiblic_id for any user without one
-
 
 SEO - Baidu cares about changes on page titles
     add schema.org microdata
@@ -145,6 +139,8 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE fix PayPal mihudie - add EIN
 
 DONE fix Georgia corp registration for mihudie 
 
