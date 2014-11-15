@@ -5,6 +5,10 @@
 %p
   You should have received an email when you registered.  Click the link in the email to verify your account.  Once verified, you can read all of mihudie.com's backyard books.
   Check your spam folder.  If you have not received your email, please click the link below to resend.
-  
-= link_to "send verification email", account_send_registered_email_verify_path, class: "action"
+%br
+%div
+  %form{:class => "form", :method => "get", :action => account_send_registered_email_verify_path, "accept-charset" => "UTF-8"}
+    %input{:type => "hidden", :name => "nothing", :id => "nothing", :value => "nothing"}
+    %button{:type => "submit", :class => "button-primary", :name => nil}
+      Resend verify email
 

@@ -8,7 +8,7 @@ email TODOs...see below
 
 Next
 -----
-try new email template
+registered_email_verify_notice and registered_email_verify_notice need to check if email is already verified.
 
 update ruby 2.1.2 to ruby 2.1.5
 
@@ -139,6 +139,8 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE try new email template
 
 DONE fix PayPal mihudie - add EIN
 

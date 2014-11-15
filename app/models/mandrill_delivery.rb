@@ -47,10 +47,6 @@ class MandrillDelivery
                                         {
                                           :name => 'main',
                                           :content => "#{mail.body}"
-                                        },
-                                        {
-                                          :name => 'unsub',
-                                          :content => "#{mail['unsub_link']}"
                                         }
                                        ],
                                        message = @message)
