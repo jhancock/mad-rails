@@ -36,6 +36,8 @@ replace elasticsearch with solr
 
 learn how to unpin mongodb apt - upgrade vr1 and repin
 
+v1.1 ensure nginx request without domain is default server and returns nothing
+
 admin pages v1.1
 
 setup UFW - uncomplicated firewall.  go ahead and get this done so I can verify to ensure everything is correct as I test the app

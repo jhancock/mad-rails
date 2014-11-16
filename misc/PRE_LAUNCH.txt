@@ -2,6 +2,7 @@ PRE_LAUNCH.txt
 ===============
 # migrate data
 rails r lib/scripts/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
+
 # things to add to migrate_v2.0.js:
 # unset Book.offline_at if it is nil
 # unset :password_reset_code and :password_reset_at
@@ -71,7 +72,6 @@ nginx gzip js and css files
 DONE ensure www.mihudie.com redirects to mihudie.com
 	see shellshadow.com for example
 
-v1.1 ensure nginx request without domain is default server and returns nothing
 
 
 

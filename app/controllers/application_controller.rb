@@ -89,11 +89,15 @@ class ApplicationController < ActionController::Base
   end
 
   def email_valid?(value)
-    # return false if value =~ /\s/
-    return false if value =~ /;|,|:|\/|<|>|\s/
-    # return true if value =~ /^.+@.+\..+$/
-    return true if value =~ /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+    return true if value =~ /.+@.+\..+/i
     false
+
+    # old check
+    # return false if value =~ /\s/
+    #return false if value =~ /;|,|:|\/|<|>|\s/
+    # return true if value =~ /^.+@.+\..+$/
+    #return true if value =~ /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+    #false
   end
 
   def ensure_user

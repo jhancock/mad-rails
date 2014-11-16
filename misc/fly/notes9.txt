@@ -7,3 +7,4 @@ If I have a notice div in reading page and theme is dark, the div content font i
 change form button position to bottom left instead of bottom right.  See mailchimp's password reset flow and forms.  
 
 
+
