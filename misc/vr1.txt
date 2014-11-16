@@ -133,7 +133,7 @@ rbenv install 2.1.2
 # go to orginal source if mirrors are giving trouble
 # RUBY_BUILD_SKIP_MIRROR=true rbenv install 2.1.2
 
-rbenv global 2.1.2
+rbenv global 2.1.2	      
 ruby -v
 #=>ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-linux]
 # gem sources -a https://rubygems.org/
@@ -156,6 +156,24 @@ cd ~/rails
 bundle install --without development test
 
 rbenv rehash
+
+# upgrade ruby to 2.1.5
+cd /home/mhd/.rbenv/plugins/ruby-build && git pull
+rbenv install --list
+rbenv install 2.1.5
+# or
+RUBY_BUILD_SKIP_MIRROR=true rbenv install 2.1.5
+rbenv global 2.1.5
+ruby -v
+rbenv rehash
+gem update
+rbenv rehash
+gem install bundler
+rbenv rehash
+# edit ~/rails/Gemfile  change ruby version to 2.1.5
+# edit ~/rails/.ruby-version  change to 2.1.5
+#from ~/rails:
+bundle install
 
 
 ##########################

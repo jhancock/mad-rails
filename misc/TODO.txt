@@ -8,6 +8,8 @@ email TODOs...see below
 
 Next
 -----
+set Mandrill webhook for bounced email.  Capture bounce info and don't send more emails to that user until they use a valid address.  Set account notice if email_bounced is set.
+
 registered_email_verify_notice and registered_email_verify_notice need to check if email is already verified.
 
 update ruby 2.1.2 to ruby 2.1.5
@@ -266,7 +268,6 @@ DONE 2 more namecheap emails to confirm
 DONE meet Julian/Fly Wednesday lunch
 DONE move mihudie.com DNS from linode to namecheap
 	DONE verify critsend DKIM and SPF
-HOLD move shellshadow email to fastmail.fm
 DONE setup tarsnap on vr1 - backup ss archives
 DONE turn off us1
 DONE check other DNS records at m5hosting.  move any to namecheap.
