@@ -1,0 +1,49 @@
+db.runCommand(
+   { aggregate: "bookmarks",
+     pipeline: [
+              { $group: {
+                _id: { user_id: "$user_id", book_id: "$book_id" },
+                uniqueIds: { $addToSet: "$_id" },
+                count: { $sum: 1 }
+              }},
+              { $match: {
+                count: { $gt: 1 }
+              }}
+               ],
+      allowDiskUse: true
+   }
+)
+
+db.runCommand(
+   { aggregate: "books",
+     pipeline: [
+              { $group: {
+                _id: { author: "$author", title: "$title" },
+                uniqueIds: { $addToSet: "$_id" },
+                count: { $sum: 1 }
+              }},
+              { $match: {
+                count: { $gt: 1 }
+              }}
+               ],
+      allowDiskUse: true
+   }
+)
+
+db.runCommand(
+   { aggregate: "users",
+     pipeline: [
+              { $group: {
+                _id: { email: "$email"},
+                uniqueIds: { $addToSet: "$_id" },
+                count: { $sum: 1 }
+              }},
+              { $match: {
+                count: { $gt: 1 }
+              }}
+               ],
+      allowDiskUse: true
+   }
+)
+
+db.books.find({}).sort({read_count: -1})

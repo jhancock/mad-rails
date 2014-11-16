@@ -2,18 +2,33 @@ PRE_LAUNCH.txt
 ===============
 # migrate data
 rails r lib/scripts/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
+# things to add to migrate_v2.0.js:
+# unset Book.offline_at if it is nil
+# unset :password_reset_code and :password_reset_at
+# set_public_id for any user without one
+# scripts to handle duplicate books, bookmarks, users.  
+books 230 dups, 228 have same origin
+  keep most recent (based on updated_at).  mark duplicate with duplicate attribute that has value of the kept version.  
+  add read_count of dup to kept book
+  update books_controller#read. If user tries to retreive by old URL for the dup, 301  redirect to the canonical of the kept version.
+bookmarks 1303 dups, 834 have same chunk
+  keep most recent based on updated_at.  delete other.
+users 24 dups
+  keep most recent
+# change user#email_error to email_bounced_at (if old user has email_error, set email_bounced_at to user#updated_at
+# ensure all books have detail_li, tag_names, tag_names_pp and summary_html
 
-# create indexes
+# remove indexes
+rake db:mongoid:remove_indexes
+
+# dump db
+
+# change index defs (the ones commented out) of user, bookmark
+
+# import db
+
+# create indexes.
 rake db:mongoid:create_indexes
-
-# script to remove duplicate bookmarks, users.  run script.  change bookmarks, users index def.  drop index.  create indexes.
-
-# script to unset Book.offline_at if it is nil
-# script to set_puiblic_id for any user without one
-
-# change some index defs to unique.
-
-# remove indexes.  create indexes.
 
 # set mongodb profiling level
 use mhd_development || use mhd_production

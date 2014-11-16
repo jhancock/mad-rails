@@ -12,8 +12,8 @@ class Bookmark
   index({book_id: 1}, {unique: false})
   index({ user_id: 1, book_id: 1 }, { unique: false })
   index({ user_id: 1, book_id: 1, updated_at: -1 }, { unique: false })
-  #index({ user_id: 1, book_id: 1 }, { unique: true, drop_dups: true })
-  #index({ user_id: 1, book_id: 1, updated_at: -1 }, { unique: true, drop_dups: true })
+  #index({ user_id: 1, book_id: 1 }, { unique: true })
+  #index({ user_id: 1, book_id: 1, updated_at: -1 }, { unique: true })
 
   def book
     @book ||= Book.find(self.book_id)

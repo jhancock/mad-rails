@@ -10,13 +10,15 @@ class User
   #TODO upgrade password hashing to bcrypt
   #field :password_bcrypt, type: String
 
-  field :password_reset_at, type: Time
-  field :password_reset_code, type: String  	
+  field :password_reset_request_at, type: Time
+  field :password_reset_request_code, type: String  	
 
   field :registered_at, type: Time
 
-  field :change_email_at, type: Time
-  field :change_email_code, type: String
+  # email address to change to.  
+  field :email_change_to, type: String
+  field :email_change_at, type: Time
+  field :email_change_code, type: String
 
   # if premium_at is set, the user has premium access.  No need to check premium_to.
   field :premium_at, type: Time
@@ -40,6 +42,7 @@ class User
 
   #TODO duplicate docs with same email.  fix and change index after migration.
   index({email: 1}, {unique: false})
+  #index({email: 1}, {unique: true})
   index({public_id: 1}, {unique: true, sparse: true})
   index({cn: 1}, {unique: false})
   #TODO why do I have an index on ip?.  Is it so I can ref a new user against existing users to see if a user is using a second email account to get fake referral?

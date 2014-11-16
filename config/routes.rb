@@ -22,9 +22,9 @@ Rails.application.routes.draw do
   # if change_email_verify happens before register_email_verify, need to give user register verify reward
   get 'account/change_email_verify/:code' => 'account#change_email_verify', as: 'change_email_verify'
 
-  get 'password_reset_request' => 'account_public#password_reset_request', as: 'password_reset_request'
+  get 'password_reset_request' => 'account_public#password_reset_request'
   post 'password_reset_request' => 'account_public#password_reset_request_post'  
-  get 'password_reset/:code' => 'account_public#password_reset', as: 'password_reset'
+  get 'password_reset/:code' => 'account_public#password_reset'
   post 'password_reset/:code' => 'account_public#password_reset_post'
 
   get 'bookmarks(/page/:page)' => 'bookmarks#index', as: 'bookmarks'

@@ -8,10 +8,23 @@ email TODOs...see below
 
 Next
 -----
+book#read needs to know that there could be more than one book with the same title/author pair.  If there is, there should be only on that does not have duplicate attribute.  BUT if that is not the case, should use the book with latest updated_at time.
+
+register verify code is wrong.  Shouldn't be using public_id for the code.  public_id is good for referals, but not things like use once codes.
+
+password_reset_request, password_reset_request_post, password_reset, password_reset_post - force_ssl 
+
+notify user of password_reset_request option on failed login
+
+change_email process.  Need to take into account users that never verified their original email.
+on register_verify_notice, let user know that if their email address is not valid, they can change their address.
+
+set Mandrill webhook for bounced email.  Capture bounce info in user and log UserEvent. Don't send more emails to that address until they use a verified address.  Display account notice if email_bounced_at is set.
+
+migrate scripts on PRE_LAUNCH list
+
 download IE8 test vm
   https://www.modern.ie/en-us/virtualization-tools#downloads
-
-set Mandrill webhook for bounced email.  Capture bounce info and don't send more emails to that user until they use a valid address.  Set account notice if email_bounced is set.
 
 upgrade password_hash to bcrypt
 
@@ -20,17 +33,13 @@ ensure session does not expire between opening and closing browser.
 setup exception_notificaion and test. 
   see if we can write exceptions to file and have scout pick them up.  
 
-scripts to migrate data for duplicate books, users, bookmarks
-script to unset Book.offline_at if it is nil
-script to set_puiblic_id for any user without one
-
 SEO - Baidu cares about changes on page titles
     add schema.org microdata
     http://www.google.com/webmasters/tools/richsnippets
     http://www.heppnetz.de/projects/goodrelations/
 
-optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data just like genre_tags_pp
-lazy save pre-rendered book li, genre_tags_pp and summary_html if doesn't exist
+optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data just like genre_tags_pp 
+save pre-rendered book li (detail_li), genre_tags_pp and summary_html if doesn't exist.
 
 script to ensure all books have li, genre_tags_pp and summary_html
 

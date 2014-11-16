@@ -29,6 +29,7 @@ class Book
 
   index({title: 1}, {unique: false})
   index({author: 1}, {unique: false})
+  # A title/author pair is not unique.  Could represent a duplicate book.  Which is allowed.
   index({ title: 1, author: 1, offline_at: 1 }, { unique: false })
   index({ title: 1, author: 1, offline_at: 1, tags: 1 }, { unique: false })
   index({tags: 1}, {unique: false})
