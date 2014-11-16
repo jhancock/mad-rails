@@ -9,6 +9,7 @@ class Bookmark
   field :chunk, type: Integer
 
   index({user_id: 1}, {unique: false})
+  index({user_id: 1, updated_at: -1}, {unique: false})
   index({book_id: 1}, {unique: false})
   index({ user_id: 1, book_id: 1 }, { unique: false })
   index({ user_id: 1, book_id: 1, updated_at: -1 }, { unique: false })

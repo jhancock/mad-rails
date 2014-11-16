@@ -77,7 +77,32 @@ class ApplicationController < ActionController::Base
 
   # sort is "popular" or "recent".  return the Chinese for it.
   def sort_cn(sort)
-    sort == "popular" ? "热力关注" : "recent"
+    sort == "popular" ? "热力关注" : "最新更新"
+  end
+
+  def account_list
+    list = []
+    return list unless current_user
+    list << [account_registered_email_verify_notice_path, "验证邮箱", :em]   unless current_user.email_verified?
+    #list << [bookmarks_path, "书签"]
+    list << [account_home_path, "账户首页"]
+    list << [change_password_path, "修改密码"]
+    list << [change_email_path, "修改注册邮箱"]
+    list
+  end
+
+  def bookmarks_list
+    list = []
+    return list unless current_user
+    bookmarks = Bookmark.where(user_id: current_user.id).desc(:updated_at)
+    count = bookmarks.count
+    limit = count > 5 ? 5 : bookmarks.count
+    bookmarks.limit(limit).each do |bookmark|
+      book = bookmark.book
+      list << [read_book_path(author: book.author, title: book.title, page: bookmark.chunk), "#{book.chapter_title(bookmark.chunk)} #{book.title} - #{book.author}"]
+    end
+    list << [bookmarks_path, "#{count} 书签"]
+    list
   end
 
   def render_404
