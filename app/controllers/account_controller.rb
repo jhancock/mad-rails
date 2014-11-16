@@ -60,8 +60,12 @@ class AccountController < ApplicationController
   end
 
   def send_registered_email_verify
+    if current_user.email_verified_at
+      flash[:notice] = "Email already verified!  You have full access to mihudie's #{Book.online_criteria.count} backyard books until #{current_user.premium_to.to_s(:yyyy_mm_dd)}."
+      redirect_to account_home_path and return
+    end
     send_user_mail(current_user.id, :registered_email_verify)
-    redirect_to account_home_path, {notice: "Verification email sent.  Please check your spam folder and ensure you can receive emails from mihudie.com"}
+    redirect_to account_home_path, notice: "Verification email sent.  Please check your spam folder and ensure you can receive emails from mihudie.com"
   end
 
   def registered_email_verify
@@ -69,7 +73,7 @@ class AccountController < ApplicationController
     user = User.find_by(public_id: public_id) if public_id
     unless user && (user.id == current_user.id)
       flash[:error] = "Invalid email verification code"
-      render and return
+      redirect_to account_home_path and return
     end
     if user.email_verified_at
       flash[:notice] = "Email already verified!  You have full access to mihudie's #{Book.online_criteria.count} backyard books until #{user.premium_to.to_s(:yyyy_mm_dd)}."

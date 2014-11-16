@@ -8,11 +8,10 @@ email TODOs...see below
 
 Next
 -----
+download IE8 test vm
+  https://www.modern.ie/en-us/virtualization-tools#downloads
+
 set Mandrill webhook for bounced email.  Capture bounce info and don't send more emails to that user until they use a valid address.  Set account notice if email_bounced is set.
-
-registered_email_verify_notice and registered_email_verify_notice need to check if email is already verified.
-
-update ruby 2.1.2 to ruby 2.1.5
 
 upgrade password_hash to bcrypt
 
@@ -78,8 +77,6 @@ sitemap.xml script
 Hand over to Andrea for translation
 ***********************************
 
-test on IE8
-
 rails logrotate not working
 
 see about mongodb logrotate
@@ -89,8 +86,6 @@ _mhd_session cookie shows in firefox for both dev.mihudie.com and mihudie.com at
 Andrea - test on iPad and Android phones.  Test on popular Chinese browsers.
 
 test on Android phones.
-
-IE downloads https://www.modern.ie/en-us/virtualization-tools#downloads
 
 see about using zepto.js or other instead of jquery.  maybe do a browser check and use jquery 1.11.1 for under IE10 and jquery 2 or jquery mobile for over?
 
@@ -141,6 +136,11 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE send_registered_email_verify and registered_email_verify_notice need to check if email is already verified.
+
+DONE update ruby 2.1.2 to ruby 2.1.5
+DONE upgrade dev and vr1 (apt)
 
 DONE try new email template
 
