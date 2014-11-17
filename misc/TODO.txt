@@ -43,7 +43,8 @@ save pre-rendered book li (detail_li), genre_tags_pp and summary_html if doesn't
 
 script to ensure all books have li, genre_tags_pp and summary_html
 
-tracks and bookmarks in one integrated menu item.  Need a name for it.  User can get to pure bookmarks view from account menu.  This leaves room for author menu at end (in future version).  author can have quick access to their book stats ;) and maybe post messages on mobile.  A controller#action knows its tracks: an array of k,v pairs.  key is URL.  value is list item name.
+DONE bookmarks menu
+DONE account menu
 
 finish all user & password behavior
    D registered email

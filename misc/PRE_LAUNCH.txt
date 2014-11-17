@@ -65,6 +65,11 @@ nginx sites-available mihudie.com
 
 DONE nginx mihudie.com config location for static files needs to have expires max working.  It may be commeted out pre-production.
 
+# rails log must be owned by group syslog or it won't rotate
+rm ~/rails/log/*
+touch ~/rails/log/production.log
+sudo chown mhd:syslog ~/rails/log/production.log
+
 nginx gzip js and css files
       gzip -1 -c mihudie.css > mihudie.css.gz
       gzip -1 -c mihudie.js > mihudie.js.gz

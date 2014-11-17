@@ -1,0 +1,18 @@
+# break down access log by month
+./segment_access_log.sh mihudie.access.log
+
+# create goaccess report
+goaccess -p ~/.goaccessrc -f mihudie.access.log-2014-09.txt -a > mihudie.access.log-2014-09.html
+
+# gzip all files
+for file in *; do gzip "$file"; done
+
+# report on a group of gzip logs
+# will crash on very large files
+zcat -f ~/lin1_logs/logs/*.txt.gz | goaccess -p ~/.goaccessrc -a > mihudie.access.log.report.html
+
+# better for mem usage
+for file in *.txt.gz; do zcat -f "$file" | goaccess -p ~/.goaccessrc -a > "$file".html; done
+
+zcat -f mihudie.access.log-2013-11.txt.gz | goaccess -p ~/.goaccessrc -a > mihudie.access.log-2013-11.txt.gz.html
+
