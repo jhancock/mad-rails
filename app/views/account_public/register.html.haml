@@ -1,8 +1,8 @@
 = my_form_for :user do |f|
   %div{:class => "notice"}
-    Already registered?
+    已经注册？
     &nbsp;
-    = link_to "请登录?", login_path, {:rel => "nofollow"}
+    = link_to "请登录", login_path, {:rel => "nofollow"}
   = f.email_field :email, "电子邮箱"
   = f.password_field :password, "密码"
   = f.password_field :password_confirm, "确认密码"

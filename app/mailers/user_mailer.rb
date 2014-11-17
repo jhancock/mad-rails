@@ -9,13 +9,13 @@ class UserMailer < ActionMailer::Base
     @user = User.find(user_id)
     #TODO figure out mandrill unsub link
     mail(:to => @user.email,
-         :subject => "Welcome to Mihudie")
+         :subject => "欢迎光临迷蝴蝶")
   end
 
   def registered_email_verify(user_id)
     @user = User.find(user_id)
     mail(:to => @user.email,
-         :subject => "Verify your email")
+         :subject => "请验证注册邮箱")
   end
 
   def registered_referral(user_id)

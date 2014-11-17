@@ -43,40 +43,40 @@ class AccountController < ApplicationController
 
   def change_email
     #TODO need chinese txt
-    @page_title = "change email"
+    @page_title = "更换注册邮箱"
     @page_description = "change email"
     @page_keywords = "change email"
   end
 
   def change_email_post
     #TODO need chinese txt
-    @page_title = "change email"
+    @page_title = "更换注册邮箱"
     @page_description = "change email"
     @page_keywords = "change email"
   end
 
   def registered_email_verify_notice
-    @page_title = "Verify your email"
+    @page_title = "请查收验证邮件"
   end
 
   def send_registered_email_verify
     if current_user.email_verified_at
-      flash[:notice] = "Email already verified!  You have full access to mihudie's #{Book.online_criteria.count} backyard books until #{current_user.premium_to.to_s(:yyyy_mm_dd)}."
+      flash[:notice] = "邮箱验证完成! 恭喜您获得迷蝴蝶后花园 #{Book.online_criteria.count} 书籍免费畅读至  #{current_user.premium_to.to_s(:yyyy_mm_dd)}。"
       redirect_to account_home_path and return
     end
     send_user_mail(current_user.id, :registered_email_verify)
-    redirect_to account_home_path, notice: "Verification email sent.  Please check your spam folder and ensure you can receive emails from mihudie.com"
+    redirect_to account_home_path, notice: "验证邮件已经发送。如未正常收取，请检查您的垃圾邮件夹。"
   end
 
   def registered_email_verify
     public_id = params[:code]
     user = User.find_by(public_id: public_id) if public_id
     unless user && (user.id == current_user.id)
-      flash[:error] = "Invalid email verification code"
+      flash[:error] = "无效的邮箱验证代码。"
       redirect_to account_home_path and return
     end
     if user.email_verified_at
-      flash[:notice] = "Email already verified!  You have full access to mihudie's #{Book.online_criteria.count} backyard books until #{user.premium_to.to_s(:yyyy_mm_dd)}."
+      flash[:notice] = "邮箱验证完成! 恭喜您获得迷蝴蝶后花园 #{Book.online_criteria.count} 书籍免费畅读至  #{user.premium_to.to_s(:yyyy_mm_dd)}。"
       redirect_to root_path and return
     end
     user.email_verified_at = Time.now
@@ -99,7 +99,7 @@ class AccountController < ApplicationController
         end
       end
     end
-    redirect_to root_path, :notice => "Congradulations!  You have full access to mihudie's backyard books until #{user.premium_to.to_s(:yyyy_mm_dd)}."
+    redirect_to root_path, :notice => "恭喜！您获得了迷蝴蝶后花园免费畅读直至 #{user.premium_to.to_s(:yyyy_mm_dd)}"
   end
 
   def send_change_email_verify
@@ -115,7 +115,7 @@ class AccountController < ApplicationController
         
   private
   def ensure_user
-    raise Unauthenticated.new(message: "You must be logged in to view your account", success_path: request.original_fullpath) unless current_user
+    raise Unauthenticated.new(message: "您必需登录后才能查看账户信息。", success_path: request.original_fullpath) unless current_user
   end
 
 end

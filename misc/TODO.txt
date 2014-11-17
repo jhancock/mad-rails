@@ -8,6 +8,12 @@ email TODOs...see below
 
 Next
 -----
+page_title on book#read - if its page 1, even if not specified, do not prefix chapter name.
+
+page_titles for book indexes/sorts need work.
+
+send_registered_email_verify has a error meessage that shows premium_to date.  This is not correct if user has premium_at but not premium_to set.
+
 book#read needs to know that there could be more than one book with the same title/author pair.  If there is, there should be only on that does not have duplicate attribute.  BUT if that is not the case, should use the book with latest updated_at time.
 
 register verify code is wrong.  Shouldn't be using public_id for the code.  public_id is good for referals, but not things like use once codes.

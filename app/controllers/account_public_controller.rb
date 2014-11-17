@@ -4,13 +4,13 @@ class AccountPublicController < ApplicationController
   before_action :ensure_no_user, except: :login_help
 
   def login
-    @page_title = "Login"
+    @page_title = "登录"
     @page_description = "登录迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "登录 电子书 在线阅读"
   end
 
   def login_post
-    @page_title = "Login"
+    @page_title = "登录"
     @page_description = "登录迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "登录 电子书 在线阅读"
     user = User.find_by(email: params[:user][:email])
@@ -28,13 +28,13 @@ class AccountPublicController < ApplicationController
   end
 
   def register
-    @page_title = "Register"
+    @page_title = "注册"
     @page_description = "注册迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "注册 电子书 在线阅读"
   end
 
   def register_post
-    @page_title = "Register"
+    @page_title = "注册"
     @page_description = "注册迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "注册 电子书 在线阅读"
     unless email_valid?(params[:user][:email])
