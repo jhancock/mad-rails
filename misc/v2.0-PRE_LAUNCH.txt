@@ -19,11 +19,9 @@ bookmarks 1303 dups, 834 have same chunk
 users 24 dups
   keep most recent
 # change user#email_error to email_bounced_at (if old user has email_error, set email_bounced_at to user#updated_at
-# ensure all books have detail_li, tag_names, tag_names_pp and summary_html
 
 # Bookmark.set_pp_all
 # Book.set_detail_li_all
-# TODO Book.set_tag_names_pp_all  # set all Book tag_names_pp.  Isn't this done in the old data?  can defer?
 
 # remove indexes
 rake db:mongoid:remove_indexes

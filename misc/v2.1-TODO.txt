@@ -11,6 +11,14 @@ http://stackoverflow.com/questions/14316426/is-there-a-paypal-ipn-code-sample-fo
 
 add Alipay
 
+old user gets one month free.  incremental email sends.
+
+shut off new user gets one month free.  keep one month referal bonus plan.  If I don't do this, users will just keep setting up more email accounts to get another month free.
+
+report to see if users are registering a referred account from same IP
+
+see about using zepto.js or other instead of jquery.  maybe do a browser check and use jquery 1.11.1 for under IE10 and jquery 2 or jquery mobile for over?
+
 set nginx/passenger in maintainance mode while I'm upgrading
 http://tom.meinlschmidt.org/2013/10/15/rails-passenger-nginx-maintenance-mode/
 

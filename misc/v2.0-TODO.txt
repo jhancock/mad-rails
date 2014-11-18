@@ -8,7 +8,15 @@ email TODOs...see below
 
 Next
 -----
-bookmark menu rendering inefficient
+create/test migrate scripts on PRE_LAUNCH list
+
+SEO - Baidu cares about changes on page titles
+    add schema.org microdata
+    http://www.google.com/webmasters/tools/richsnippets
+    http://www.heppnetz.de/projects/goodrelations/
+
+download IE8 test vm
+  https://www.modern.ie/en-us/virtualization-tools#downloads
 
 set User.email_bounces, default 0
 
@@ -31,11 +39,6 @@ on register_verify_notice, let user know that if their email address is not vali
 
 set Mandrill webhook for bounced email.  Capture bounce info in user and log UserEvent. Don't send more emails to that address until they use a verified address.  Display account notice if email_bounced_at is set.
 
-migrate scripts on PRE_LAUNCH list
-
-download IE8 test vm
-  https://www.modern.ie/en-us/virtualization-tools#downloads
-
 upgrade password_hash to bcrypt
 
 ensure session does not expire between opening and closing browser.
@@ -43,18 +46,9 @@ ensure session does not expire between opening and closing browser.
 setup exception_notificaion and test. 
   see if we can write exceptions to file and have scout pick them up.  
 
-SEO - Baidu cares about changes on page titles
-    add schema.org microdata
-    http://www.google.com/webmasters/tools/richsnippets
-    http://www.heppnetz.de/projects/goodrelations/
+account page notification for user referal bonus
 
-optimize: _book.html.haml can use a pre-rendered <li>.  store it in book data just like genre_tags_pp 
-save pre-rendered book li (detail_li), genre_tags_pp and summary_html if doesn't exist.
-
-script to ensure all books have li, genre_tags_pp and summary_html
-
-DONE bookmarks menu
-DONE account menu
+test full user referal process with multiple accounts
 
 finish all user & password behavior
    D registered email
@@ -83,13 +77,11 @@ finish all user & password behavior
     D test mods to user login, LoginLog, logout kills cookie, register stores ip, etc
     D logout link in menu bar if not mobile.  only on account page for mobile
 
-    account menu shortcuts
-      emphasis on verify password in account menu
+    D emphasis on verify password in account menu
 
 sitemap.xml script
-  Should sitemap include old book links with objectId? NO
-  Canonical url be the one with author/title.
-
+  sitemap should not include old book links with objectId??
+  Canonical url should be the one with author/title.
 
 ***********************************
 Hand over to Andrea for translation
@@ -105,13 +97,10 @@ Andrea - test on iPad and Android phones.  Test on popular Chinese browsers.
 
 test on Android phones.
 
-see about using zepto.js or other instead of jquery.  maybe do a browser check and use jquery 1.11.1 for under IE10 and jquery 2 or jquery mobile for over?
-
 
 new model
 ---------- 
   User gets 1 month premium_to on registration.  After they validate their email.
-change premium attribute to premium_at. 
   Two week after, send user email asking if they've enjoyed mihudie.  If they would like to invite a friend, they can use the link in this email and both they and their friend gets another month free.  Try if Mandrill can send the two-week-later email when the validate-success mail is sent. 
 
   For existing users, create a new email to notice them of their free month (when I get around to writing a script to roll through existing users).  These users must verify their email too!  We can fix this by having a seperate landing page for this email to claim their referral URL.  Set their new premium_to and send them an email as well two weeks later to let them invite a friend.
@@ -154,6 +143,13 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE bookmark menu rendering inefficient
+
+DONE optimize rendering of lists details. script to ensure all books have detail_li, bookmarks have pp info
+
+DONE bookmarks menu
+DONE account menu
 
 DONE rearrange menu items: home (hide-mobile), genres, bookmarks, account.
 
