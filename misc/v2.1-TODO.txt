@@ -17,6 +17,19 @@ shut off new user gets one month free.  keep one month referal bonus plan.  If I
 
 report to see if users are registering a referred account from same IP
 
+change Book finder to use scoping http://mongoid.org/en/mongoid/docs/querying.html#scoping
+
+admin page v1.0
+  elaticsearch calls on book change.  
+  grant premium_to access - amount of time or specific date
+  	send email to user unless checkbox is selected to not
+  fix admin_users views
+
+user legal agreement.  include backyard access rules and refund fee rules.
+
+setup tarsnap on vr1
+  check money in tarsnap account
+
 see about using zepto.js or other instead of jquery.  maybe do a browser check and use jquery 1.11.1 for under IE10 and jquery 2 or jquery mobile for over?
 
 set nginx/passenger in maintainance mode while I'm upgrading
@@ -25,6 +38,8 @@ http://tom.meinlschmidt.org/2013/10/15/rails-passenger-nginx-maintenance-mode/
 put hashids in seperate file in lib, not as gem
 
 if book is offline, gracefully return user to home or prior page with error message.
+
+unsubscribe link on email template
 
 fix nginx conf so there is a default server that returns nothing.  This will keep people from hitting it with the ip address.
 see: https://github.com/perusio/piwik-nginx/blob/master/sites-available/000-default

@@ -4,8 +4,8 @@
 
 - unless current_user.email_verified?
   %div{:class => "notice"}
-    Verify your email to receive one month free.
-    = link_to "resend verification email", account_registered_email_verify_notice_path
+    请验证您的注册邮箱以获得一个月迷蝴蝶后花园免费阅读权限。
+    = link_to "重新发送验证邮件", account_registered_email_verify_notice_path
     
 %h3
   = "#{current_user.email}"
@@ -14,17 +14,17 @@
 
 - if current_user.premium_to || current_user.premium_at
   - if current_user.premium_at
-    = "You have backyard access"
+    = "您目前享有后花园访问权限"
   - else
-    = "You have backyard access to #{current_user.premium_to.to_s(:yyyy_mm_dd)}"
+    = "您有后花园访问权限直至 #{current_user.premium_to.to_s(:yyyy_mm_dd)}"
 -# TODO add notice for referral here.
 %hr
 - if current_user.bookmarks
-  = "#{current_user.bookmarks.count} bookmarks"
+  = "#{current_user.bookmarks.count} 书签"
   &nbsp;
-  = link_to "manage bookmarks", bookmarks_path, class: "action" 
+  = link_to "管理书签", bookmarks_path, class: "action" 
 %br
 %br
 = link_to "修改密码", change_password_path, class: "action"
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-= link_to "change_email", change_email_path, class: "action"
+= link_to "修改注册邮箱", change_email_path, class: "action"

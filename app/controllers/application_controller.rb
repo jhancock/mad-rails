@@ -125,7 +125,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_user
-    raise Unauthenticated.new(message: "You must be logged in to view this page", success_path: request.original_fullpath) unless current_user
+    raise Unauthenticated.new(message: "此页面必需登录后才能访问", success_path: request.original_fullpath) unless current_user
   end
 
   protected

@@ -1,11 +1,7 @@
 %div{:class => "main-text"}
-  %h1 Welcome to Mihudie 2.0
+  %h1 欢迎光临迷蝴蝶
   %p
-    = " 欢迎来到迷蝴蝶文学社区，与同好一同品评、分享和创作。以文会友，不亦悦乎？期待你添砖加瓦，也衷心希望你能在此获得最愉悦的体验。"
-    %br
-    = " 美梦如真，是耶，非耶，化作蝴蝶！"
-    - if @china
-      WELCOME CHINA USER
+    = "欢迎来到迷蝴蝶文学社区！史上最简洁、最快捷和最移动的阅读和写作平台。一切为了您的体验，我们将继续努力，请您持续捧场  ：）"
 
 = render partial: 'shared/my_collection', locals: {collection: @books, url_params: {controller: 'books', action: 'list', sort: @sort}, name: nil}
 

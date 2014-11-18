@@ -5,20 +5,32 @@ fix Georgia corp registration for shellshadow.
 sign up for Alipay - Mihudie LLC
 See if my PayPal account handles UnionPay
 email TODOs...see below
+update Amazon credit card
 
 Next
 -----
 create/test migrate scripts on PRE_LAUNCH list
+
+see what happened to WELCOME CHINA USER
+
+BUG If I go to http://mihudie.com, read page 1, then go to page 2, register shows, then I click login and login and get redirected to page 2...but I have already verified my email and I'm getting the :notice div tell me to verify.  Maybe its best to not have a success_message and just do a check if the user has not verified and always diplay a message until they do.
+
+download IE8 test vm
+  https://www.modern.ie/en-us/virtualization-tools#downloads
 
 SEO - Baidu cares about changes on page titles
     add schema.org microdata
     http://www.google.com/webmasters/tools/richsnippets
     http://www.heppnetz.de/projects/goodrelations/
 
-download IE8 test vm
-  https://www.modern.ie/en-us/virtualization-tools#downloads
+sitemap.xml script
+  sitemap should not include old book links with objectId??
+  Canonical url should be the one with author/title.
+  should these links contain microdata?
 
-set User.email_bounces, default 0
+need better emphasis for menu item :em
+
+do I need to trim blank on fields such as email and password?
 
 page_title on book#read - if its page 1, even if not specified, do not prefix chapter name.
 
@@ -37,6 +49,8 @@ notify user of password_reset_request option on failed login
 change_email process.  Need to take into account users that never verified their original email.
 on register_verify_notice, let user know that if their email address is not valid, they can change their address.
 
+set User.email_bounces, default 0
+
 set Mandrill webhook for bounced email.  Capture bounce info in user and log UserEvent. Don't send more emails to that address until they use a verified address.  Display account notice if email_bounced_at is set.
 
 upgrade password_hash to bcrypt
@@ -50,38 +64,8 @@ account page notification for user referal bonus
 
 test full user referal process with multiple accounts
 
-finish all user & password behavior
-   D registered email
-   D send_email_verify (for register)
-   password_reset_request, password_reset_request_post, password_reset, password_reset_post - force_ssl 
-   on login failure, show password-reset link
-   account 
-      T verify email
-      D logout link 
-      D manage bookmarks link
-      D change_password
-      change_email
-      set theme
-      D show premium to date
-      show referral link if not used
+account set theme page
 
-    D send_email_verify link
-      D log event for email sent - email handler should do this
-      D log event when verified
-    T register_email_verify - need to give month free and give month free to referrer
-
-    D bookmarks page - page through and remove bookmarks
-      D BooksController#read needs to set bookmark
-    D change_password page
-
-    D test mods to user login, LoginLog, logout kills cookie, register stores ip, etc
-    D logout link in menu bar if not mobile.  only on account page for mobile
-
-    D emphasis on verify password in account menu
-
-sitemap.xml script
-  sitemap should not include old book links with objectId??
-  Canonical url should be the one with author/title.
 
 ***********************************
 Hand over to Andrea for translation
@@ -106,31 +90,6 @@ new model
   For existing users, create a new email to notice them of their free month (when I get around to writing a script to roll through existing users).  These users must verify their email too!  We can fix this by having a seperate landing page for this email to claim their referral URL.  Set their new premium_to and send them an email as well two weeks later to let them invite a friend.
 
   A user may buy a full year premium (added to their existing time) for 60 rmb or $10 USD. 
-
-
-Andrea
--------
-user legal agreement.  include backyard access rules and refund fee rules.
-
-Andrea needs to write new emails and help translate site messages
---------
-
-do I need to trim blank on fields such as email and password?
-
-change Book finder to use scoping http://mongoid.org/en/mongoid/docs/querying.html#scoping
-
-admin page v1.0
-  elaticsearch calls on book change.  
-  grant premium_to access - amount of time or specific date
-  	send email to user unless checkbox is selected to not
-  fix admin_users views
-
-review email template.  It may not be repsonsive for email readers.
-   add my own unsubscribe link to email template.  the default one is too prominent.
-   email footer has  mihudie address which links to map on iPhone.  See if this can be removed
-
-setup tarsnap on vr1
-  check money in tarsnap account
 
 
 cleanup email TODOs
@@ -158,7 +117,7 @@ DONE send_registered_email_verify and registered_email_verify_notice need to che
 DONE update ruby 2.1.2 to ruby 2.1.5
 DONE upgrade dev and vr1 (apt)
 
-DONE try new email template
+DONE new email template
 
 DONE fix PayPal mihudie - add EIN
 

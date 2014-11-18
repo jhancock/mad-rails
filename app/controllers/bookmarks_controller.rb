@@ -4,9 +4,7 @@ class BookmarksController < ApplicationController
   before_action :ensure_user
 
   def index
-    @page_title = "Bookmarks"
-    @page_description = "按近期被点击次数排行的电子书，在线阅读最吸引人的中文电子书"
-    @page_keywords = "关注 流行 中文电子书 在线阅读"
+    @page_title = "书签"
     @page = params[:page].to_i > 0 ? params[:page].to_i : 1
     @bookmarks = Bookmark.where(user_id: current_user.id).desc(:updated_at).page(@page)
     if (@bookmarks.count == 0) && (@page == 1)
@@ -20,10 +18,10 @@ class BookmarksController < ApplicationController
   def delete
     bookmark = Bookmark.find(params[:bookmark_id])
     unless bookmark
-      redirect_to root_path, :notice => "bookmark not found" and return
+      redirect_to root_path, :notice => "书签没有找到" and return
     end
     bookmark.delete if bookmark
-    flash[:notice] = "#{bookmark.book.title} bookmark deleted"
+    flash[:notice] = "#{bookmark.book.title} - 书签已经删除"
     redirect_back_or bookmarks_path
   end
 end

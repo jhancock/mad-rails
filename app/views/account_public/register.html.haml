@@ -1,6 +1,6 @@
 = my_form_for :user do |f|
   %div{:class => "notice"}
-    已经注册？
+    请提供真实邮箱进行注册。已经注册？
     &nbsp;
     = link_to "请登录", login_path, {:rel => "nofollow"}
   = f.email_field :email, "电子邮箱"

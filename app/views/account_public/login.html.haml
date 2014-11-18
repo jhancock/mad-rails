@@ -1,7 +1,8 @@
 = my_form_for :user  do |f|
   %div{:class => "notice"}
-    Login &nbsp;&nbsp;&nbsp; 
-    = link_to "尚未注册?", register_path, {:rel => "nofollow"}
+    请登录。尚未注册？
+    &nbsp;
+    = link_to "请注册", register_path, {:rel => "nofollow"}
   = f.email_field :email, "电子邮箱"
   = f.password_field :password, "密码"
   %div{:class => "form-action clearfix"}

@@ -16,12 +16,12 @@ class AccountPublicController < ApplicationController
     user = User.find_by(email: params[:user][:email])
     unless user
       LoginEvents.log_invalid_user(params[:user][:email], request.remote_ip)
-      flash.now[:form_error] = "Login error"
+      flash.now[:form_error] = "用户名或者密码错误 #{view_context.link_to('重设密码', password_reset_request_path)}".html_safe
       render 'login' and return
     end
     unless user.password?(params[:user][:password])
       LoginEvents.log_bad_password(user.id, request.remote_ip)
-      flash.now[:form_error] = "Login error"
+      flash.now[:form_error] = "用户名或者密码错误 #{view_context.link_to('重设密码', password_reset_request_path)}".html_safe
       render 'login' and return
     end
     set_login(user)
@@ -38,15 +38,15 @@ class AccountPublicController < ApplicationController
     @page_description = "注册迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "注册 电子书 在线阅读"
     unless email_valid?(params[:user][:email])
-      flash.now[:form_error] = "invalid email format"
+      flash.now[:form_error] = "邮箱地址格式错误"
       render 'register' and return
     end
     unless params[:user][:password] == params[:user][:password_confirm]
-      flash.now[:form_error] = "passwords do not match"
+      flash.now[:form_error] = "两次密码填写不符"
       render 'register' and return
     end
     if User.find_by(email: params[:user][:email])
-      flash.now[:form_error] = "Error.  If you already have an account, please #{view_context.link_to("login", login_path)}".html_safe
+      flash.now[:form_error] = "<strong>#{params[:user][:email]}</strong> 已经被注册。如果忘记密码，请 #{view_context.link_to('重设密码', password_reset_request_path)}".html_safe
       render 'register' and return
     end
     user = User.new({:email => params[:user][:email], :registered_at => Time.now})
@@ -63,6 +63,14 @@ class AccountPublicController < ApplicationController
     end
     send_user_mail(user.id, :registered)
     set_login(user)
+  end
+
+  def password_reset_request
+    @page_title = "重设密码"
+  end
+
+  def password_reset
+    @page_title = "密码重设"
   end
 
   def login_help
@@ -84,6 +92,6 @@ class AccountPublicController < ApplicationController
   end
 
   def ensure_no_user
-    raise Unauthorized.new(message: "Not available to logged in user") if current_user
+    raise Unauthorized.new(message: "此页面不适用于已经登录的用户") if current_user
   end
 end

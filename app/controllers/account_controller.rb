@@ -4,7 +4,7 @@ class AccountController < ApplicationController
   before_action :ensure_user, except: :logout
 
   def index
-    @page_title = "Account"
+    @page_title = "账户管理"
     @page_description = "在线管理自己账户的密码和最近阅读的书签信息 "
     @page_keywords = "账户管理 书签 电子书"
   end
@@ -12,7 +12,7 @@ class AccountController < ApplicationController
   def logout
     reset_session
     @_current_user = nil
-    redirect_to root_path, :notice => "You are now logged out"
+    redirect_to root_path, :notice => "您已经退出登录状态"
   end
 
   def change_password
@@ -27,32 +27,26 @@ class AccountController < ApplicationController
     @page_keywords = "密码 在线阅读"
     unless current_user.password?(params[:user][:password])
       UserEvents.log(current_user.id, :password_change_error, {error: "incorrect_current_password"})
-      flash.now[:form_error] = "invalid current password"
+      flash.now[:form_error] = "当前的密码错误"
       render "change_password" and return
     end
     unless params[:user][:new_password] == params[:user][:new_password_confirm]
       UserEvents.log(current_user.id, :password_change_error, {error: "new_passwords_do_not_match"})
-      flash.now[:form_error] = "new passwords do not match"
+      flash.now[:form_error] = "新密码两次输入不符"
       render "change_password" and return
     end
     current_user.password(params[:user][:new_password])
     current_user.save
     UserEvents.log(current_user.id, :password_changed)
-    redirect_to account_home_path, :notice => "password successfully changed"
+    redirect_to account_home_path, :notice => "密码修改成功"
   end
 
   def change_email
-    #TODO need chinese txt
     @page_title = "更换注册邮箱"
-    @page_description = "change email"
-    @page_keywords = "change email"
   end
 
   def change_email_post
-    #TODO need chinese txt
     @page_title = "更换注册邮箱"
-    @page_description = "change email"
-    @page_keywords = "change email"
   end
 
   def registered_email_verify_notice
