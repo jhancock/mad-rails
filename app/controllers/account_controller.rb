@@ -69,6 +69,7 @@ class AccountController < ApplicationController
   end
 
   def registered_email_verify
+    #TODO change from public_id to email_verify_code
     public_id = params[:code]
     user = User.find_by(public_id: public_id) if public_id
     unless user && (user.id == current_user.id)

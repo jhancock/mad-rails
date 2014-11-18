@@ -4,6 +4,8 @@ class User
 
   field :email, type: String
   field :email_verified_at, type: Time
+  # one-time use code created by hashid lib based on Time.now
+  field :email_verify_code, type: String
 
   field :password_hash, type: String
   field :password_salt, type: String
@@ -15,10 +17,15 @@ class User
 
   field :registered_at, type: Time
 
+  # last bounce time
+  field :email_bounced_at, type: Time
+  # bounce count since :email_verified_at
+  field :email_bounces, type: Integer, default: 0
+
   # email address to change to.  
   field :email_change_to, type: String
   field :email_change_at, type: Time
-  field :email_change_code, type: String
+  field :email_change_verify_code, type: String
 
   # if premium_at is set, the user has premium access.  No need to check premium_to.
   field :premium_at, type: Time
@@ -32,7 +39,7 @@ class User
   field :city, type: String
   field :ip, type: String
 
-  # :public_id used for referral codes, email validation, payment identifier, etc.
+  # :public_id used for referral codes, payment identifier, etc.
   field :public_id, type: String
 
   # intended for arbitrary error info for debugging purposes 

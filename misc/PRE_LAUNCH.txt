@@ -4,8 +4,10 @@ PRE_LAUNCH.txt
 rails r lib/scripts/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
 
 # things to add to migrate_v2.0.js:
+
 # unset Book.offline_at if it is nil
-# unset :password_reset_code and :password_reset_at
+# unset all User :password_reset_code and :password_reset_at
+# unset all Book :tag_names.  Keep tags, tag_names_pp
 # set_public_id for any user without one
 # scripts to handle duplicate books, bookmarks, users.  
 books 230 dups, 228 have same origin
@@ -18,6 +20,10 @@ users 24 dups
   keep most recent
 # change user#email_error to email_bounced_at (if old user has email_error, set email_bounced_at to user#updated_at
 # ensure all books have detail_li, tag_names, tag_names_pp and summary_html
+
+# Bookmark.set_pp_all
+# Book.set_detail_li_all
+# TODO Book.set_tag_names_pp_all  # set all Book tag_names_pp.  Isn't this done in the old data?  can defer?
 
 # remove indexes
 rake db:mongoid:remove_indexes

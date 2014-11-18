@@ -96,10 +96,9 @@ class ApplicationController < ActionController::Base
     return list unless current_user
     bookmarks = Bookmark.where(user_id: current_user.id).desc(:updated_at)
     count = bookmarks.count
-    limit = count > 5 ? 5 : bookmarks.count
+    limit = count > 5 ? 5 : count
     bookmarks.limit(limit).each do |bookmark|
-      book = bookmark.book
-      list << [read_book_path(author: book.author, title: book.title, page: bookmark.chunk), "#{book.chapter_title(bookmark.chunk)} #{book.title} - #{book.author}"]
+      list << [read_book_path(author: bookmark.author, title: bookmark.title, page: bookmark.chunk), bookmark.pp]
     end
     list << [bookmarks_path, "#{count} 书签"]
     list

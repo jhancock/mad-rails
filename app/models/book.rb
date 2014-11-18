@@ -4,6 +4,7 @@ class Book
   include Mongoid::Timestamps
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
+  delegate :url_helpers, to: 'Rails.application.routes'
 
   field :title, type: String
   field :author, type: String
@@ -11,7 +12,7 @@ class Book
   # need to store this as html_safe
   field :summary_html, type: String
   field :tags, type: Array, default: []
-  field :tag_names, type: Array, default: []
+  #field :tag_names, type: Array, default: []
   field :tag_names_pp, type: String
   # pre-rendered li of the book for detail-span
   field :detail_li, type: String
@@ -152,4 +153,33 @@ class Book
   def chunk_path(chunk_id)
     "#{Rails.configuration.mihudie.books_path_prefix}#{self.id}/formatted/#{chunk_id}.html"
   end
+
+  def create_detail_li 
+    html = "<li><span>#{self.author}</span>".html_safe
+    html << "<a href='#{url_helpers.read_book_path(author: self.author, title: self.title)}'>#{self.title}</a>".html_safe
+    html << "<div class='detail-span'>".html_safe
+    html << "#{self.summary_html}<br>".html_safe
+    tag_ids = self.tags
+    if (tag_ids.class == Array) && (tag_ids.length > 0)
+      if tag_ids.length > 1
+        tag_ids[0..-2].each do |tag_id|
+          html << "<strong><a href='#{url_helpers.books_by_tag_path(tag: GenreTag.by_id(tag_id).name)}'>#{GenreTag.by_id(tag_id).cn}</a></strong>,&nbsp;".html_safe
+        end
+      end
+      html << "<strong><a href='#{url_helpers.books_by_tag_path(tag: GenreTag.by_id(tag_ids[-1]).name)}'>#{GenreTag.by_id(tag_ids[-1]).cn}</a></strong>&nbsp;&ndash;&nbsp;".html_safe
+    end
+    html << "<strong>#{self.chars.to_s(:delimited)}</strong> 字数".html_safe
+    html << "<div class='detail-span-action'>".html_safe
+    html << "<a class='button-primary' href='#{url_helpers.read_book_path(author: self.author, title: self.title)}' rel='nofollow'>阅读</a>".html_safe
+    html << "</div></div></li>".html_safe
+    html.html_safe
+  end
+
+  def self.set_detail_li_all
+    self.online_criteria.each do |book|
+      book.detail_li = book.create_detail_li
+      book.save
+    end  
+  end
+
 end

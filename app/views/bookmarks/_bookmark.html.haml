@@ -7,16 +7,14 @@
   %div{:class => "detail-span"}
     = "#{book.summary_html}".html_safe
     %br
-      %strong
-        -#- if book.tag_names_pp and book.tag_names_pp.length > 0
-        - if book.tags.class == Array
-          - book.tags.each do | tag_id |
-            = link_to GenreTag.by_id(tag_id).cn, books_by_tag_path(tag: GenreTag.by_id(tag_id).name)
-            = ", "
-          = " - #{book.chars} 字数"
-          -##{book.tag_names_pp} - #{book.chars} 字数
-        - else
-          #{book.chars} 字数
+    - if book.tags.class == Array
+      - book.tags.each do | tag_id |
+        %strong
+          = link_to GenreTag.by_id(tag_id).cn, books_by_tag_path(tag: GenreTag.by_id(tag_id).name)
+        = ", "
+      = " - <strong>#{book.chars.to_s(:delimited)}</strong> 字数".html_safe
+    - else
+      = "<strong>#{book.chars.to_s(:delimited)}</strong> 字数".html_safe
     %div{:class => "detail-span-action"}
       %a{:class => "button-primary", :href => read_book_path(author: book.author, title: book.title), :rel => "nofollow"}
         阅读

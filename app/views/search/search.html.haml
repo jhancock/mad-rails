@@ -14,4 +14,4 @@
         = "#{book.try(:highlight).try(:summary) ? book.highlight.summary[0] : book.summary}".html_safe
       %p
         = "#{book.try(:highlight).try(:tag_names_pp) ? book.highlight.tag_names_pp[0] : book.tag_names_pp}".html_safe
-        = "- #{book.chars} 字数"
+        = "- #{book.chars.to_s(:delimited)} 字数"
