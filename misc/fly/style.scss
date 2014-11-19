@@ -105,7 +105,7 @@ hr{border: none; border-bottom: 1px solid $main-text-color-hover*2;}
 .notice{
   background:$main-text-color-hover*2.4; font-size: 18px;
   border: 1px solid $main-text-color-hover*2.2;padding: 15px;margin: 0 0 10px;
-  border-radius: 5px;
+  border-radius: 5px;color: #000!important;
   a{ color:$main-color; }
 }
 .error{@extend .notice; border-width:0 0 0 4px;border-color:$color-red; border-radius: 0;}
@@ -180,7 +180,7 @@ body{font-family:$font-family; font-size:$font-size;line-height: 180%;}
         a:hover{background:$main-text-color-hover*2.3; }
         &.nav-flow{left: 0; width: 100%;}
         &.nav-line{
-          width: 150px;
+          min-width: 150px;
           li{ display: block;}
         }
       }
