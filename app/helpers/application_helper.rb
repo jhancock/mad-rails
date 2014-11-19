@@ -14,6 +14,10 @@ module ApplicationHelper
     "<link rel='canonical' href='https://#{href}' />".html_safe
   end
 
+  def china?
+    controller.china?
+  end
+
   @@tags_list = nil
   def tags_list
     return @@tags_list if @@tags_list

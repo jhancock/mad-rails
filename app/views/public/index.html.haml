@@ -2,7 +2,10 @@
   %h1 欢迎光临迷蝴蝶
   %p
     = "欢迎来到迷蝴蝶文学社区！史上最简洁、最快捷和最移动的阅读和写作平台。一切为了您的体验，我们将继续努力，请您持续捧场  ：）"
-
+  - if china?
+    %p
+      WELCOME CHINA USER!
+    
 = render partial: 'shared/my_collection', locals: {collection: @books, url_params: {controller: 'books', action: 'list', sort: @sort}, name: nil}
 
 -#  name: "书库"  -- this is an optional local arg to my_collection
