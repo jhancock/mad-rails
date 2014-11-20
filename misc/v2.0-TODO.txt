@@ -55,7 +55,7 @@ set Mandrill webhook for bounced email.  Capture bounce info in user and log Use
 
 upgrade password_hash to bcrypt
 
-ensure session does not expire between opening and closing browser.
+DONE ensure session does not expire between opening and closing browser.  set to 6 months.
 
 setup exception_notificaion and test. 
   see if we can write exceptions to file and have scout pick them up.  
