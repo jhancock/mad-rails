@@ -1,17 +1,18 @@
 %div{:class => "main-text hide-mobile"}
   %h1
-    @page_title
+    = @page_title
 
 - if current_user.email_verified_at
   %p
     = "您的邮箱 <strong>#{current_user.email}</strong> 已经完成验证，无需再做任何动作。".html_safe
 - else
-  %ol
-    %li
-      = "我们已经向您的注册邮箱 <strong>#{current_user.email}</strong> 发送了验证邮件，请查收。".html_safe
-    %li
-      = "如果您确定没有接收到这封邮件，请用如下备份方式完成验证：用您的注册邮箱向 register@inbound.mihudie.com 发送邮件，主题和内容均为 '注册邮箱验证'。一旦我方系统收到您的邮件，将自动完成验证，之后您无需接收任何邮件即可享有迷蝴蝶后花园一个月免费畅读权益。".html_safe
-    %li
-      = "如果您想要修改您的注册邮箱，请点击&nbsp;"
-      = link_to "修改注册邮箱", change_email_path, class: "action"
-      = "，我们会发送邮箱验证链接到您新提供的邮箱地址。如果新邮箱接收邮件有问题，请参考上述备份邮箱验证方式，完成验证，享受免费权益。"
+  %p
+    = "<strong>1</strong> 我们已经向您的注册邮箱 <strong>#{current_user.email}</strong> 发送了验证邮件，请查收。".html_safe
+  %br
+  %p
+    = "<strong>2</strong> 如果您确定没有接收到这封邮件，请用如下备份方式完成验证：用您的注册邮箱向 <strong>register@inbound.mihudie.com</strong> 发送邮件，主题和内容均为 '注册邮箱验证'。一旦我方系统收到您的邮件，将自动完成验证，之后您无需接收任何邮件即可享有迷蝴蝶后花园一个月免费畅读权益。".html_safe
+  %br
+  %p
+    = "<strong>3</strong> 如果您想要修改您的注册邮箱，请点击&nbsp;".html_safe
+    = link_to "修改注册邮箱", change_email_path, class: "action"
+    = "，我们会发送邮箱验证链接到您新提供的邮箱地址。如果新邮箱接收邮件有问题，请参考上述备份邮箱验证方式，完成验证，享受免费权益。"

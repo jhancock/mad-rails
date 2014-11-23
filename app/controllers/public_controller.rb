@@ -9,10 +9,6 @@ class PublicController < ApplicationController
     @china = china?
   end
 
-  ＃def self.home_page_title
-  ＃  "迷蝴蝶 电子书 穿越时空/都市言情/仙侠修真/网游同人 在线阅读"
-  ＃end
-
   def upload_notice
   end
 
