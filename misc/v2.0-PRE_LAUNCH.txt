@@ -40,20 +40,21 @@ rake db:mongoid:create_indexes
 use mhd_development || use mhd_production
 db.setProfilingLevel(2)
 
-index elastic search.  delete_and_reindex_book_search.rb
+index elastic search.  reindex_book_search.rb
 
-create sitemap.xml.
+create sitemap.xml.  create_sitemap.rb
 
 remove critsend from SPF and DKIM
 
 DNS stuff - lin1 to vr1
+  remove critsend DKIM and SPF
 
 verify SSL at https://www.ssllabs.com/
 
 mandrill
   ensure production API key
   money in mandrill account
-  ensure mandrill DKIM and SPF
+  DONE ensure mandrill DKIM and SPF
 
 remove basic auth from Rails
   ApplicationController before_action :http_auth

@@ -1,8 +1,8 @@
 %div{:class => "reading-page"}
   %div{:class => "reading-page-md"}
     %h2{:class => "chapter-title"}
-      = @chapter_title
-    = @content
+      = @chapter_title.html_safe
+    = @content.html_safe
 
 %div{:class => "page-bar"}
   - if @page > 1  
