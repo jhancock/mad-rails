@@ -80,6 +80,12 @@ class ApplicationController < ActionController::Base
     sort == "popular" ? "热力关注" : "最新更新"
   end
 
+  def list_view_page_prefix(page)
+    # page_prfix is empty string if page is 1
+    return nil if page == 1
+    "第#{page}页"
+  end  
+
   def account_list
     list = []
     return list unless current_user
@@ -100,7 +106,7 @@ class ApplicationController < ActionController::Base
     bookmarks.limit(limit).each do |bookmark|
       list << [read_book_path(author: bookmark.author, title: bookmark.title, page: bookmark.chunk), bookmark.pp]
     end
-    list << [bookmarks_path, "#{count} 书签"]
+    list << [bookmarks_path, "#{count} 管理所有书签"]
     list
   end
 

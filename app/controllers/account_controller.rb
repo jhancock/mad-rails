@@ -50,7 +50,7 @@ class AccountController < ApplicationController
   end
 
   def registered_email_verify_notice
-    @page_title = "请查收验证邮件"
+    @page_title = "请验证注册邮箱"
   end
 
   def send_registered_email_verify

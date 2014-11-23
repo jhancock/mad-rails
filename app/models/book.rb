@@ -111,6 +111,7 @@ class Book
 
   #TODO no concept of chapters.  New model needed.
   def chapter_title(page)
+    return nil if page == 1
     "第#{page}页"
   end
 

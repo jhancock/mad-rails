@@ -1,7 +1,7 @@
 %div{:class => "reading-page"}
   %div{:class => "reading-page-md"}
     %h2{:class => "chapter-title"}
-      = @chapter_title.html_safe
+      = @chapter_title || "第1页"
     = @content.html_safe
 
 %div{:class => "page-bar"}

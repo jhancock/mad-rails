@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 class PublicController < ApplicationController
   def index
-    @page_title = self.class.home_page_title
-    @page_description = "迷蝴蝶中文电子书在线阅读网络社区，由用户共同推荐分享喜爱的 中文电子书，提供最清爽干净、简捷方便和安全的社区环境，无广告病毒烦忧。"
-    @page_keywords = "电子书 在线阅读 安全 简便"
+    @page_title = "迷蝴蝶 电子书 穿越重生/熟女言情/种田宅斗/耽美同人 手机阅读 全本txt 支持Kindle"
+    @page_description = "迷蝴蝶华文电子书社区，提供最简洁、快捷、适读和安全的阅读和写作环境，最新最流行最全类型书籍应有尽有。"
+    @page_keywords = "电子书 在线阅读 手机阅读 全本下载 txt 安全 简便"
     @sort = 'recent'
     @books = Book.online_recent.page(1)
     @china = china?
   end
 
-  def self.home_page_title
-    "迷蝴蝶 电子书 穿越时空/都市言情/仙侠修真/网游同人 在线阅读"
-  end
+  ＃def self.home_page_title
+  ＃  "迷蝴蝶 电子书 穿越时空/都市言情/仙侠修真/网游同人 在线阅读"
+  ＃end
 
   def upload_notice
   end

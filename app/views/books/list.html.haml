@@ -1,6 +1,6 @@
 %div{:class => "main-text hide-mobile"}
   %h1{:class => "hide-mobile"}
-    = "#{@sort} books - page #{@page}"
+    = @page_title
 
 = render partial: 'shared/my_collection', locals: {collection: @books, url_params: {controller: 'books', action: 'list', sort: @sort}, name: nil}
 
