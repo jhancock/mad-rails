@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class PublicController < ApplicationController
   def index
-    @page_title = "迷蝴蝶 电子书 穿越重生/熟女言情/种田宅斗/耽美同人 手机阅读 全本txt 支持Kindle"
+    @page_title = "迷蝴蝶 电子书 熟女言情/穿越重生/种田宅斗/耽美同人 手机阅读 全本txt 支持Kindle"
     @page_description = "迷蝴蝶华文电子书社区，提供最简洁、快捷、适读和安全的阅读和写作环境，最新最流行最全类型书籍应有尽有。"
     @page_keywords = "电子书 在线阅读 手机阅读 全本下载 txt 安全 简便"
     @sort = 'recent'

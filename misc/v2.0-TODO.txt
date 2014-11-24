@@ -11,7 +11,7 @@ Next
 -----
 create/test migrate scripts on PRE_LAUNCH list
 
-tag list views...pagination shows "Displaying all 26 books" for lists without more than 50 items.  Possibly shows something different for when user has only one item.  need to dig into kanamari for this.
+tag list views and bookmarks...pagination shows "Displaying all 26 books" for lists without more than 50 items.  Possibly shows something different for when user has only one item.  need to dig into kanamari for this.
 
 BUG If I go to http://mihudie.com, read page 1, then go to page 2, register shows, then I click login and login and get redirected to page 2...but I have already verified my email and I'm getting the :notice div tell me to verify.  Maybe its best to not have a success_message and just do a check if the user has not verified and always display a message until they do.
 
@@ -20,14 +20,13 @@ send_registered_email_verify needs to be gone.  not gonna send a second email.  
 send_registered_email_verify has a error meessage that shows premium_to date.  This is not correct if user has premium_at but not premium_to set.
   and in view account#index.html.haml @:
        - if current_user.premium_at
+  and registered_email_verify at bottom
+
+register verify code is wrong.  Shouldn't be using public_id for the code.  public_id is good for referals, but not things like use once codes.
 
 ActionView::Template::Error (invalid byte sequence in UTF-8):
 error: http://dev.mihudie.com/books/%E8%89%BE%E5%B0%8F%E5%9B%BE/%E5%88%98%E8%8A%92%E5%9B%A7%E8%AE%B0/read
   invalid byte sequence
-
-DONE page_title on book#read - if its page 1, even if not specified, do not prefix chapter name.
-
-DONE page_titles for book indexes/sorts need work.
 
 book#read needs to know that there could be more than one book with the same title/author pair.  If there is, there should be only on that does not have duplicate attribute.  BUT if that is not the case, should use the book with latest updated_at time.
 
@@ -43,12 +42,6 @@ sitemap.xml script
   sitemap should not include old book links with objectId??
   Canonical url should be the one with author/title.
   should these links contain microdata?
-
-need better emphasis for menu item :em
-
-do I need to trim blank on fields such as email and password?
-
-register verify code is wrong.  Shouldn't be using public_id for the code.  public_id is good for referals, but not things like use once codes.
 
 password_reset_request, password_reset_request_post, password_reset, password_reset_post - force_ssl 
 
@@ -71,6 +64,10 @@ account page notification for user referal bonus
 test full user referal process with multiple accounts
 
 account set theme page
+
+need better emphasis for menu item :em
+
+do I need to trim blank on fields such as email and password?
 
 
 ***********************************
@@ -106,6 +103,10 @@ email Rowan's friend
 email Nick
 email Andrew Morrow
 send cv to trademe saved jobs
+
+DONE page_title on book#read - if its page 1, even if not specified, do not prefix chapter name.
+
+DONE page_titles for book indexes/sorts need work.
 
 DONE see what happened to WELCOME CHINA USER.  All is well.
 

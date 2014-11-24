@@ -53,6 +53,7 @@ class AccountController < ApplicationController
     @page_title = "请验证注册邮箱"
   end
 
+  #TODO removed this method.  not going to let them resend an email.
   def send_registered_email_verify
     if current_user.email_verified_at
       flash[:notice] = "邮箱验证完成! 恭喜您获得迷蝴蝶后花园 #{Book.online_criteria.count} 书籍免费畅读至  #{current_user.premium_to.to_s(:yyyy_mm_dd)}。"
@@ -67,7 +68,7 @@ class AccountController < ApplicationController
     public_id = params[:code]
     user = User.find_by(public_id: public_id) if public_id
     unless user && (user.id == current_user.id)
-      flash[:error] = "无效的邮箱验证代码。"
+      flash[:error] = "您已经完成验证，此验证码已经无效。"
       redirect_to account_home_path and return
     end
     if user.email_verified_at
