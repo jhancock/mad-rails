@@ -6,6 +6,8 @@ class User
   field :email_verified_at, type: Time
   # one-time use code created by hashid lib based on Time.now
   field :email_verify_code, type: String
+  # prior value of email field.  Useful fo rknowing what a user's email was befor ethey changed it.
+  field :email_was, type: String
 
   field :password_hash, type: String
   field :password_salt, type: String

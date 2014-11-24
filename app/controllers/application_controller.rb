@@ -89,7 +89,7 @@ class ApplicationController < ActionController::Base
   def account_list
     list = []
     return list unless current_user
-    list << [account_registered_email_verify_notice_path, "验证邮箱", :em]   unless current_user.email_verified?
+    list << [email_verify_notice_path, "验证邮箱", :em] unless current_user.email_verified?
     #list << [bookmarks_path, "书签"]
     list << [account_home_path, "账户首页"]
     list << [change_password_path, "修改密码"]

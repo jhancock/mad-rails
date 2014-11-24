@@ -5,7 +5,7 @@
 - unless current_user.email_verified?
   %div{:class => "notice"}
     请验证您的注册邮箱以获得一个月迷蝴蝶后花园免费阅读权限。如果接收不到验证邮件，请点击
-    = link_to "验证注册邮箱", account_registered_email_verify_notice_path
+    = link_to "验证注册邮箱", email_verify_notice_path
     
 %h3
   = "#{current_user.email}"

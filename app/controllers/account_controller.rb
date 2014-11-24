@@ -47,13 +47,42 @@ class AccountController < ApplicationController
 
   def change_email_post
     @page_title = "更换注册邮箱"
+    new_email = params[:user][:new_email]    
+    # verify password
+    unless current_user.password?(params[:user][:password])
+      flash.now[:form_error] = "bad password"
+      render 'change_email' and return
+    end
+    # verify email format
+    unless email_valid?(new_email)
+      flash.now[:form_error] = "邮箱地址格式错误"
+      render 'change_email' and return
+    end
+    # verify new_email matches new_email_confirm
+    unless new_email == params[:user][:new_email_confirm]
+      flash.now[:form_error] = "new email and comfirm new email do not match"
+      render 'change_email' and return
+    end
+    # verify new_email not assigned to another account
+    other_user = User.find_by(email: new_email)
+    if other_user
+      flash.now[:form_error] = "<strong>#{new_email}</strong> used by another account".html_safe
+      render 'change_email' and return
+    end
+
+    current_user.email_was = current_user.email
+    current_user.email = new_email
+    current_user.create_email_verify_code
+    current_user.save
+    send_user_mail(current_user.id, :email_verify)
+    redirect_to account_home_path, notice: "Your email has been changed to #{new_email}.  We have sent a verification email to that address.  Please check and confirm.".html_safe
   end
 
-  def registered_email_verify_notice
+  def email_verify_notice
     @page_title = "请验证注册邮箱"
   end
 
-  def registered_email_verify
+  def email_verify
     email_verify_code = params[:code]
     user = User.find_by(email_verify_code: email_verify_code) if email_verify_code
     unless user && (user.id == current_user.id)
@@ -61,7 +90,7 @@ class AccountController < ApplicationController
       redirect_to account_home_path and return
     end
     user.set_email_verified
-    UserEvents.log(user.id, :registered_email_verified, {email: user.email})
+    UserEvents.log(user.id, :email_verified, {email: user.email})
     reward_events = UserEvents.find_by(user_id: user.id, event: "registered_premium_bonus")
     unless reward_events
       user.extend_premium(1.month)

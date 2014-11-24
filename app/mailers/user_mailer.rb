@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
          :subject => "欢迎光临迷蝴蝶")
   end
 
-  def registered_email_verify(user_id)
+  def email_verify(user_id)
     @user = User.find(user_id)
     mail(:to => @user.email,
          :subject => "请验证注册邮箱")

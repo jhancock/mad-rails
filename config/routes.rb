@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   get 'login_help' => 'account_public#login_help', as: 'login_help'
   get 'register' => 'account_public#register', as: 'register'
   post 'register' => 'account_public#register_post'
-  get 'account/registered_email_verify/:code' => 'account#registered_email_verify', as: 'registered_email_verify'
-  get 'account/registered_email_verify_notice' => 'account#registered_email_verify_notice'
+  get 'account/email_verify/:code' => 'account#email_verify', as: 'email_verify'
+  get 'account/email_verify_notice' => 'account#email_verify_notice', as: 'email_verify_notice'
 
   get 'account' => 'account#index', as: 'account_home'
   get 'account/change_password' => 'account#change_password', as: 'change_password'
@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   get 'account/change_email' => 'account#change_email', as: 'change_email'
   post 'account/change_email' => 'account#change_email_post'
   get 'account/send_change_email_verify' => 'account#send_change_email_verify', as: 'send_change_email_verify'
-  # if change_email_verify happens before register_email_verify, need to give user register verify reward
   get 'account/change_email_verify/:code' => 'account#change_email_verify', as: 'change_email_verify'
 
   get 'password_reset_request' => 'account_public#password_reset_request', as: 'password_reset_request'

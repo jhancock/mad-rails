@@ -1,4 +1,14 @@
 %h1
-  Your current email is #{current_user.email}.  This is your login id.  You may change this to another address.
-%p
-  Please enter your new email address and your password.  We will send an email to your new address to verify.  Your email will change only after you verify.  After the change, you will use the new address to login.
+  = @page_title
+
+= my_form_for :user  do |f|
+  %div{:class => "notice"}
+    Your current email is <strong>#{current_user.email}</strong>.
+    Your email address is your login id.  You may change this to another address.
+  %div{:class => "notice"}
+    Enter your new email twice and provide your password
+  = f.text_field :new_email, "new email"
+  = f.text_field :new_email_confirm, "new email confirm"
+  = f.password_field :password, "password"
+  %div{:class => "form-action clearfix"}
+    = f.submit "change_email"

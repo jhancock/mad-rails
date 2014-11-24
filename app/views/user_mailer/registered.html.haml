@@ -2,4 +2,4 @@
 
 = email_paragraph "请点击验证邮箱按钮，完成您的注册邮箱验证，然后尽情畅享迷蝴蝶后花园免费阅读权益"
 
-= email_button "验证邮箱", registered_email_verify_url(@user.email_verify_code)
+= email_button "验证邮箱", email_verify_url(@user.email_verify_code)

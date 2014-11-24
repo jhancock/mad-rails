@@ -27,10 +27,10 @@ class BooksController < ApplicationController
     raise Unauthenticated.new(message: "请先注册后再继续阅读！请确定提供有效邮箱完成注册验证以获得后花园书库免费阅读权限。", redirect_to: register_path, success_path: request.original_fullpath) if @page > 1 && !current_user
 
     #TODO This check works until I have an option to let them pay.  For the first month, all verified users will be premium.
-    raise Unauthorized.new(message: "请验证注册邮箱后继续阅读", redirect_to:  account_registered_email_verify_notice_path) if @page > 2 && !current_user.premium?
+    raise Unauthorized.new(message: "请验证注册邮箱后继续阅读", redirect_to:  account_email_verify_notice_path) if @page > 2 && !current_user.premium?
 
     #If user email not verified (they are on page 1 or 2). Show flash message directing them to verify email.  Can't get to page 3 without doing so.
-    flash.now[:notice] = "我们已经向您的邮箱 #{current_user.email} 发送了验证邮件，请查收。如果接收邮件有问题，请点击 #{view_context.link_to("请验证注册邮箱", account_registered_email_verify_notice_path)}，成功后可获得迷蝴蝶后花园一个月免费畅读权限。".html_safe if @page > 1 && !current_user.email_verified?
+    flash.now[:notice] = "我们已经向您的邮箱 #{current_user.email} 发送了验证邮件，请查收。如果接收邮件有问题，请点击 #{view_context.link_to("请验证注册邮箱", account_email_verify_notice_path)}，成功后可获得迷蝴蝶后花园一个月免费畅读权限。".html_safe if @page > 1 && !current_user.email_verified?
 
     begin
       path = @book.chunk_path(@page)
