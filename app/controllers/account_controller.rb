@@ -53,16 +53,6 @@ class AccountController < ApplicationController
     @page_title = "请验证注册邮箱"
   end
 
-  #TODO removed this method.  not going to let them resend an email.
-  def send_registered_email_verify
-    if current_user.email_verified_at
-      flash[:notice] = "邮箱验证完成! 恭喜您获得迷蝴蝶后花园 #{Book.online_criteria.count} 书籍免费畅读至  #{current_user.premium_to.to_s(:yyyy_mm_dd)}。"
-      redirect_to account_home_path and return
-    end
-    send_user_mail(current_user.id, :registered_email_verify)
-    redirect_to account_home_path, notice: "验证邮件已经发送。如未正常收取，请检查您的垃圾邮件夹。"
-  end
-
   def registered_email_verify
     #TODO change from public_id to email_verify_code
     public_id = params[:code]

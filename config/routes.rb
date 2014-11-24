@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   get 'login_help' => 'account_public#login_help', as: 'login_help'
   get 'register' => 'account_public#register', as: 'register'
   post 'register' => 'account_public#register_post'
-  get 'account/send_registered_email_verify' => 'account#send_registered_email_verify'
   get 'account/registered_email_verify/:code' => 'account#registered_email_verify', as: 'registered_email_verify'
   get 'account/registered_email_verify_notice' => 'account#registered_email_verify_notice'
 
