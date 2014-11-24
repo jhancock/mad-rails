@@ -12,11 +12,8 @@
   &nbsp;
   = link_to "退出", logout_path, class: "action"
 
-- if current_user.premium_to || current_user.premium_at
-  - if current_user.premium_at
-    = "您目前享有后花园访问权限"
-  - else
-    = "您有后花园访问权限直至 #{current_user.premium_to.to_s(:yyyy_mm_dd)}"
+- if current_user.premium?
+  = "您有后花园访问权限直至 #{current_user.premium_date_pp}"
 -# TODO add notice for referral here.
 %hr
 - if current_user.bookmarks

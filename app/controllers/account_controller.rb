@@ -62,7 +62,7 @@ class AccountController < ApplicationController
       redirect_to account_home_path and return
     end
     if user.email_verified_at
-      flash[:notice] = "邮箱验证完成! 恭喜您获得迷蝴蝶后花园 #{Book.online_criteria.count} 书籍免费畅读至  #{user.premium_to.to_s(:yyyy_mm_dd)}。"
+      flash[:notice] = "邮箱验证完成! 恭喜您获得迷蝴蝶后花园 #{Book.online_criteria.count} 书籍免费畅读至  #{user.premium_date_pp}。"
       redirect_to root_path and return
     end
     user.email_verified_at = Time.now
@@ -85,7 +85,7 @@ class AccountController < ApplicationController
         end
       end
     end
-    redirect_to root_path, :notice => "恭喜！您获得了迷蝴蝶后花园免费畅读直至 #{user.premium_to.to_s(:yyyy_mm_dd)}"
+    redirect_to root_path, :notice => "恭喜！您获得了迷蝴蝶后花园免费畅读直至 #{user.premium_date_pp}"
   end
 
   def send_change_email_verify

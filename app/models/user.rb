@@ -78,6 +78,16 @@ class User
     self.premium_to = self.premium_to + duration
   end
 
+  def premium_date_pp
+    if self.premium_at
+      "no end date"
+    elsif self.premium_to
+      premium_to.to_s(:yyyy_mm_dd)
+    else
+      ""
+    end
+  end
+
   def admin?
     self.privilege?("admin")
   end
