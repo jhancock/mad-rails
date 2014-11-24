@@ -13,12 +13,8 @@ create/test migrate scripts on PRE_LAUNCH list
 
 ANDREA in config/locales/en.yml, change kaminari tranlsations.  tag list views and bookmarks...pagination shows "Displaying all 26 books" for lists without more than 50 items.  Possibly shows something different for when user has only one item.  need to dig into kanamari for this.
 
-send_registered_email_verify has a error meessage that shows premium_to date.  This is not correct if user has premium_at but not premium_to set.
-  and in view account#index.html.haml @:
-       - if current_user.premium_at
-  and registered_email_verify at bottom
-
-register verify code is wrong.  Shouldn't be using public_id for the code.  public_id is good for referals, but not things like use once codes.
+change_email process.  Need to take into account users that never verified their original email.
+on register_verify_notice, let user know that if their email address is not valid, they can change their address.
 
 ActionView::Template::Error (invalid byte sequence in UTF-8):
 error: http://dev.mihudie.com/books/%E8%89%BE%E5%B0%8F%E5%9B%BE/%E5%88%98%E8%8A%92%E5%9B%A7%E8%AE%B0/read
@@ -37,9 +33,6 @@ sitemap.xml script
   should these links contain microdata?
 
 password_reset_request, password_reset_request_post, password_reset, password_reset_post - force_ssl 
-
-change_email process.  Need to take into account users that never verified their original email.
-on register_verify_notice, let user know that if their email address is not valid, they can change their address.
 
 set User.email_bounces, default 0
 
@@ -102,6 +95,13 @@ DONE notify user of password_reset_request option on failed login
 DONE send_registered_email_verify needs to be gone.  not gonna send a second email.  they have to send one to us.
 
 DONE BUG If I go to http://mihudie.com, read page 1, then go to page 2, register shows, then I click login and login and get redirected to page 2...but I have already verified my email and I'm getting the :notice div tell me to verify.  Maybe its best to not have a success_message and just do a check if the user has not verified and always display a message until they do.
+
+DONE register verify code is wrong.  Shouldn't be using public_id for the code.  public_id is good for referals, but not things like use once codes.
+
+DONE send_registered_email_verify has a error meessage that shows premium_to date.  This is not correct if user has premium_at but not premium_to set.
+  and in view account#index.html.haml @:
+       - if current_user.premium_at
+  and registered_email_verify at bottom
 
 DONE page_title on book#read - if its page 1, even if not specified, do not prefix chapter name.
 

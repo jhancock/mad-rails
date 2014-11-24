@@ -22,6 +22,7 @@ class User
   # bounce count since :email_verified_at
   field :email_bounces, type: Integer, default: 0
 
+  #TODO rethink these fields.  maybe its easier to just save prio email as email_was attribute since user must verify the new one anyway.
   # email address to change to.  
   field :email_change_to, type: String
   field :email_change_at, type: Time
@@ -51,6 +52,7 @@ class User
   index({email: 1}, {unique: false})
   #index({email: 1}, {unique: true})
   index({public_id: 1}, {unique: true, sparse: true})
+  index({email_verify_code: 1}, {unique: true, sparse: true})
   index({cn: 1}, {unique: false})
   #TODO why do I have an index on ip?.  Is it so I can ref a new user against existing users to see if a user is using a second email account to get fake referral?
   index({ip: 1}, {unique: false})
@@ -58,9 +60,34 @@ class User
   index({premium_at: 1}, {unique: false})
   index({premium_to: 1}, {unique: false})
 
+  def self.register!(email, password)
+    return nil if self.find_by(email: email)
+    user = self.new({:email => email, :registered_at => Time.now})
+    user.password(password)
+    user.create_public_id
+    user.create_email_verify_code
+    user.save
+    user
+  end
+
   def create_public_id
     hashids = Hashids.new(self.class.hashids_salt)
     self.public_id = hashids.encode_hex(self.id.to_s)
+  end
+
+  def create_email_verify_code
+    self.email_verify_code = self.create_use_once_id
+    self.email_verified_at = nil
+  end
+
+  def set_email_verified
+    self.email_verify_code = nil
+    self.email_verified_at = Time.now
+  end
+
+  def create_use_once_id
+    hashids = Hashids.new(self.class.hashids_salt)
+    hashids.encode(Time.now.to_i)
   end
 
   def email_verified?

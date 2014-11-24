@@ -45,15 +45,11 @@ class AccountPublicController < ApplicationController
       flash.now[:form_error] = "两次密码填写不符"
       render 'register' and return
     end
-    if User.find_by(email: params[:user][:email])
+    user = User.register!(params[:user][:email], params[:user][:password])
+    unless user
       flash.now[:form_error] = "<strong>#{params[:user][:email]}</strong> 已经被注册。如果忘记密码，请 #{view_context.link_to('重设密码', password_reset_request_path)}".html_safe
       render 'register' and return
     end
-    user = User.new({:email => params[:user][:email], :registered_at => Time.now})
-    user.password(params[:user][:password])
-    user.create_public_id
-    # save user so it gets an id
-    user.save
     referrer_public_id = session[:referrer]
     referrer = User.find_by(public_id: referrer_public_id) if referrer_public_id
     if referrer
