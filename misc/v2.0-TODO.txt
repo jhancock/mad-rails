@@ -11,6 +11,8 @@ Next
 -----
 create/test migrate scripts on PRE_LAUNCH list
 
+ANDREA email_verify_notice.html.haml translate item 4
+
 ANDREA in config/locales/en.yml, change kaminari tranlsations.  tag list views and bookmarks...pagination shows "Displaying all 26 books" for lists without more than 50 items.  Possibly shows something different for when user has only one item.  need to dig into kanamari for this.
 
 password_reset_request, password_reset_request_post, password_reset, password_reset_post - force_ssl 
