@@ -3,7 +3,7 @@ ruby '2.1.5'
 
 gem 'rails', '4.1.7'
 gem 'haml-rails'
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.9'
 #gem 'mongoid', '~> 4.0.0', github: 'mongoid/mongoid'
 gem 'mongoid', '~> 4.0.0'
 

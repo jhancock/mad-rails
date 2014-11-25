@@ -11,9 +11,9 @@ http://stackoverflow.com/questions/14316426/is-there-a-paypal-ipn-code-sample-fo
 
 add Alipay
 
-old user gets one month free.  incremental email sends.
+account page notification for user referal bonus
 
-shut off new user gets one month free.  keep one month referal bonus plan.  If I don't do this, users will just keep setting up more email accounts to get another month free.
+consider to shut off new user gets one month free.  keep one month referal bonus plan.  If I don't do this, users might keep setting up more email accounts to get another month free.
 
 report to see if users are registering a referred account from same IP
 

@@ -12,16 +12,14 @@ class User
 
   field :password_hash, type: String
   field :password_salt, type: String
-  #TODO upgrade password hashing to bcrypt
-  #field :password_bcrypt, type: String
+
+  field :password_bcrypt, type: String
 
   field :password_reset_code, type: String
   field :password_reset_at, type: Time
 
-  # last bounce time
+  # last bounce time.  gets unset when email_verified_at gets set
   field :email_bounced_at, type: Time
-  # bounce count since :email_verified_at
-  field :email_bounces, type: Integer, default: 0
 
   # if premium_at is set, the user has premium access.  No need to check premium_to.
   field :premium_at, type: Time
@@ -140,12 +138,26 @@ class User
 
   # returns true if the password is correct
   def password?(password)
-    self.password_hash == OpenSSL::Digest::SHA1.hexdigest("#{self.password_salt}#{password}") 
+    if self.password_bcrypt
+      BCrypt::Password.new(self.password_bcrypt) == password
+    else
+      password_correct = self.password_hash == OpenSSL::Digest::SHA1.hexdigest("#{self.password_salt}#{password}")
+      if password_correct
+        self.password(password)
+        self.set(password_bcrypt: self.password_bcrypt)
+      end
+      password_correct
+    end
   end
 
   def password(password)
-    self.password_salt = create_password_salt
-    self.password_hash = OpenSSL::Digest::SHA1.hexdigest("#{self.password_salt}#{password}")
+    self.password_bcrypt = BCrypt::Password.create(password)
+    self.unset(:password_hash) if self.password_hash
+    self.unset(:password_salt) if self.password_salt
+
+    # old method
+    #self.password_salt = create_password_salt
+    #self.password_hash = OpenSSL::Digest::SHA1.hexdigest("#{self.password_salt}#{password}")
   end
 
   def set_geo(ip)
