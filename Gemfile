@@ -21,6 +21,8 @@ gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
 gem 'mandrill-api'
+gem 'mandrill-rails'
+
 gem 'geoip', '~> 1.4.0'
 
 gem 'hashids'

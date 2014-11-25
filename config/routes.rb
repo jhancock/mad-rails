@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   # legacy URL
   get 'books/:id/read(/:page)' => 'books#read_id', as: 'read_id_book', constraints: { id: /[a-f0-9]{24}/ }
 
+  #resource :mandrill, :controller => 'mandrill', :only => [:show,:create]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

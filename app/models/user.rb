@@ -154,7 +154,6 @@ class User
     self.password_bcrypt = BCrypt::Password.create(password)
     self.unset(:password_hash) if self.password_hash
     self.unset(:password_salt) if self.password_salt
-
     # old method
     #self.password_salt = create_password_salt
     #self.password_hash = OpenSSL::Digest::SHA1.hexdigest("#{self.password_salt}#{password}")

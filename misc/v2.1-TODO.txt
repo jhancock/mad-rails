@@ -1,5 +1,20 @@
+v2.1
+-----
+Mandrill webhooks
+------------------
+mandrill webhook for register@app.mihudie.com
+https://github.com/evendis/mandrill-rails
 
-v1.1
+set Mandrill webhook for bounced email.  Capture bounce info in user and log UserEvent. Don't send more emails to that address until they use a verified address.  Display account notice if email_bounced_at is set.
+
+attribute email bounces to password_reset_request, register, change_email...all of them in one bucket.  a bounce is a bounce.
+
+set User.email_bounced_at if mandrill says it bounced.
+    when an email is verified, unset email_bounced_at
+    if an email is not verified and email_bounced_at is greater then email_verified_at, don't send the email and log to UserEvents
+
+
+v2.2
 -----
 add PayPal Express
 https://github.com/paypal/PayPal-Ruby-SDK
@@ -15,11 +30,19 @@ account page notification for user referal bonus
 
 consider to shut off new user gets one month free.  keep one month referal bonus plan.  If I don't do this, users might keep setting up more email accounts to get another month free.
 
+test full user referal process with multiple accounts
+
+account set theme page
+
 report to see if users are registering a referred account from same IP
+
+see about mongodb logrotate
+
+need better emphasis for menu item :em
 
 change Book finder to use scoping http://mongoid.org/en/mongoid/docs/querying.html#scoping
 
-admin page v1.0
+admin page v2.0
   elaticsearch calls on book change.  
   grant premium_to access - amount of time or specific date
   	send email to user unless checkbox is selected to not
