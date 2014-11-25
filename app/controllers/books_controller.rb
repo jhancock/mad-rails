@@ -19,7 +19,8 @@ class BooksController < ApplicationController
   end
 
   def read_private(book, page)
-    render_404 and return unless book
+    redirect_to(root_path, status: 301) and return unless book
+    #render_404 and return unless book
     @book = book
     @bookmark = current_user ? Bookmark.find_by({user_id: current_user.id, book_id: @book.id}) : nil
     @page = page ? page.to_i : @bookmark ? @bookmark.chunk : 1
@@ -48,7 +49,13 @@ class BooksController < ApplicationController
     @book.increment_read_count if !current_user || !current_user.admin?
     @book.increment_unique_read_count if current_user && !@bookmark
     Bookmark.set(current_user, @book, @page) if current_user
-    render "read", layout: "reading"
+    begin
+      render "read", layout: "reading"
+    rescue ActionView::Template::Error
+      @book.set_offline_invalid_coding!(@page)
+      flash[:notice] = "book temporarily offline"
+      redirect_to(root_path, status: 301) and return
+    end
   end
 
   def list

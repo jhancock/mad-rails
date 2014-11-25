@@ -109,6 +109,12 @@ class Book
      )
   end
 
+  def set_offline_invalid_coding!(page)
+    self.set(offline_at: Time.now)
+    self.set(offline_reason: "invalid UTF-8 encoding")
+    SystemEvents.log(:book_invalid_encoding, {book_id: self.id, chunk: page})
+  end
+
   #TODO no concept of chapters.  New model needed.
   def chapter_title(page)
     return nil if page == 1
