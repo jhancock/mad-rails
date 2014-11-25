@@ -45,6 +45,10 @@ class AccountPublicController < ApplicationController
       flash.now[:form_error] = "两次密码填写不符"
       render 'register' and return
     end
+    unless params[:user][:password].length > 3
+      flash.now[:form_error] = "password cannot be less than 4 characters"
+      render 'register' and return
+    end
     user = User.register!(params[:user][:email], params[:user][:password])
     unless user
       flash.now[:form_error] = "<strong>#{params[:user][:email]}</strong> 已经被注册。如果忘记密码，请 #{view_context.link_to('重设密码', password_reset_request_path)}".html_safe
@@ -61,12 +65,62 @@ class AccountPublicController < ApplicationController
     set_login(user)
   end
 
+  # password_reset methods are accessible to logged in users.
   def password_reset_request
     @page_title = "重设密码"
   end
 
+  def password_reset_request_post
+    @page_title = "重设密码"
+    email = params[:user][:email]
+    unless email_valid?(email)
+      flash.now[:form_error] = "邮箱地址格式错误"
+      render 'password_reset_request' and return
+    end
+    user = User.find_by(email: email)
+    flash[:notice] = "An email to reset your password has been sent if it is a verified account"
+    if user && user.email_verified?
+      user.create_password_reset_code
+      user.save
+      send_user_mail(user.id, :password_reset)
+    end
+    redirect_to root_path
+  end
+
   def password_reset
     @page_title = "密码重设"
+    @bad_code = true
+    @user = User.find_by(password_reset_code: params[:code])
+    # if no user or if code expired set @bad_code to true and change view accordingly
+    if @user && ((Time.now - @user.password_reset_at) < 1.week)
+      @bad_code = false
+    end
+  end
+
+  def password_reset_post
+    @page_title = "密码重设"
+    @bad_code = true
+    new_password = params[:user][:new_password]
+    unless new_password == params[:user][:new_password_confirm]
+      flash.now[:form_error] = "两次密码填写不符"
+      render 'password_reset' and return
+    end
+    unless new_password.length > 3
+      flash.now[:form_error] = "password cannot be less than 4 characters"
+      render 'password_reset' and return
+    end
+    @user = User.find_by(password_reset_code: params[:code])
+    # if no user or if code expired set @bad_code to true and change view accordingly
+    if @user && ((Time.now - @user.password_reset_at) < 1.week)
+      @bad_code = false
+      @user.password(new_password)
+      @user.password_reset_success
+      @user.save
+      flash[:notice] = "Password reset.  You are now logged in."
+      set_login(@user)
+    else
+      render 'password_reset'
+    end
   end
 
   def login_help

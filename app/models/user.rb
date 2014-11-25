@@ -7,6 +7,7 @@ class User
   # one-time use code created by hashid lib based on Time.now
   field :email_verify_code, type: String
   # prior value of email field.  Useful fo rknowing what a user's email was befor ethey changed it.
+  field :registered_at, type: Time
   field :email_was, type: String
 
   field :password_hash, type: String
@@ -14,21 +15,13 @@ class User
   #TODO upgrade password hashing to bcrypt
   #field :password_bcrypt, type: String
 
-  field :password_reset_request_at, type: Time
-  field :password_reset_request_code, type: String  	
-
-  field :registered_at, type: Time
+  field :password_reset_code, type: String
+  field :password_reset_at, type: Time
 
   # last bounce time
   field :email_bounced_at, type: Time
   # bounce count since :email_verified_at
   field :email_bounces, type: Integer, default: 0
-
-  #TODO rethink these fields.  maybe its easier to just save prio email as email_was attribute since user must verify the new one anyway.
-  # email address to change to.  
-  field :email_change_to, type: String
-  field :email_change_at, type: Time
-  field :email_change_verify_code, type: String
 
   # if premium_at is set, the user has premium access.  No need to check premium_to.
   field :premium_at, type: Time
@@ -77,14 +70,26 @@ class User
     self.public_id = hashids.encode_hex(self.id.to_s)
   end
 
+  #TODO using unset could be a problem.  create_email_verify_code, set_email_verified, set_password_reset all doing an atomic unset and also expect the caller to save the document as well.
   def create_email_verify_code
     self.email_verify_code = self.create_use_once_id
-    self.email_verified_at = nil
+    self.unset(:email_verified_at)
   end
 
-  def set_email_verified
-    self.email_verify_code = nil
+  def email_verified_success
+    self.unset(:email_verify_code)
     self.email_verified_at = Time.now
+  end
+
+  def create_password_reset_code
+    self.password_reset_code = self.create_use_once_id
+    self.password_reset_at = Time.now
+  end
+
+  # called after password has been reset.  clear the reset code and time
+  def password_reset_success
+    self.unset(:password_reset_code)
+    self.unset(:password_reset_at)
   end
 
   def create_use_once_id

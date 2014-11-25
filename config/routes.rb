@@ -17,8 +17,6 @@ Rails.application.routes.draw do
   post 'account/change_password' => 'account#change_password_post'
   get 'account/change_email' => 'account#change_email', as: 'change_email'
   post 'account/change_email' => 'account#change_email_post'
-  get 'account/send_change_email_verify' => 'account#send_change_email_verify', as: 'send_change_email_verify'
-  get 'account/change_email_verify/:code' => 'account#change_email_verify', as: 'change_email_verify'
 
   get 'password_reset_request' => 'account_public#password_reset_request', as: 'password_reset_request'
   post 'password_reset_request' => 'account_public#password_reset_request_post'  

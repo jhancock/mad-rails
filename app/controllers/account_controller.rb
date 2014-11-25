@@ -30,12 +30,16 @@ class AccountController < ApplicationController
       flash.now[:form_error] = "当前的密码错误"
       render "change_password" and return
     end
-    unless params[:user][:new_password] == params[:user][:new_password_confirm]
-      UserEvents.log(current_user.id, :password_change_error, {error: "new_passwords_do_not_match"})
+    new_password = params[:user][:new_password]
+    unless new_password == params[:user][:new_password_confirm]
       flash.now[:form_error] = "新密码两次输入不符"
       render "change_password" and return
     end
-    current_user.password(params[:user][:new_password])
+    unless new_password.length > 3
+      flash.now[:form_error] = "password cannot be less than 4 characters"
+      render 'change_password' and return
+    end
+    current_user.password(new_password)
     current_user.save
     UserEvents.log(current_user.id, :password_changed)
     redirect_to account_home_path, :notice => "密码修改成功"
@@ -89,7 +93,7 @@ class AccountController < ApplicationController
       flash[:error] = "您已经完成验证，此验证码已经无效。"
       redirect_to account_home_path and return
     end
-    user.set_email_verified
+    user.email_verified_success
     UserEvents.log(user.id, :email_verified, {email: user.email})
     reward_events = UserEvents.find_by(user_id: user.id, event: "registered_premium_bonus")
     unless reward_events

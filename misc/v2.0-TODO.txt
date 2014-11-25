@@ -11,19 +11,23 @@ Next
 -----
 create/test migrate scripts on PRE_LAUNCH list
 
+ANDREA translations for change_password_post, reset_password_post, etc
+
 ANDREA email_verify_notice.html.haml translate item 4
 
 ANDREA in config/locales/en.yml, change kaminari tranlsations.  tag list views and bookmarks...pagination shows "Displaying all 26 books" for lists without more than 50 items.  Possibly shows something different for when user has only one item.  need to dig into kanamari for this.
 
-password_reset_request, password_reset_request_post, password_reset, password_reset_post - force_ssl 
+DONE password_reset_request, password_reset_request_post, password_reset, password_reset_post - force_ssl 
 
-set User.email_bounces, default 0
+upgrade password_hash to bcrypt
+
+set User.email_bounced_at if mandrill says it bounced.
+    when an email is verified, unset email_bounced_at
+    if an email is not verified and email_bounced_at is greater then email_verified_at, don't send the email and log to UserEvents
 
 set Mandrill webhook for bounced email.  Capture bounce info in user and log UserEvent. Don't send more emails to that address until they use a verified address.  Display account notice if email_bounced_at is set.
 
 attribute email bounces to password_reset_request, register, change_email...all of them in one bucket.  a bounce is a bounce.
-
-upgrade password_hash to bcrypt
 
 ActionView::Template::Error (invalid byte sequence in UTF-8):
 error: http://dev.mihudie.com/books/%E8%89%BE%E5%B0%8F%E5%9B%BE/%E5%88%98%E8%8A%92%E5%9B%A7%E8%AE%B0/read

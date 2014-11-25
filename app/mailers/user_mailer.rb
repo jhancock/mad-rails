@@ -18,6 +18,12 @@ class UserMailer < ActionMailer::Base
          :subject => "请验证注册邮箱")
   end
 
+  def password_reset(user_id) 
+    @user = User.find(user_id)
+    mail(:to => @user.email,
+         :subject => "reset password")
+  end
+
   def registered_referral(user_id)
     @user = User.find(user_id)
     mail(:to => @user.email,
