@@ -1,66 +1,65 @@
 PRE_LAUNCH.txt
 ===============
 # suspend scoutapp monitoring
+# stop vr1 nginx
+# stop lin1 nginx
+# dump lin1 mongo.  cp to vr1
+# remove critsend from SPF and DKIM
+# DNS stuff - lin1 to vr1
+#   remove critsend DKIM and SPF
 
 # migrate data
 rails r lib/scripts/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
 
-# things to add to migrate_v2.0.js:
+# next two scripts handle duplicate bookmarks and users.  duplicate books are handled lazy as they are hit by users.
 
-# DONE unset all User :password_reset_code and :password_reset_at
-# DONE unset all User :email_error
-# DONE unset all Book :offline_at if it is nil and then unset :offline_reason
-# DONE unset all Book :tag_names.  Keep tags, tag_names_pp
-# DONE ensure all Book :tags are an array.. No nil allowed
-# DONE ensure all Book :read_count and :unique_read_count are set to an integer
+# bookmarks 1303 dups, 834 have same chunk
+#  keep most recent based on updated_at.  delete other.
+rails r lib/scripts/migrate_v2.0_dup_bookmarks.rb
 
-# scripts to handle duplicate bookmarks and users.  duplicate books are handled lazy as they are hit by users.
-
-bookmarks 1303 dups, 834 have same chunk
-  keep most recent based on updated_at.  delete other.
-
-users 24 dups
-  keep most recent based on updated_at.  delete other.
+# users 24 dups
+#  keep most recent based on updated_at.  delete other.
+rails r lib/scripts/migrate_v2.0_dup_users.rb
 
 ### END SCRIPTS ###
 
 # create indexes.
 rake db:mongoid:create_indexes
 
-# Users.set_public_id_all  # set_public_id for any user without one.  books.each  book.create_public_id; book.save
-# Bookmark.set_pp_all
-# Book.set_detail_li_all
+# from rails console
+User.set_public_id_all  
+Bookmark.set_pp_all
+Book.set_detail_li_all
 
 # remove indexes
 rake db:mongoid:remove_indexes
 
 # dump db
+# mongodump --out #{dump_path}
 
 # change index defs (the ones commented out) of user, bookmark
 
 # import db
+# mongorestore -d #{db} #{dump_path}/#{db}
 
 # create indexes.
 rake db:mongoid:create_indexes
 
 # set mongodb profiling level
+mongo
 use mhd_development || use mhd_production
 db.setProfilingLevel(2)
 
-index elastic search.  reindex_book_search.rb
+# index elastic search.  
+rails r lib/scripts/reindex_book_search.rb
 
 TODO create sitemap.xml.  create_sitemap.rb
-
-remove critsend from SPF and DKIM
-
-DNS stuff - lin1 to vr1
-  remove critsend DKIM and SPF
 
 verify SSL at https://www.ssllabs.com/
 
 mandrill
   ensure production API key
-  money in mandrill account
+  DONE money in mandrill account
   DONE ensure mandrill DKIM and SPF
   change webhook urls to match mihudie.com, not vr1.mihudie.com
 
@@ -80,6 +79,15 @@ DONE nginx mihudie.com config location for static files needs to have expires ma
 rm ~/rails/log/*
 touch ~/rails/log/production.log
 sudo chown mhd:syslog ~/rails/log/production.log
+
+# delete old nginx logs
+# /var/log/nginx/*
+
+# delete mongodb logs
+sudo killall -SIGUSR1 mongod
+sudo su -
+cd /var/log/mongodb
+# delete old rotated log file
 
 nginx gzip js and css files
       gzip -1 -c mihudie.css > mihudie.css.gz
@@ -101,7 +109,5 @@ test microdata
 http://www.google.com/webmasters/tools/richsnippets
 
 submit site to baidu, google, bing, yahoo
-
-
 
 

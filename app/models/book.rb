@@ -188,6 +188,7 @@ class Book
   def self.merge_books(books_criteria)
     master_book = nil
     books_criteria.each do |book|
+      #TODO need to ensure ruby is doing what I think and master_book gets set correct
       master_book ||= book
       unless book.id == master_book.id
         # if book has summary and master_book does not, make book master

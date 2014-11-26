@@ -168,6 +168,13 @@ class User
     @bookmarks ||= Bookmark.where(user_id: self.id)
   end
 
+  def self.set_public_id_all
+    self.where(public_id: nil).each do |user|
+      user.create_public_id
+      user.save
+    end
+  end
+
   private
   def create_password_salt
     hashids = Hashids.new(self.class.hashids_salt)
