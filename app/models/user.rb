@@ -36,8 +36,9 @@ class User
   field :city, type: String
   field :ip, type: String
 
-  #TODO duplicate docs with same email.  fix and change index after migration.
-  #index({email: 1}, {unique: false})
+  # v1.0 index
+  index({email: 1}, {unique: false})
+  # v2.0 index
   index({email: 1}, {unique: true})
   index({public_id: 1}, {unique: true, sparse: true})
   index({email_verify_code: 1}, {unique: true, sparse: true})

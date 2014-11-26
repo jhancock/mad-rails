@@ -1,9 +1,9 @@
 PRE_LAUNCH.txt
 ===============
-finish dev pre-launch dry run
-commit translation changes
+DONE finish dev pre-launch dry run
+DONE commit translation changes
 test on dev and push to vr1
-dry run of pre-launch on vr1
+dry run of pre-launch on vr1?
 
 # suspend scoutapp monitoring
 # stop vr1 nginx
@@ -53,6 +53,7 @@ mongodump --out ~/migrate_v2.0/v2
 mongo
 use mhd_development || use mhd_production
 db.dropDatabase()
+quit()
 
 # change model index defs (the ones commented out) of user, bookmark
 
