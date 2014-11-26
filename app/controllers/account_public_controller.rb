@@ -46,7 +46,7 @@ class AccountPublicController < ApplicationController
       render 'register' and return
     end
     unless params[:user][:password].length > 3
-      flash.now[:form_error] = "password cannot be less than 4 characters"
+      flash.now[:form_error] = "密码设置不能少于4位数字或字母"
       render 'register' and return
     end
     user = User.register!(params[:user][:email], params[:user][:password])
@@ -78,7 +78,7 @@ class AccountPublicController < ApplicationController
       render 'password_reset_request' and return
     end
     user = User.find_by(email: email)
-    flash[:notice] = "An email to reset your password has been sent if it is a verified account"
+    flash[:notice] = "如果您输入的邮箱地址为已经验证过的邮箱，我们会发送重设密码邮件到此邮箱地址"
     if user && user.email_verified?
       user.create_password_reset_code
       user.save
@@ -106,7 +106,7 @@ class AccountPublicController < ApplicationController
       render 'password_reset' and return
     end
     unless new_password.length > 3
-      flash.now[:form_error] = "password cannot be less than 4 characters"
+      flash.now[:form_error] = "密码设置不能少于4位数字或字母"
       render 'password_reset' and return
     end
     @user = User.find_by(password_reset_code: params[:code])
@@ -116,7 +116,7 @@ class AccountPublicController < ApplicationController
       @user.password(new_password)
       @user.password_reset_success
       @user.save
-      flash[:notice] = "Password reset.  You are now logged in."
+      flash[:notice] = "密码重设成功。 您现在已经登录。"
       set_login(@user)
     else
       render 'password_reset'

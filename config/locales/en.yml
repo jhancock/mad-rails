@@ -26,8 +26,8 @@ en:
     page_entries_info:
       one_page:
         display_entries:
-          zero: "No %{entry_name} found"
-          one: "Displaying <b>1</b> %{entry_name}"
-          other: "Displaying <b>all %{count}</b> %{entry_name}"
+          zero: "没有 %{entry_name}"
+          one: "显示 <b>1</b> %{entry_name}"
+          other: "显示 <b> 所有 %{count}</b> %{entry_name}"
       more_pages:
         display_entries: "<b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b>"

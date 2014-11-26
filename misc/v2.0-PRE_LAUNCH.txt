@@ -1,5 +1,10 @@
 PRE_LAUNCH.txt
 ===============
+finish dev pre-launch dry run
+commit translation changes
+test on dev and push to vr1
+dry run of pre-launch on vr1
+
 # suspend scoutapp monitoring
 # stop vr1 nginx
 # stop lin1 nginx
@@ -9,6 +14,10 @@ PRE_LAUNCH.txt
 #   remove critsend DKIM and SPF
 
 # migrate data
+cd ~/migrate_v2.0
+# rm -rf *
+rm ~/migrate_v2.0.txt
+cd ~/rails
 rails r lib/scripts/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
 
 # next two scripts handle duplicate bookmarks and users.  duplicate books are handled lazy as they are hit by users.
@@ -27,7 +36,7 @@ rails r lib/scripts/migrate_v2.0_dup_users.rb
 rake db:mongoid:create_indexes
 
 # from rails console
-User.set_public_id_all  
+User.set_public_id_all
 Bookmark.set_pp_all
 Book.set_detail_li_all
 
@@ -35,23 +44,38 @@ Book.set_detail_li_all
 rake db:mongoid:remove_indexes
 
 # dump db
-# mongodump --out #{dump_path}
+mongodump --out ~/migrate_v2.0/v2
 
-# change index defs (the ones commented out) of user, bookmark
+#HERE
+
+# drop db
+# from mongo shell
+mongo
+use mhd_development || use mhd_production
+db.dropDatabase()
+
+# change model index defs (the ones commented out) of user, bookmark
 
 # import db
-# mongorestore -d #{db} #{dump_path}/#{db}
+# mongorestore -d mhd_development ~/migrate_v2.0/v2/mhd_development
+# mongorestore -d mhd_production ~/migrate_v2.0/v2/mhd_production
 
 # create indexes.
+cd ~/rails
 rake db:mongoid:create_indexes
 
 # set mongodb profiling level
 mongo
 use mhd_development || use mhd_production
 db.setProfilingLevel(2)
+quit()
 
 # index elastic search.  
 rails r lib/scripts/reindex_book_search.rb
+
+# after dry run, change the comments in model indexes of user and bookmark back to what they were so you can do the process again.
+
+# SERVER READY
 
 TODO create sitemap.xml.  create_sitemap.rb
 

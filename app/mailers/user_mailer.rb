@@ -21,7 +21,7 @@ class UserMailer < ActionMailer::Base
   def password_reset(user_id) 
     @user = User.find(user_id)
     mail(:to => @user.email,
-         :subject => "reset password")
+         :subject => "密码重设")
   end
 
   def registered_referral(user_id)

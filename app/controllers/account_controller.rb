@@ -36,7 +36,7 @@ class AccountController < ApplicationController
       render "change_password" and return
     end
     unless new_password.length > 3
-      flash.now[:form_error] = "password cannot be less than 4 characters"
+      flash.now[:form_error] = "密码设置不能少于4位数字或字母"
       render 'change_password' and return
     end
     current_user.password(new_password)
@@ -54,7 +54,7 @@ class AccountController < ApplicationController
     new_email = params[:user][:new_email]    
     # verify password
     unless current_user.password?(params[:user][:password])
-      flash.now[:form_error] = "bad password"
+      flash.now[:form_error] = "密码错误"
       render 'change_email' and return
     end
     # verify email format
@@ -64,13 +64,13 @@ class AccountController < ApplicationController
     end
     # verify new_email matches new_email_confirm
     unless new_email == params[:user][:new_email_confirm]
-      flash.now[:form_error] = "new email and comfirm new email do not match"
+      flash.now[:form_error] = "两次输入的邮箱地址不相符"
       render 'change_email' and return
     end
     # verify new_email not assigned to another account
     other_user = User.find_by(email: new_email)
     if other_user
-      flash.now[:form_error] = "<strong>#{new_email}</strong> used by another account".html_safe
+      flash.now[:form_error] = "<strong>#{new_email}</strong> 此邮箱地址已经被注册".html_safe
       render 'change_email' and return
     end
 
@@ -79,7 +79,7 @@ class AccountController < ApplicationController
     current_user.create_email_verify_code
     current_user.save
     send_user_mail(current_user.id, :email_verify)
-    redirect_to account_home_path, notice: "Your email has been changed to #{new_email}.  We have sent a verification email to that address.  Please check and confirm.".html_safe
+    redirect_to account_home_path, notice: "您的注册邮箱已经成功修改为 #{new_email}。 我们已经向您新的注册邮箱发送了验证邮件。 请查收邮件并完成邮箱验证。".html_safe
   end
 
   def email_verify_notice

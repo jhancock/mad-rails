@@ -1,11 +1,11 @@
 = my_form_for :user  do |f|
   %div{:class => "notice"}
-    Your current email is <strong>#{current_user.email}</strong>.
-    Your email address is your login id.  You may change this to another address.
+    = "您现在的注册邮箱是 <strong>#{current_user.email}</strong>.".html_safe
+    此邮箱为您的登录账号名。您可以在此修改注册邮箱。
   %div{:class => "notice"}
-    Enter your new email twice and provide your password
-  = f.text_field :new_email, "new email"
-  = f.text_field :new_email_confirm, "new email confirm"
-  = f.password_field :password, "password"
+    请输入新的邮箱地址两次，并输入注册账号时您设置的密码。
+  = f.text_field :new_email, "新邮箱地址"
+  = f.text_field :new_email_confirm, "确认新邮箱地址"
+  = f.password_field :password, "输入密码"
   %div{:class => "form-action clearfix"}
-    = f.submit "change_email"
+    = f.submit "修改邮箱"
