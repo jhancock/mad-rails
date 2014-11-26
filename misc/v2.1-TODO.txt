@@ -1,5 +1,8 @@
 v2.1
 -----
+add schema.org microdata
+  http://www.google.com/webmasters/tools/richsnippets
+  http://www.heppnetz.de/projects/goodrelations/
 
 v2.2
 -----

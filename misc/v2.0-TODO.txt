@@ -30,11 +30,12 @@ ANDREA email_verify_notice.html.haml translate item 4
 
 ANDREA in config/locales/en.yml, change kaminari tranlsations.  tag list views and bookmarks...pagination shows "Displaying all 26 books" for lists without more than 50 items.  Possibly shows something different for when user has only one item.  need to dig into kanamari for this.
 
-DONE book#read needs to know that there could be more than one book with the same title/author pair.  If there is, there should be only one that does not have :duplicate attribute (need to add duplicate management to admin).  BUT needs to gracefully handle the case if there is more than one.
+DONE (lazy handling at run-time) books 230 dups, 228 have same origin
+    keep most recent (based on updated_at).  mark duplicate with duplicate attribute that has id of the kept version.  
+    add read_count of dup to kept book
+    update bookmarks to point to master book
 
-add schema.org microdata
-  http://www.google.com/webmasters/tools/richsnippets
-  http://www.heppnetz.de/projects/goodrelations/
+DONE book#read needs to know that there could be more than one book with the same title/author pair.  If there is, there should be only one that does not have :duplicate attribute (need to add duplicate management to admin).  BUT needs to gracefully handle the case if there is more than one.
 
 sitemap.xml script
   sitemap should not include old book links with objectId??

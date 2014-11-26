@@ -1,20 +1,20 @@
 PRE_LAUNCH.txt
 ===============
+# suspend scoutapp monitoring
+
 # migrate data
 rails r lib/scripts/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
 
 # things to add to migrate_v2.0.js:
 
-# unset Book :offline_at if it is nil and then unset :offline_reason
-# unset all User :password_reset_code and :password_reset_at
-# unset all Book :tag_names.  Keep tags, tag_names_pp
-# unset all Book :email_error
-# ensure all Book :tags are an array.. No nil allowed
-# ensure all Book :read_count and :unique_read_count are set to an integer
+# DONE unset all User :password_reset_code and :password_reset_at
+# DONE unset all User :email_error
+# DONE unset all Book :offline_at if it is nil and then unset :offline_reason
+# DONE unset all Book :tag_names.  Keep tags, tag_names_pp
+# DONE ensure all Book :tags are an array.. No nil allowed
+# DONE ensure all Book :read_count and :unique_read_count are set to an integer
 
-# set_public_id for any user without one.  books.each  book.create_public_id; book.save
-
-# scripts to handle duplicate books, bookmarks, users.  
+# scripts to handle duplicate bookmarks and users.  duplicate books are handled lazy as they are hit by users.
 
 bookmarks 1303 dups, 834 have same chunk
   keep most recent based on updated_at.  delete other.
@@ -22,13 +22,12 @@ bookmarks 1303 dups, 834 have same chunk
 users 24 dups
   keep most recent based on updated_at.  delete other.
 
-DONE (lazy handling at run-time) books 230 dups, 228 have same origin
-    keep most recent (based on updated_at).  mark duplicate with duplicate attribute that has id of the kept version.  
-    add read_count of dup to kept book
-    update bookmarks to point to master book
-
 ### END SCRIPTS ###
 
+# create indexes.
+rake db:mongoid:create_indexes
+
+# Users.set_public_id_all  # set_public_id for any user without one.  books.each  book.create_public_id; book.save
 # Bookmark.set_pp_all
 # Book.set_detail_li_all
 
@@ -50,7 +49,7 @@ db.setProfilingLevel(2)
 
 index elastic search.  reindex_book_search.rb
 
-create sitemap.xml.  create_sitemap.rb
+TODO create sitemap.xml.  create_sitemap.rb
 
 remove critsend from SPF and DKIM
 
@@ -72,9 +71,6 @@ nginx.conf
   change passenger_pre_start http://vr1.mihudie.com/; 
       to passenger_pre_start http://mihudie.com/; 
 
-scoutapp
-  change URL monitoring to mihudie.com and remove http auth params
-
 nginx sites-available mihudie.com
   remove server_name vr1.mihudie.com;
 
@@ -88,6 +84,10 @@ sudo chown mhd:syslog ~/rails/log/production.log
 nginx gzip js and css files
       gzip -1 -c mihudie.css > mihudie.css.gz
       gzip -1 -c mihudie.js > mihudie.js.gz
+
+scoutapp
+  change URL monitoring to mihudie.com and remove http auth params
+  start monitoring
 
 
 POST_LAUNCH
