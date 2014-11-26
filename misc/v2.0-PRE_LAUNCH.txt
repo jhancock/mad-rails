@@ -5,21 +5,29 @@ rails r lib/scripts/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/m
 
 # things to add to migrate_v2.0.js:
 
-# unset Book.offline_at if it is nil
+# unset Book :offline_at if it is nil and then unset :offline_reason
 # unset all User :password_reset_code and :password_reset_at
 # unset all Book :tag_names.  Keep tags, tag_names_pp
-# set_public_id for any user without one
+# unset all Book :email_error
+# ensure all Book :tags are an array.. No nil allowed
+# ensure all Book :read_count and :unique_read_count are set to an integer
+
+# set_public_id for any user without one.  books.each  book.create_public_id; book.save
+
 # scripts to handle duplicate books, bookmarks, users.  
-books 230 dups, 228 have same origin
-  keep most recent (based on updated_at).  mark duplicate with duplicate attribute that has value of the kept version.  
-  add read_count of dup to kept book
-  update books_controller#read. If user tries to retreive by old URL for the dup, 301  redirect to the canonical of the kept version.
+
 bookmarks 1303 dups, 834 have same chunk
   keep most recent based on updated_at.  delete other.
-users 24 dups
-  keep most recent
 
-# change user#email_error to email_bounced_at (if old user has email_error, set email_bounced_at to user#updated_at
+users 24 dups
+  keep most recent based on updated_at.  delete other.
+
+DONE (lazy handling at run-time) books 230 dups, 228 have same origin
+    keep most recent (based on updated_at).  mark duplicate with duplicate attribute that has id of the kept version.  
+    add read_count of dup to kept book
+    update bookmarks to point to master book
+
+### END SCRIPTS ###
 
 # Bookmark.set_pp_all
 # Book.set_detail_li_all
@@ -55,6 +63,7 @@ mandrill
   ensure production API key
   money in mandrill account
   DONE ensure mandrill DKIM and SPF
+  change webhook urls to match mihudie.com, not vr1.mihudie.com
 
 remove basic auth from Rails
   ApplicationController before_action :http_auth

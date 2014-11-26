@@ -10,6 +10,9 @@ class User
   field :registered_at, type: Time
   field :email_was, type: String
 
+  # :public_id used for referral codes, payment identifier, etc.
+  field :public_id, type: String
+
   field :password_hash, type: String
   field :password_salt, type: String
 
@@ -18,7 +21,7 @@ class User
   field :password_reset_code, type: String
   field :password_reset_at, type: Time
 
-  # last bounce time.  gets unset when email_verified_at gets set
+  #TODO last bounce time. gets unset when email_verified_at gets set
   field :email_bounced_at, type: Time
 
   # if premium_at is set, the user has premium access.  No need to check premium_to.
@@ -32,14 +35,6 @@ class User
   field :cn, type: String  # country name (two char code) from the geo array
   field :city, type: String
   field :ip, type: String
-
-  # :public_id used for referral codes, payment identifier, etc.
-  field :public_id, type: String
-
-  # intended for arbitrary error info for debugging purposes 
-  # and to ensure we don't try to send to bad addresses more than once
-  # TODO can I get rid of :email_error attribute?
-  field :email_error, type: String
 
   #TODO duplicate docs with same email.  fix and change index after migration.
   index({email: 1}, {unique: false})
@@ -90,6 +85,7 @@ class User
     self.unset(:password_reset_at)
   end
 
+  #TODO this could return a non-unique value if Time.now is same
   def create_use_once_id
     hashids = Hashids.new(self.class.hashids_salt)
     hashids.encode(Time.now.to_i)

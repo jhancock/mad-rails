@@ -3,7 +3,8 @@ class BooksController < ApplicationController
   # read by monogo id for backward compatibility
   def read_id
     id = params[:id]
-    book = Book.find(id)
+    #book = Book.find(id)
+    book = Book.find_for_read_by_id(id)
     @canonical_path = read_book_path(author: book.author, title: book.title) if book
     read_private(book, params[:page])
     #redirect_to read_book_url(author: book.author, title: book.title, page: params[:page]), status: 301
@@ -12,9 +13,7 @@ class BooksController < ApplicationController
   def read
     author = params[:author]
     title = params[:title]
-    #TODO see if I need to use $exists or can query offline_at: nil
-    book = Book.find_by(author: author, title: title, offline_at: {'$exists' => false})
-    #TODO change to redirect_to :root, 301?  302? :notice => "book not found"
+    book = Book.find_for_read(author, title)
     read_private(book, params[:page])
   end
 
@@ -24,6 +23,7 @@ class BooksController < ApplicationController
     @book = book
     @bookmark = current_user ? Bookmark.find_by({user_id: current_user.id, book_id: @book.id}) : nil
     @page = page ? page.to_i : @bookmark ? @bookmark.chunk : 1
+    redirect_to read_book_path(author: @book.author, title: @book.title, page: 1) and return if ((@page > @book.chunks) || (@page < 1))
 
     raise Unauthenticated.new(message: "请先注册后再继续阅读！请确定提供有效邮箱完成注册验证以获得后花园书库免费阅读权限。", redirect_to: register_path, success_path: request.original_fullpath) if @page > 1 && !current_user
 
@@ -38,8 +38,9 @@ class BooksController < ApplicationController
       logger.info "PATH: #{path}"
       @content = IO.read(path).html_safe
     rescue Errno::ENOENT
-      #TODO need better error messgase here
-      @content = "file not found: #{path}".html_safe
+      @book.set_offline_file_not_found!(path)
+      flash[:notice] = "book temporarily offline"
+      redirect_to(root_path, status: 301) and return
     end
     @chapter_title = @book.chapter_title(@page)
     @page_title = "#{@chapter_title} #{@book.title} - #{@book.author}"

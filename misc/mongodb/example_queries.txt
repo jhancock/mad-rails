@@ -1,0 +1,2 @@
+
+db.books.find({duplicate: {$exists: true}})

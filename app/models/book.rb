@@ -9,10 +9,9 @@ class Book
   field :title, type: String
   field :author, type: String
   field :summary, type: String
-  # need to store this as html_safe
+  #TODO need to store this as html_safe
   field :summary_html, type: String
   field :tags, type: Array, default: []
-  #field :tag_names, type: Array, default: []
   field :tag_names_pp, type: String
   # pre-rendered li of the book for detail-span
   field :detail_li, type: String
@@ -27,6 +26,9 @@ class Book
   # should default to nil?  or change this to a state field?
   field :offline_at, type: Time
   field :offline_reason, type: String
+
+  # if set, this book is duplicate.  The master's id is the value of this field
+  field :duplicate, type: BSON::ObjectId
 
   index({title: 1}, {unique: false})
   index({author: 1}, {unique: false})
@@ -111,8 +113,14 @@ class Book
 
   def set_offline_invalid_coding!(page)
     self.set(offline_at: Time.now)
-    self.set(offline_reason: "invalid UTF-8 encoding")
-    SystemEvents.log(:book_invalid_encoding, {book_id: self.id, chunk: page})
+    self.set(offline_reason: "invalid_utf8_encoding")
+    SystemEvents.log(:book_invalid_utf8_encoding, {book_id: self.id, chunk: page})
+  end
+
+  def set_offline_file_not_found!(path)
+    self.set(offline_at: Time.now)
+    self.set(offline_reason: "file_not_found")
+    SystemEvents.log(:book_file_not_found, {book_id: self.id, path: path})
   end
 
   #TODO no concept of chapters.  New model needed.
@@ -146,11 +154,73 @@ class Book
   end
 
   def self.online_criteria
-    criteria = Book.exists(title: true, author: true, offline_at: false)
+    criteria = self.exists(title: true, author: true, offline_at: false)
     if Rails.configuration.mihudie.suppress_tags
       criteria = criteria.nin(tags: Rails.configuration.mihudie.suppress_tags)
     end
     criteria
+  end
+
+  def self.find_for_read(author, title)
+    book = nil
+    books_criteria = self.online_criteria.where(author: author, title: title).desc(:created_at)
+    count = books_criteria.count
+    if count == 1
+      book = books_criteria.first
+    elsif count > 1
+      book = self.merge_books(books_criteria)
+    end
+    book
+  end
+
+  # if id is online but is duplicate, return the master if it is online.  otherwise return nil
+  def self.find_for_read_by_id(id)
+    book = self.online_criteria.find_by(id: id)
+    if book && book.duplicate
+      book = self.online_criteria.find_by(id: book.duplicate)
+    end
+    book
+  end
+
+  # All books in books_criteria are assumed to be duplicates of one another.
+  # books_criteria must be ordered so the first item is the default book to become master.
+  # books_criteria.count should be greater than 1
+  def self.merge_books(books_criteria)
+    master_book = nil
+    books_criteria.each do |book|
+      master_book ||= book
+      unless book.id == master_book.id
+        # if book has summary and master_book does not, make book master
+        if book.summary && !master_book.summary
+          self.set_duplicate(book, master_book, true)
+          master_book = book
+        else
+          self.set_duplicate(master_book, book, true)
+        end
+      end
+    end
+    master_book
+  end
+
+  def self.set_duplicate(master, duplicate, merge_read_count = false)
+    unless master.id == duplicate.id
+      SystemEvents.log(:book_duplicate, {book_id: duplicate.id, master: master.id})
+      master.unset(:duplicate)
+      if master.offline_reason == "duplicate"
+        master.unset(:offline_at)
+        master.unset(:offline_reason)
+      end
+      master.inc(read_count: duplicate.read_count) if merge_read_count && duplicate.read_count
+      master.inc(unique_read_count: duplicate.unique_read_count) if merge_read_count && duplicate.unique_read_count      
+      duplicate.duplicate = master.id
+      duplicate.offline_at = Time.now
+      duplicate.offline_reason = "duplicate"
+      duplicate.read_count = 0 if merge_read_count
+      duplicate.unique_read_count = 0 if merge_read_count
+      duplicate.save
+      #fix broken bookmarks
+      Bookmark.where(book_id: duplicate.id).update_all(book_id: master.id)
+    end
   end
 
   def online?
