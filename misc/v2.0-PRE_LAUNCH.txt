@@ -23,7 +23,7 @@ cd ~/migrate_v2.0
 # rm -rf *
 rm ~/migrate_v2.0.txt
 cd ~/rails
-rails r lib/scripts/scripts/migrate_v2.0/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
+rails r lib/scripts/migrate_v2.0/migrate_v2.0.rb  ~/mongo_dump/lin1-20141127051346.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
 
 # next three scripts handle duplicate books, bookmarks and users. 
 
@@ -48,9 +48,9 @@ rake db:mongoid:create_indexes
 User.set_public_id_all
 Bookmark.set_pp_all
 Book.set_detail_li_all
+
 quit
 
-#HERE
 # remove indexes
 rake db:mongoid:remove_indexes
 
@@ -100,27 +100,29 @@ mandrill
   DONE ensure mandrill DKIM and SPF
   change webhook urls to match mihudie.com, not vr1.mihudie.com
 
-remove basic auth from Rails
+DONE remove basic auth from Rails
   ApplicationController before_action :http_auth
 
-nginx.conf
+DONE nginx.conf
   change passenger_pre_start http://vr1.mihudie.com/; 
       to passenger_pre_start http://mihudie.com/; 
 
-nginx sites-available mihudie.com
+DONE nginx sites-available mihudie.com
   remove server_name vr1.mihudie.com;
+
+DONE cp nginx.conf and mihudie.com conf files to /etc/nginx/...
 
 DONE nginx mihudie.com config location for static files needs to have expires max working.  It may be commeted out pre-production.
 
-# rails log must be owned by group syslog or it won't rotate
+DONE # rails log must be owned by group syslog or it won't rotate
 rm ~/rails/log/*
 touch ~/rails/log/production.log
 sudo chown mhd:syslog ~/rails/log/production.log
 
-# delete old nginx logs
+DONE # delete old nginx logs
 # /var/log/nginx/*
 
-# delete mongodb logs
+DONE # delete mongodb logs
 sudo killall -SIGUSR1 mongod
 sudo su -
 cd /var/log/mongodb
@@ -130,11 +132,14 @@ DONE nginx gzip js and css files
       gzip -1 -c mihudie.css > mihudie.css.gz
       gzip -1 -c mihudie.js > mihudie.js.gz
 
-sudo service nginx start
+DONE reboot vr1
 
-scoutapp
+DONE scoutapp
   change URL monitoring to mihudie.com and remove http auth params
   start monitoring
+
+DONE adujst url monitoring on uptimerobot
+  remove auth params
 
 remove mihudie.com DNS setting on home wifi router
 

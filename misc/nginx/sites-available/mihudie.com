@@ -44,7 +44,7 @@ server {
   listen 80;
   listen 443 ssl spdy;
 
-  server_name mihudie.com vr1.mihudie.com;
+  server_name mihudie.com;
   access_log /var/log/nginx/mihudie.access.log;
   error_log /var/log/nginx/mihudie.error.log;
 

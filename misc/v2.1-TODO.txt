@@ -16,6 +16,11 @@ http://stackoverflow.com/questions/14316426/is-there-a-paypal-ipn-code-sample-fo
 
 add Alipay
 
+ssl https://www.ssllabs.com/ssltest/analyze.html?d=mihudie.com
+  Chain issues	Contains anchor
+
+review book_controller#read queries to see if it is getting bookmark one too many times.  also root and list pages
+
 need UserEvent on password_reset.  currently only an event when I send the email.
 
 account page notification for user referal bonus

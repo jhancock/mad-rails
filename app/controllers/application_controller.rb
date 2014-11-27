@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   rescue_from Unauthorized, with: :unauthorized
 
   protect_from_forgery with: :exception
-  before_action :http_auth
+  #before_action :http_auth
   before_action :set_country
   before_action :current_user
   before_action :capture_referrer
