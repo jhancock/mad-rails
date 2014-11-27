@@ -16,6 +16,8 @@ http://stackoverflow.com/questions/14316426/is-there-a-paypal-ipn-code-sample-fo
 
 add Alipay
 
+need UserEvent on password_reset.  currently only an event when I send the email.
+
 account page notification for user referal bonus
 
 consider to shut off new user gets one month free.  keep one month referal bonus plan.  If I don't do this, users might keep setting up more email accounts to get another month free.

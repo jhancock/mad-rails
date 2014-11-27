@@ -123,6 +123,12 @@ class Book
     SystemEvents.log(:book_file_not_found, {book_id: self.id, path: path})
   end
 
+  def set_offline_author_or_title_not_found!
+    self.set(offline_at: Time.now)
+    self.set(offline_reason: "author_or_title_not_found")
+    SystemEvents.log(:book_author_or_title_not_found, {book_id: self.id})    
+  end
+
   #TODO no concept of chapters.  New model needed.
   def chapter_title(page)
     return nil if page == 1

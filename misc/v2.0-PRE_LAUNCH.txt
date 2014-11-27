@@ -7,12 +7,15 @@ DONE commit translation changes
 test on dev and push to vr1
 dry run of pre-launch on vr1?
 
-# suspend scoutapp monitoring
-# stop vr1 nginx
-# stop lin1 nginx
-# dump lin1 mongo.  cp to vr1
-# remove critsend from SPF and DKIM
-# DNS stuff - lin1 to vr1
+# DONE suspend scoutapp monitoring
+  https://scoutapp.com/jhancock/notifications
+# DONE stop vr1 nginx
+  sudo service nginx start
+# DONE stop lin1 nginx
+
+# DONE dump lin1 mongo.  cp to vr1
+
+# DONE DNS stuff - lin1 to vr1
 #   remove critsend DKIM and SPF
 
 # migrate data
@@ -20,19 +23,23 @@ cd ~/migrate_v2.0
 # rm -rf *
 rm ~/migrate_v2.0.txt
 cd ~/rails
-rails r lib/scripts/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
+rails r lib/scripts/scripts/migrate_v2.0/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
 
-# next two scripts handle duplicate bookmarks and users.  duplicate books are handled lazy as they are hit by users.
+# next three scripts handle duplicate books, bookmarks and users. 
+
+rails r lib/scripts/migrate_v2.0/migrate_v2.0_dup_books.rb
 
 # bookmarks 1303 dups, 834 have same chunk
 #  keep most recent based on updated_at.  delete other.
-rails r lib/scripts/migrate_v2.0_dup_bookmarks.rb
+rails r lib/scripts/migrate_v2.0/migrate_v2.0_dup_bookmarks.rb
 
 # users 24 dups
 #  keep most recent based on updated_at.  delete other.
-rails r lib/scripts/migrate_v2.0_dup_users.rb
+rails r lib/scripts/migrate_v2.0/migrate_v2.0_dup_users.rb
 
 ### END SCRIPTS ###
+
+# verify mongodb imported correct using robomongo
 
 # create indexes.
 rake db:mongoid:create_indexes
@@ -41,14 +48,16 @@ rake db:mongoid:create_indexes
 User.set_public_id_all
 Bookmark.set_pp_all
 Book.set_detail_li_all
+quit
 
+#HERE
 # remove indexes
 rake db:mongoid:remove_indexes
 
 # dump db
+cd ~/migrate_v2.0
+rm -rf v2/
 mongodump --out ~/migrate_v2.0/v2
-
-#HERE
 
 # drop db
 # from mongo shell
@@ -58,6 +67,7 @@ db.dropDatabase()
 quit()
 
 # change model index defs (the ones commented out) of user, bookmark
+# when doing above on vr1, commit index mods to git
 
 # import db
 # mongorestore -d mhd_development ~/migrate_v2.0/v2/mhd_development
@@ -85,7 +95,7 @@ TODO create sitemap.xml.  create_sitemap.rb
 verify SSL at https://www.ssllabs.com/
 
 mandrill
-  ensure production API key
+  DONE ensure production API key
   DONE money in mandrill account
   DONE ensure mandrill DKIM and SPF
   change webhook urls to match mihudie.com, not vr1.mihudie.com
@@ -116,14 +126,17 @@ sudo su -
 cd /var/log/mongodb
 # delete old rotated log file
 
-nginx gzip js and css files
+DONE nginx gzip js and css files
       gzip -1 -c mihudie.css > mihudie.css.gz
       gzip -1 -c mihudie.js > mihudie.js.gz
+
+sudo service nginx start
 
 scoutapp
   change URL monitoring to mihudie.com and remove http auth params
   start monitoring
 
+remove mihudie.com DNS setting on home wifi router
 
 POST_LAUNCH
 -------------
@@ -137,4 +150,4 @@ http://www.google.com/webmasters/tools/richsnippets
 
 submit site to baidu, google, bing, yahoo
 
-
+cp lin1 nginx logs

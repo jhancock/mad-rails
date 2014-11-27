@@ -17,6 +17,15 @@ puts "Marking duplicate books"
 def merge_books(book_ids)
   books_hash = {}
   master_book = nil
+  test_book = Book.find(book_ids[0])
+  # this collection of book_ids are books that should be marked as offline, not merged
+  if (test_book.author == nil) || (test_book.title == nil) || (test_book.author == "") || (test_book.title == "")
+    book_ids.each do |book_id|
+      Book.find(book_id).set_offline_author_or_title_not_found!
+    end
+    return nil
+  end
+
   # iterate over book_ids to build books_hash and mark which will be master.
   book_ids.each do |book_id|
     books_hash[book_id] = Book.find(book_id)
