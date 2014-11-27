@@ -161,23 +161,26 @@ class Book
     criteria
   end
 
-  def self.find_for_read(author, title)
-    book = nil
-    books_criteria = self.online_criteria.where(author: author, title: title).desc(:created_at)
-    count = books_criteria.count
-    if count == 1
-      book = books_criteria.first
-    elsif count > 1
-      book = self.merge_books(books_criteria)
-    end
-    book
-  end
+  #def self.find_for_read(author, title)
+  #  book = nil
+  #  books_criteria = self.online_criteria.where(author: author, title: title).desc(:created_at)
+  #  count = books_criteria.count
+  #  if count == 1
+  #    book = books_criteria.first
+  #  elsif count > 1
+  #    book = self.merge_books(books_criteria)
+  #  end
+  #  book
+  #end
 
   # if id is online but is duplicate, return the master if it is online.  otherwise return nil
   def self.find_for_read_by_id(id)
-    book = self.online_criteria.find_by(id: id)
+    book = self.find(id)
     if book && book.duplicate
       book = self.online_criteria.find_by(id: book.duplicate)
+    end
+    if book && !book.online?
+      book = nil
     end
     book
   end
@@ -185,32 +188,36 @@ class Book
   # All books in books_criteria are assumed to be duplicates of one another.
   # books_criteria must be ordered so the first item is the default book to become master.
   # books_criteria.count should be greater than 1
-  def self.merge_books(books_criteria)
-    master_book = nil
-    books_criteria.each do |book|
-      #TODO need to ensure ruby is doing what I think and master_book gets set correct
-      master_book ||= book
-      unless book.id == master_book.id
-        # if book has summary and master_book does not, make book master
-        if book.summary && !master_book.summary
-          self.set_duplicate(book, master_book, true)
-          master_book = book
-        else
-          self.set_duplicate(master_book, book, true)
-        end
-      end
+  #def self.merge_books(books_criteria)
+  #  master_book = nil
+  #  books_criteria.each do |book|
+  #    #TODO need to ensure ruby is doing what I think and master_book gets set correct
+  #    master_book ||= book
+  #    unless book.id == master_book.id
+  #      # if book has summary and master_book does not, make book master
+  #      if book.summary && !master_book.summary
+  #        self.set_duplicate(book, master_book, true)
+  #        master_book = book
+  #      else
+  #        self.set_duplicate(master_book, book, true)
+  #      end
+  #    end
+  #  end
+  #  master_book
+  #end
+
+  def self.set_master(book)
+    book.unset(:duplicate)
+    if book.offline_reason == "duplicate"
+      book.unset(:offline_at)
+      book.unset(:offline_reason)
     end
-    master_book
   end
 
   def self.set_duplicate(master, duplicate, merge_read_count = false)
     unless master.id == duplicate.id
       SystemEvents.log(:book_duplicate, {book_id: duplicate.id, master: master.id})
-      master.unset(:duplicate)
-      if master.offline_reason == "duplicate"
-        master.unset(:offline_at)
-        master.unset(:offline_reason)
-      end
+      self.set_master(master)
       master.inc(read_count: duplicate.read_count) if merge_read_count && duplicate.read_count
       master.inc(unique_read_count: duplicate.unique_read_count) if merge_read_count && duplicate.unique_read_count      
       duplicate.duplicate = master.id

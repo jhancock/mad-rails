@@ -1,4 +1,4 @@
-# rails r lib/scripts/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
+# rails r lib/scripts/migrate_v2.0/migrate_v2.0.rb  ~/mongo_dump/lin1-20141102082738.tar.gz ~/migrate_v2.0 > ~/migrate_v2.0.txt
 # ARGV[0] - path to tar.gz.  Dump of mhd_v1.0 mongodb
 # ARGV[1] - temp working directory.  will create if does not exist. 
 
@@ -49,7 +49,7 @@ puts "Restoring #{db_archive_name} into #{db}"
 system "mongorestore -d #{db} #{mongo_collection_path}"
 
 # run model_report
-scripts_dir = "/home/mhd/rails/lib/scripts"
+scripts_dir = "/home/mhd/rails/lib/scripts/migrate_v2.0"
 # rails r lib/scripts/model_report.rb > ~/model_report_pre_migrate.txt
 puts "Pre migrate report"
 load "#{scripts_dir}/model_report.rb"

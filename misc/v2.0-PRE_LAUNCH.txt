@@ -1,5 +1,7 @@
 PRE_LAUNCH.txt
 ===============
+see about rollback of book#read_for loookup process.  If I can tag book dups such that only one book of same author::title combination can online.  see migrate_v2.0_dup_bookmarks.js and .rb
+
 DONE finish dev pre-launch dry run
 DONE commit translation changes
 test on dev and push to vr1

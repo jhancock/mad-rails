@@ -13,7 +13,8 @@ class BooksController < ApplicationController
   def read
     author = params[:author]
     title = params[:title]
-    book = Book.find_for_read(author, title)
+    # there should only be 1 online book with same author:title pair
+    book = Book.online_criteria.find_by(author: author, title: title)
     read_private(book, params[:page])
   end
 

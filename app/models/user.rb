@@ -39,7 +39,7 @@ class User
   # v1.0 index
   index({email: 1}, {unique: false})
   # v2.0 index
-  index({email: 1}, {unique: true})
+  #index({email: 1}, {unique: true})
   index({public_id: 1}, {unique: true, sparse: true})
   index({email_verify_code: 1}, {unique: true, sparse: true})
   index({cn: 1}, {unique: false})

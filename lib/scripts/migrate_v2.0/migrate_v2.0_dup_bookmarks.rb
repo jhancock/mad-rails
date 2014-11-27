@@ -1,5 +1,5 @@
 db = Rails.env.production? ? "mhd_production" : "mhd_development"
-scripts_dir = "/home/mhd/rails/lib/scripts"
+scripts_dir = "/home/mhd/rails/lib/scripts/migrate_v2.0"
 puts "Rails ENV=#{Rails.env}"
 
 # drop dup_bookmarks collection
