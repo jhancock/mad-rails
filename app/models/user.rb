@@ -70,9 +70,15 @@ class User
     self.unset(:email_verified_at)
   end
 
-  def email_verified_success
+  #def email_verified_success
+  #  self.unset(:email_verify_code)
+  #  self.email_verified_at = Time.now
+  #end
+
+  def email_verified!
     self.unset(:email_verify_code)
-    self.email_verified_at = Time.now
+    self.set(email_verified_at: Time.now)
+    UserEvents.log(self.id, :email_verified, {email: self.email})
   end
 
   def create_password_reset_code
@@ -102,9 +108,17 @@ class User
   end
 
   # duration is a Fixnum such as 1.month
-  def extend_premium(duration)
-    self.premium_to = Time.now unless self.premium_to
-    self.premium_to = self.premium_to + duration
+  #def extend_premium(duration)
+  #  self.premium_to = Time.now unless self.premium_to
+  #  self.premium_to = self.premium_to + duration
+  #end
+
+  def extend_premium!(duration)
+    current_premium_to = self.premium_to ? self.premium_to : Time.now
+    extend_to = current_premium_to + duration
+    self.set(premium_to: extend_to)
+    self.unset(:premium_at)  # v1.0 users may have had this set
+    UserEvents.log(self.id, :premium_extended, {to: extend_to})
   end
 
   def premium_date_pp

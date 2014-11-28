@@ -16,6 +16,8 @@ http://stackoverflow.com/questions/14316426/is-there-a-paypal-ipn-code-sample-fo
 
 add Alipay
 
+registered email address should be stored in lowercase.
+
 ssl https://www.ssllabs.com/ssltest/analyze.html?d=mihudie.com
   Chain issues	Contains anchor
 

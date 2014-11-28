@@ -93,14 +93,13 @@ class AccountController < ApplicationController
       flash[:error] = "您已经完成验证，此验证码已经无效。"
       redirect_to account_home_path and return
     end
-    user.email_verified_success
-    UserEvents.log(user.id, :email_verified, {email: user.email})
+    user.email_verified!
     reward_events = UserEvents.find_by(user_id: user.id, event: "registered_premium_bonus")
     unless reward_events
-      user.extend_premium(1.month)
+      user.extend_premium!(1.month)
       UserEvents.log(user.id, :registered_premium_bonus, {amount: "1 month"})
     end
-    user.save
+    # user.save
 
     # TODO ensure registered_event only return 1 event or nil
     registered_event = UserEvents.find_by(user_id: user.id, event: "registered")
@@ -111,8 +110,8 @@ class AccountController < ApplicationController
         UserEvents.log(referrer.id, :registered_referral, {referred: user.id})
         reward_events = UserEvents.find_by(id: referrer.id, event: "registered_referral_premium_bonus")
         unless reward_events
-          referrer.extend_premium(1.month)
-          referrer.save
+          referrer.extend_premium!(1.month)
+          #referrer.save
           UserEvents.log(referrer.id, :registered_referral_premium_bonus, {referred: user.id, amount: "1 month"})
           send_user_mail(referrer.id, :registered_referral)
         end
