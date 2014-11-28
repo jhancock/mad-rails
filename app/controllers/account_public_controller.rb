@@ -13,7 +13,7 @@ class AccountPublicController < ApplicationController
     @page_title = "登录"
     @page_description = "登录迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "登录 电子书 在线阅读"
-    user = User.find_by(email: params[:user][:email])
+    user = User.find_by(email: params[:user][:email].downcase)
     unless user
       LoginEvents.log_invalid_user(params[:user][:email], request.remote_ip)
       flash.now[:form_error] = "用户名或者密码错误 #{view_context.link_to('重设密码', password_reset_request_path)}".html_safe
@@ -37,7 +37,8 @@ class AccountPublicController < ApplicationController
     @page_title = "注册"
     @page_description = "注册迷蝴蝶中文电子书网站，在线阅读最热门的中文电子书"
     @page_keywords = "注册 电子书 在线阅读"
-    unless email_valid?(params[:user][:email])
+    email = params[:user][:email].downcase
+    unless email_valid?(email)
       flash.now[:form_error] = "邮箱地址格式错误"
       render 'register' and return
     end
@@ -49,9 +50,9 @@ class AccountPublicController < ApplicationController
       flash.now[:form_error] = "密码设置不能少于4位数字或字母"
       render 'register' and return
     end
-    user = User.register!(params[:user][:email], params[:user][:password])
+    user = User.register!(email, params[:user][:password])
     unless user
-      flash.now[:form_error] = "<strong>#{params[:user][:email]}</strong> 已经被注册。如果忘记密码，请 #{view_context.link_to('重设密码', password_reset_request_path)}".html_safe
+      flash.now[:form_error] = "<strong>#{email}</strong> 已经被注册。如果忘记密码，请 #{view_context.link_to('重设密码', password_reset_request_path)}".html_safe
       render 'register' and return
     end
     referrer_public_id = session[:referrer]
@@ -72,7 +73,7 @@ class AccountPublicController < ApplicationController
 
   def password_reset_request_post
     @page_title = "重设密码"
-    email = params[:user][:email]
+    email = params[:user][:email].downcase
     unless email_valid?(email)
       flash.now[:form_error] = "邮箱地址格式错误"
       render 'password_reset_request' and return

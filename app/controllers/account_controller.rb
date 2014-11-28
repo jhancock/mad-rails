@@ -51,7 +51,7 @@ class AccountController < ApplicationController
 
   def change_email_post
     @page_title = "更换注册邮箱"
-    new_email = params[:user][:new_email]    
+    new_email = params[:user][:new_email].downcase
     # verify password
     unless current_user.password?(params[:user][:password])
       flash.now[:form_error] = "密码错误"
@@ -63,7 +63,7 @@ class AccountController < ApplicationController
       render 'change_email' and return
     end
     # verify new_email matches new_email_confirm
-    unless new_email == params[:user][:new_email_confirm]
+    unless new_email == params[:user][:new_email_confirm].downcase
       flash.now[:form_error] = "两次输入的邮箱地址不相符"
       render 'change_email' and return
     end
