@@ -1,0 +1,8 @@
+# add to Gemfil
+gem "skylight"
+
+sudo service nginx stop
+bundle install
+bundle exec skylight setup UmrcuT0QZJaV
+
+sudo service nginx start

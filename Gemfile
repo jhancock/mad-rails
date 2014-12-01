@@ -27,6 +27,8 @@ gem 'geoip', '~> 1.4.0'
 
 gem 'hashids'
 
+#gem "skylight"
+
 # add exception_notifier http://amberonrails.com/rails-exception_notification-setup/
 #    https://github.com/smartinez87/exception_notification
 # or https://github.com/rails/exception_notification
