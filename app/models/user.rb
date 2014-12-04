@@ -4,13 +4,15 @@ class User
 
   field :email, type: String
   field :email_verified_at, type: Time
-  # one-time use code created by hashid lib based on Time.now
-  field :email_verify_code, type: String
-  # prior value of email field.  Useful fo rknowing what a user's email was befor ethey changed it.
   field :registered_at, type: Time
+
+  # one-time-use code created by hashid lib based on Time.now
+  field :email_verify_code, type: String
+
+  # prior value of email field
   field :email_was, type: String
 
-  # :public_id used for referral codes, payment identifier, etc.
+  # used for referral codes, payment identifier, etc.
   field :public_id, type: String
 
   field :password_hash, type: String
@@ -43,7 +45,6 @@ class User
   index({public_id: 1}, {unique: true, sparse: true})
   index({email_verify_code: 1}, {unique: true, sparse: true})
   index({cn: 1}, {unique: false})
-  #TODO why do I have an index on ip?.  Is it so I can ref a new user against existing users to see if a user is using a second email account to get fake referral?
   index({ip: 1}, {unique: false})
   index({privileges: 1}, {unique: false})
   index({premium_at: 1}, {unique: false})
@@ -64,16 +65,10 @@ class User
     self.public_id = hashids.encode_hex(self.id.to_s)
   end
 
-  #TODO using unset could be a problem.  create_email_verify_code, set_email_verified, set_password_reset all doing an atomic unset and also expect the caller to save the document as well.
   def create_email_verify_code
     self.email_verify_code = self.create_use_once_id
     self.unset(:email_verified_at)
   end
-
-  #def email_verified_success
-  #  self.unset(:email_verify_code)
-  #  self.email_verified_at = Time.now
-  #end
 
   def email_verified!
     self.unset(:email_verify_code)
@@ -108,11 +103,6 @@ class User
   end
 
   # duration is a Fixnum such as 1.month
-  #def extend_premium(duration)
-  #  self.premium_to = Time.now unless self.premium_to
-  #  self.premium_to = self.premium_to + duration
-  #end
-
   def extend_premium!(duration)
     current_premium_to = self.premium_to ? self.premium_to : Time.now
     extend_to = current_premium_to + duration
@@ -165,9 +155,6 @@ class User
     self.password_bcrypt = BCrypt::Password.create(password)
     self.unset(:password_hash) if self.password_hash
     self.unset(:password_salt) if self.password_salt
-    # old method
-    #self.password_salt = create_password_salt
-    #self.password_hash = OpenSSL::Digest::SHA1.hexdigest("#{self.password_salt}#{password}")
   end
 
   def set_geo(ip)

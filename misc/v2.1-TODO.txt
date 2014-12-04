@@ -1,10 +1,49 @@
+turn on mihudie BankOfDudley card
+fix BoD personal debit card.
+fix Georgia corp registration for shellshadow.
+
+sign up for Alipay - Mihudie LLC
+See if my PayPal account handles UnionPay
+email TODOs...see below
+update Amazon credit card
+
+cleanup lin1
+  cp lin1 nginx logs
+
 v2.1
+------
+Mandrill webhooks
+------------------
+mandrill webhook for support@app.mihudie.com
+https://github.com/evendis/mandrill-rails
+
+set Mandrill webhook for bounced email.
+  set user.email_bounced_at to Time.now
+  when user verifies email, unset email_bounced_at
+  change ApplicationController.send_user_mail to take user as first param, not user_id
+    check if user.email_bounced_at is set.  if so, don't send email...but do log a UserEvent
+    change all callers of send_user_mail to pass user and not id
+  account_controller.email_verify, set user.email_bounced_at to nil
+
+handle email to register@app.mihudie.com
+  look up sender.  if its a user that is not verified, set the user to be verified by following similar process as in account_controller.email_verify
+-----------------
+
+v2.2
 -----
+sitemap.xml script
+  sitemap should not include old book links with objectId??
+  Canonical url should be the one with author/title.
+  should these links contain microdata?
+
+setup exception_notificaion and test. 
+  see if we can write exceptions to file and have scout pick them up.  
+
 add schema.org microdata
   http://www.google.com/webmasters/tools/richsnippets
   http://www.heppnetz.de/projects/goodrelations/
 
-v2.2
+v2.3
 -----
 add PayPal Express
 https://github.com/paypal/PayPal-Ruby-SDK
@@ -16,16 +55,20 @@ http://stackoverflow.com/questions/14316426/is-there-a-paypal-ipn-code-sample-fo
 
 add Alipay
 
-registered email address should be stored in lowercase.
+DONE registered email address should be stored in lowercase.
 
 ssl https://www.ssllabs.com/ssltest/analyze.html?d=mihudie.com
   Chain issues	Contains anchor
 
 review book_controller#read queries to see if it is getting bookmark one too many times.  also root and list pages
 
+submit site to baidu, google, bing, yahoo
+
 need UserEvent on password_reset.  currently only an event when I send the email.
 
 account page notification for user referal bonus
+
+TODO create sitemap.xml.  create_sitemap.rb
 
 consider to shut off new user gets one month free.  keep one month referal bonus plan.  If I don't do this, users might keep setting up more email accounts to get another month free.
 
@@ -104,8 +147,6 @@ handle error in search if nothing found, such as empty search.
 
 when I delete a bookmark, the flash message shows the book.  change this to a link in casde the user wants to go back to it after they deleted the mark.
 
-v1.2
-------
 send to kindle behavior
   use Kindle packaging tool
   set limits per month for backyard books.  all purchased books can send.
@@ -113,12 +154,8 @@ send to kindle behavior
 
 admin pages v1.2
 
-v1.3
------
 author publishes chapter at a time
 
-v1.4
-------
 book uplaods
   need quarantine
   need admin area to take uploaded books, clean them up and publish
@@ -131,3 +168,14 @@ see about adding HTTPS strict.
     need to change session cookie to https only.  this means there would be some session cookie attributes we want to track for users not logged in.  they may be accessing via http.
 
 try http://emailtosms.com for a low cost email2sms service with Scoutapp
+
+cleanup email TODOs
+--------------------
+email Wiley Stuckey
+see about NZ telecom HR director.  See if he's the same guy I met
+email Aaron Bellingham
+email Richard Vaughan with updated cv
+email Rowan's friend
+email Nick
+email Andrew Morrow
+send cv to trademe saved jobs

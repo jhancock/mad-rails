@@ -1,4 +1,4 @@
-# ARGV[0] - email address of user to show
+# ARGV[0] - email address of user
 # ARGV[1] - extend_premium (optional)
 
 puts "Rails ENV=#{Rails.env}"

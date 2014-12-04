@@ -1,11 +1,9 @@
 PRE_LAUNCH.txt
 ===============
-see about rollback of book#read_for loookup process.  If I can tag book dups such that only one book of same author::title combination can online.  see migrate_v2.0_dup_bookmarks.js and .rb
-
 DONE finish dev pre-launch dry run
 DONE commit translation changes
-test on dev and push to vr1
-dry run of pre-launch on vr1?
+DONE test on dev and push to vr1
+DONE dry run of pre-launch on vr1?
 
 # DONE suspend scoutapp monitoring
   https://scoutapp.com/jhancock/notifications
@@ -90,9 +88,7 @@ rails r lib/scripts/reindex_book_search.rb
 
 # SERVER READY
 
-TODO create sitemap.xml.  create_sitemap.rb
-
-verify SSL at https://www.ssllabs.com/
+DONE verify SSL at https://www.ssllabs.com/
 
 mandrill
   DONE ensure production API key
@@ -141,18 +137,12 @@ DONE scoutapp
 DONE adujst url monitoring on uptimerobot
   remove auth params
 
-remove mihudie.com DNS setting on home wifi router
+DONE remove mihudie.com DNS setting on home wifi router
 
 POST_LAUNCH
 -------------
-run SSL tests  testssl.com?
+DONE run SSL tests  testssl.com?
 
-verify http working
+DONE verify http working
 curl -I http://mihudie.com
 
-test microdata
-http://www.google.com/webmasters/tools/richsnippets
-
-submit site to baidu, google, bing, yahoo
-
-cp lin1 nginx logs
